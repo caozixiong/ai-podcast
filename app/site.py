@@ -141,23 +141,31 @@ def build_index(episodes: list[dict], cfg: dict) -> str:
 
 
 def build_episode(ep: dict, cfg: dict) -> str:
-    eid = _esc(ep.get("episode_id"))
+    eid = str(ep.get("episode_id", "")).replace("/", "_")
     title = _esc(ep.get("title"))
     audio = ep.get("audio", {})
     preview = audio.get("preview_url", "")
     share = audio.get("share_url", preview)
 
-    if preview:
+    if preview and share:
+        # Drive 模式（可选升级）
         player = (
             f'<div class="player"><iframe src="{_esc(preview)}" allow="autoplay" '
             f'title="{title} 播放器" style="width:100%;height:140px;border:0;border-radius:12px;background:#000"></iframe>'
-            f'<p class="note">如果播放器未加载（部分浏览器限制嵌入），请用下面的备用链接；'
-            f'并在无痕窗口测试不登录 Google 是否可播。</p></div>'
+            f'<p class="note">播放器未加载？用下面的备用链接；在无痕窗口测试不登录 Google 是否可播。</p></div>'
         )
         actions = f'<a class="btn play" href="{_esc(share)}" target="_blank" rel="noopener">▶ 在 Google Drive 打开</a>'
+    elif audio.get("path") or audio.get("duration_sec"):
+        # 本仓库托管：audio/{eid}.mp3（相对 episodes/ 页 = ../audio/）
+        player = (
+            f'<div class="player"><audio controls preload="metadata" '
+            f'src="../audio/{eid}.mp3" style="width:100%"></audio>'
+            f'<p class="note">音频随本仓库发布；若无法播放，请刷新或稍后重试。</p></div>'
+        )
+        actions = f'<a class="btn play" href="../audio/{eid}.mp3" download="{eid}.mp3">⬇ 下载 MP3</a>'
     else:
         player = ('<div class="empty"><h2>音频生成中</h2>'
-                  '<p class="hint">本集音频尚在生成/上传，暂不可播放。逐字稿与来源见下。</p></div>')
+                  '<p class="hint">本集音频尚在生成，暂不可播放。逐字稿与来源见下。</p></div>')
         actions = ''
 
     srcs = "".join(
@@ -200,6 +208,7 @@ def build_site(episodes: list[dict], out_dir: str, cfg: dict) -> dict:
     """生成 index.html + assets + 每集页。返回写出的文件列表。"""
     os.makedirs(os.path.join(out_dir, "assets"), exist_ok=True)
     os.makedirs(os.path.join(out_dir, "episodes"), exist_ok=True)
+    os.makedirs(os.path.join(out_dir, "audio"), exist_ok=True)
     with open(os.path.join(out_dir, "assets", "style.css"), "w", encoding="utf-8") as f:
         f.write(CSS)
     with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8") as f:

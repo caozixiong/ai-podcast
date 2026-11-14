@@ -7,14 +7,15 @@ rclone/**
 **/rclone.conf
 secrets/
 
-# ===== 音频原始 / 缓存（音频只放 Drive，不出库）=====
-audio/
-*.mp3
-*.wav
-*.m4a
-cache/
+# ===== 缓存 / 依赖 / 系统 =====
+.venv/
+venv/
+node_modules/
 __pycache__/
 *.pyc
+cache/
+.DS_Store
+Thumbs.db
 
 # ===== 日志 =====
 logs/
@@ -25,9 +26,7 @@ data/private/
 data/.lock*
 *.lock
 
-# ===== 依赖 / 系统 =====
-.venv/
-venv/
-node_modules/
-.DS_Store
-Thumbs.db
+# ===== 测试/临时音频（正式节目音频在 audio/ 下，随仓库发布）=====
+data/*.mp3
+data/*.wav
+data/*.m4a

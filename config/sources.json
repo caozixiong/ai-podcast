@@ -9,12 +9,13 @@
       "name": "arXiv: TSV / 封装 / 无损检测 / 显微",
       "type": "arxiv",
       "url": "http://export.arxiv.org/api/query?search_query=all:%22through+silicon+via%22+OR+all:%22glass+via%22+OR+all:%22non-destructive+inspection%22+OR+all:%22advanced+packaging%22+OR+all:%22electron+microscopy%22&start=0&max_results=30&sortBy=submittedDate&sortOrder=descending",
-      "enabled": true
+      "enabled": false,
+      "_note": "本环境 arXiv 429 限流，暂关；换到可访问 arXiv 的机器再开。"
     },
     {
       "name": "Google News RSS: TSV / 封装 / 检测 (中文)",
       "type": "rss",
-      "url": "https://news.google.com/rss/search?q=TSV+%E5%B0%81%E8%A3%9D+%E6%8E%A2%E6%B5%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+      "url": "https://news.google.com/rss/search?q=TSV%20OR%20TGV%20OR%20%E5%85%88%E8%BF%9B%E5%B0%81%E8%A3%9D%20OR%20%E7%8E%BB%E7%92%83%E9%80%9A%E5%AD%90%20%E6%A3%80%E6%B5%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
       "enabled": true
     },
     {

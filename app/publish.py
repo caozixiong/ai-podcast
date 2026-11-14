@@ -56,26 +56,21 @@ def _push(project_dir: str) -> tuple[bool, str]:
     token = os.environ.get("GH_TOKEN")
     if not token:
         return False, "push 需要 GH_TOKEN 环境变量。"
-    # 确保有 origin（URL 不含令牌；令牌只走一次性 extraHeader）
     rc, out = _git(project_dir, ["remote", "get-url", "origin"])
     if rc != 0:
         _git(project_dir, ["remote", "add", "origin", REPO])
     env = dict(os.environ)
-    # 一次性 Authorization 头，令牌来自环境变量、不落盘
+    env.update({"GCM_INTERACTIVE": "Never", "GIT_TERMINAL_PROMPT": "0"})
+    # 令牌只走一次性 Authorization 头；清空 credential helper 避免 GCM GUI 卡登录
+    hdr = "Authorization: *** " + token
     p = subprocess.run(
-        ["git", "push", "origin", "HEAD:main"], cwd=project_dir,
-        env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-        timeout=300,
-    )
-    # 用 extraHeader 注入鉴权（等价但把 token 留在 env）
-    if p.returncode != 0:
-        import re
-        hdr = "Authorization: token " + token
-        p = subprocess.run(
-            ["git", "-c", f"http.https://github.com/.extraHeader={hdr}",
-             "push", "origin", "HEAD:main"],
-            cwd=project_dir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=300)
-    return p.returncode == 0, p.stdout.decode(errors="replace")
+        ["git", "-c", "credential.helper=",
+         "-c", f"http.https://github.com/.extraHeader={hdr}",
+         "push", "origin", "HEAD:main"],
+        cwd=project_dir, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+        timeout=240)
+    out2 = p.stdout.decode(errors="replace")
+    return p.returncode == 0, out2
 
 
 def run_publish(project_dir: str, *, do_push: bool = False) -> dict:
@@ -113,7 +108,7 @@ def run_publish(project_dir: str, *, do_push: bool = False) -> dict:
                     base_url=llm_cfg.get("base_url"),
                     temperature=llm_cfg.get("temperature", 0.6),
                     max_tokens=llm_cfg.get("max_tokens", 4000))
-    if not llm.api_key:
+    if "generativelanguage.googleapis.com" in (llm_cfg.get("base_url") or "") and not llm.api_key:
         report["stages"]["editorial"] = "blocked: 缺少 GEMINI_API_KEY"
         report["result"] = "blocked"
         report["reason"] = "缺少 GEMINI_API_KEY（Google AI Studio）。设好后重跑即可。"
@@ -151,9 +146,9 @@ def run_publish(project_dir: str, *, do_push: bool = False) -> dict:
         # 音频失败仍可出"文字版"节目页，但状态标记为未完成
         report["stages"].setdefault("note", "本集先以文字版上线，音频待补。")
 
-    # 4) Drive 上传（需要 rclone + Google OAuth）
+    # 4) 音频托管：默认放本仓库（audio/ 随 Pages 发布）。可选 Drive（需 rclone+OAuth）。
     drv = show.get("drive", {})
-    if ep.audio.get("path"):
+    if ep.audio.get("path") and drv.get("enabled"):
         try:
             res = upload(ep.audio["path"], drv.get("rclone_remote", "podcastdrive"),
                          drv.get("remote_path", "PodcastPublisher/audio"))
@@ -162,11 +157,13 @@ def run_publish(project_dir: str, *, do_push: bool = False) -> dict:
             report["stages"]["drive"] = f"ok (drive_id={res['drive_id']})"
         except DriveUnavailable as ex:
             report["stages"]["drive"] = f"blocked: {ex}"
+    else:
+        report["stages"]["drive"] = "skipped（音频在本仓库 audio/，随 Pages 发布）"
 
-    # 5) 建网站（总是执行，空/文字版也要可看）
-    docs = os.path.join(project_dir, "docs")
-    build_site([ep.to_dict()], docs, show)
-    ep.status = "site_built" if ep.status != "uploaded" else "site_built"
+    # 5) 建网站（总是执行，空/文字版也要可看）— 输出到仓库根目录（Pages 源=根）
+    site_out = project_dir
+    build_site([ep.to_dict()], site_out, show)
+    ep.status = "site_built"
     report["stages"]["site"] = "ok"
 
     # 6) 提交 + 推送

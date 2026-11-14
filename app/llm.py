@@ -11,7 +11,7 @@ import time
 
 import requests
 
-DEFAULT_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai"
+DEFAULT_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
 DEFAULT_MODEL = "gemini-2.5-flash"
 
 
@@ -23,7 +23,10 @@ class LLMClient:
     def __init__(self, api_key=None, base_url=None, model=None, temperature=0.6,
                  max_tokens=4000, timeout_s=120, max_retries=2, fallback_model=None):
         self.api_key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-        self.base_url = (base_url or DEFAULT_BASE_URL).rstrip("/")
+        base = (base_url or DEFAULT_BASE_URL).rstrip("/")
+        if base.endswith("/openai"):
+            base = base[: -len("/openai")]
+        self.base_url = base
         self.model = model or DEFAULT_MODEL
         self.fallback_model = fallback_model
         self.temperature = temperature
@@ -31,38 +34,107 @@ class LLMClient:
         self.timeout_s = timeout_s
         self.max_retries = max_retries
 
-    def _headers(self) -> dict:
-        if not self.api_key:
-            raise LLMError("缺少 API key：请在环境变量设置 GEMINI_API_KEY（Google AI Studio）。")
-        return {"Content-Type": "application/json",
-                "Authorization": f"Bearer {self.api_key}"}
+    def _one(self, system, user, model, temperature, max_tokens) -> str:
+        if "generativelanguage.googleapis.com" in self.base_url:
+            return self._gemini(system, user, model, temperature, max_tokens)
+        if self.base_url.rstrip("/").endswith("/v1"):
+            return self._openai(system, user, model, temperature, max_tokens)
+        return self._ollama_native(system, user, model, temperature, max_tokens)
 
-    def _one(self, system: str, user: str, model: str, temperature, max_tokens) -> str:
+    def _openai(self, system, user, model, temperature, max_tokens) -> str:
+        """OpenAI 兼容端点：Ollama / LM Studio / 其它。"""
         url = f"{self.base_url}/chat/completions"
-        payload = {
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        body = {
             "model": model,
             "temperature": self.temperature if temperature is None else temperature,
             "max_tokens": self.max_tokens if max_tokens is None else max_tokens,
-            "messages": [
-                {"role": "system", "content": system},
-                {"role": "user", "content": user},
-            ],
+            "messages": [{"role": "system", "content": system},
+                         {"role": "user", "content": user}],
         }
         last_err = None
         for attempt in range(self.max_retries + 1):
             try:
-                r = requests.post(url, headers=self._headers(), json=payload, timeout=self.timeout_s)
+                r = requests.post(url, headers=headers, json=body, timeout=self.timeout_s)
                 if r.status_code == 429 or r.status_code >= 500:
-                    last_err = f"HTTP {r.status_code}: {r.text[:300]}"
+                    last_err = f"HTTP {r.status_code}: {r.text[:200]}"
                     time.sleep(2 ** attempt)
                     continue
                 r.raise_for_status()
-                data = r.json()
-                return data["choices"][0]["message"]["content"]
+                return r.json()["choices"][0]["message"]["content"]
             except requests.RequestException as e:
                 last_err = str(e)
                 time.sleep(2 ** attempt)
-        raise LLMError(f"模型 {model} 调用失败（重试 {self.max_retries} 次）：{last_err}")
+            except LLMError:
+                raise
+        raise LLMError(f"模型 {model}（OpenAI 兼容）调用失败：{last_err}")
+
+    def _ollama_native(self, system, user, model, temperature, max_tokens) -> str:
+        """Ollama 原生 /api/chat：对思考型模型加 think:false 拿干净 content。"""
+        url = f"{self.base_url.rstrip('/')}/api/chat"
+        body = {
+            "model": model, "think": False, "stream": False,
+            "messages": [{"role": "system", "content": system},
+                         {"role": "user", "content": user}],
+            "options": {
+                "temperature": self.temperature if temperature is None else temperature,
+                "num_predict": self.max_tokens if max_tokens is None else max_tokens,
+            },
+        }
+        last_err = None
+        for attempt in range(self.max_retries + 1):
+            try:
+                r = requests.post(url, json=body, timeout=self.timeout_s)
+                if r.status_code == 429 or r.status_code >= 500:
+                    last_err = f"HTTP {r.status_code}"
+                    time.sleep(2 ** attempt)
+                    continue
+                r.raise_for_status()
+                msg = r.json().get("message", {})
+                return msg.get("content") or msg.get("reasoning") or ""
+            except requests.RequestException as e:
+                last_err = str(e)
+                time.sleep(2 ** attempt)
+            except LLMError:
+                raise
+        raise LLMError(f"Ollama {model} 调用失败：{last_err}")
+
+    def _gemini(self, system, user, model, temperature, max_tokens) -> str:
+        """Google AI Studio 原生 generateContent。"""
+        if not self.api_key:
+            raise LLMError("调用 Gemini 需要 GEMINI_API_KEY。")
+        url = f"{self.base_url}/models/{model}:generateContent"
+        headers = {"Content-Type": "application/json", "x-goog-api-key": self.api_key}
+        body = {
+            "system_instruction": {"parts": [{"text": system}]},
+            "contents": [{"role": "user", "parts": [{"text": user}]}],
+            "generationConfig": {
+                "temperature": self.temperature if temperature is None else temperature,
+                "maxOutputTokens": self.max_tokens if max_tokens is None else max_tokens,
+            },
+        }
+        last_err = None
+        for attempt in range(self.max_retries + 1):
+            try:
+                r = requests.post(url, headers=headers, json=body, timeout=self.timeout_s)
+                if r.status_code == 429 or r.status_code >= 500:
+                    last_err = f"HTTP {r.status_code}: {r.text[:200]}"
+                    time.sleep(2 ** attempt)
+                    continue
+                r.raise_for_status()
+                parts = r.json()["candidates"][0]["content"]["parts"]
+                return "".join(p.get("text", "") for p in parts)
+            except requests.RequestException as e:
+                last_err = str(e)
+                time.sleep(2 ** attempt)
+            except (KeyError, IndexError, TypeError):
+                last_err = "Gemini 返回无正文（可能被安全过滤/额度）"
+                time.sleep(1)
+            except LLMError:
+                raise
+        raise LLMError(f"Gemini {model} 调用失败：{last_err}")
 
     def complete(self, system: str, user: str, *, temperature=None, max_tokens=None) -> str:
         try:

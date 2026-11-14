@@ -8,19 +8,25 @@
   "episode": {
     "min_items": 2,
     "max_items": 6,
-    "lookback_days": 7,
+    "lookback_days": 30,
     "target_duration_min": 5,
     "target_duration_max": 10
   },
   "llm": {
-    "provider": "google_ai_studio",
-    "model": "gemini-2.5-flash",
-    "fallback_model": "gemini-2.5-pro",
-    "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
-    "api_key_env": "GEMINI_API_KEY",
-    "temperature": 0.6,
-    "max_tokens": 4000,
-    "timeout_s": 120
+    "provider": "ollama",
+    "model": "qwen3.8:27b",
+    "fallback_model": "qwen3.6:27b",
+    "base_url": "http://127.0.0.1:11434",
+    "temperature": 0.5,
+    "max_tokens": 1400,
+    "timeout_s": 180,
+    "_gemini_alternative": {
+      "provider": "google_ai_studio",
+      "model": "gemini-2.5-flash",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "api_key_env": "GEMINI_API_KEY",
+      "note": "本机环境 Gemini 生成接口 404，默认走本地 Ollama（免费）；换到能访问 Gemini 的机器可改用此配置。"
+    }
   },
   "tts": {
     "engine": "edge-tts",

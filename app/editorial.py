@@ -52,6 +52,8 @@ def _parse_output(raw: str, fallback_title: str) -> tuple[str, str]:
         body = raw[:m.start()] + raw[m.end():]
     body = re.sub(r"^\s*\{.*\}\s*$", "", body, flags=re.DOTALL)
     body = re.sub(r"^\s*#{1,6}\s*", "", body, flags=re.MULTILINE)
+    body = re.sub(r"\*\*([^*]+)\*\*", r"\1", body)   # **加粗** → 加粗
+    body = re.sub(r"[*_`|]", "", body)                 # 清除残留 markdown 符号
     return body.strip(), title
 
 
