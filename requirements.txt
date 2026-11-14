@@ -1,0 +1,16 @@
+# 采集与解析
+feedparser>=6.0.11
+requests>=2.32.0
+python-dateutil>=2.9.0
+
+# 跨平台文件锁（Windows 原生，替代 macOS/Unix fcntl）
+filelock>=3.14.0
+
+# 中文 TTS（需联网，非官方在线接口；失败时回退 Windows SAPI）
+edge-tts>=6.1.10
+
+# 网页/文本清理（可选，采集时抽取摘要）
+beautifulsoup4>=4.12.0
+
+# 测试（纯离线，不触达真实 GitHub/Drive）
+pytest>=8.0.0

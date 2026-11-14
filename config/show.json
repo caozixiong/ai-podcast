@@ -1,0 +1,40 @@
+{
+  "show_name": "无损检测前沿",
+  "subtitle": "中文科技播客 · X-ray/CT 无损检测 · 半导体 TSV/TGV 检测 · AI 科研",
+  "language": "zh-CN",
+  "timezone": "America/Toronto",
+  "pages_url": "https://caozixiong.github.io/ai-podcast/",
+  "base_path": "/ai-podcast/",
+  "episode": {
+    "min_items": 2,
+    "max_items": 6,
+    "lookback_days": 7,
+    "target_duration_min": 5,
+    "target_duration_max": 10
+  },
+  "llm": {
+    "provider": "google_ai_studio",
+    "model": "gemini-2.5-flash",
+    "fallback_model": "gemini-2.5-pro",
+    "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "api_key_env": "GEMINI_API_KEY",
+    "temperature": 0.6,
+    "max_tokens": 4000,
+    "timeout_s": 120
+  },
+  "tts": {
+    "engine": "edge-tts",
+    "voice": "zh-CN-YunxiNeural",
+    "alt_voices": ["zh-CN-XiaoxiaoNeural", "zh-CN-YunyangNeural"],
+    "rate": "+0%",
+    "min_duration_sec": 10,
+    "max_duration_sec": 1500
+  },
+  "drive": {
+    "rclone_remote": "podcastdrive",
+    "remote_path": "PodcastPublisher/audio",
+    "private_backup_remote": "podcastdrive",
+    "private_backup_path": "PodcastPublisher/private-backup",
+    "separate_public_from_private": true
+  }
+}

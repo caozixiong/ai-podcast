@@ -1,0 +1,33 @@
+# ===== 密钥与凭据（绝不出库）=====
+.env
+*.pem
+*.key
+rclone.conf
+rclone/**
+**/rclone.conf
+secrets/
+
+# ===== 音频原始 / 缓存（音频只放 Drive，不出库）=====
+audio/
+*.mp3
+*.wav
+*.m4a
+cache/
+__pycache__/
+*.pyc
+
+# ===== 日志 =====
+logs/
+*.log
+
+# ===== 本地私密数据（data/episodes.json、data/seen.json 仍入库）=====
+data/private/
+data/.lock*
+*.lock
+
+# ===== 依赖 / 系统 =====
+.venv/
+venv/
+node_modules/
+.DS_Store
+Thumbs.db

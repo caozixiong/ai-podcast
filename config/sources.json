@@ -1,0 +1,28 @@
+{
+  "priority_keywords": [
+    "TSV", "硅通孔", "TGV", "玻璃通孔", "Innometric", "Javis",
+    "先进封装", "3D 堆叠", "3D packaging", "CT 无损检测", "X-ray 检测",
+    "SEM", "电子显微镜", "样品制备", "半导体检测", "AI 缺陷检测", "无损检测"
+  ],
+  "sources": [
+    {
+      "name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+      "type": "arxiv",
+      "url": "http://export.arxiv.org/api/query?search_query=all:%22through+silicon+via%22+OR+all:%22glass+via%22+OR+all:%22non-destructive+inspection%22+OR+all:%22advanced+packaging%22+OR+all:%22electron+microscopy%22&start=0&max_results=30&sortBy=submittedDate&sortOrder=descending",
+      "enabled": true
+    },
+    {
+      "name": "Google News RSS: TSV / 封装 / 检测 (中文)",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=TSV+%E5%B0%81%E8%A3%9D+%E6%8E%A2%E6%B5%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+      "enabled": true
+    },
+    {
+      "name": "Google News RSS: Innometric / Javis / TSV (英文)",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Innometric+OR+Javis+TSV+OR+%22through+silicon+via%22&hl=en-US&gl=US&ceid=US:en",
+      "enabled": true
+    }
+  ],
+  "notes": "输入端采集公开新闻/学术摘要(RSS/Atom/arXiv)；不生成输出 Podcast RSS。实施时逐一验证源真实可达，不可假设永远可用。"
+}
