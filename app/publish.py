@@ -53,24 +53,33 @@ def _git(project_dir: str, args: list[str], timeout=300) -> tuple[int, str]:
 
 
 def _push(project_dir: str) -> tuple[bool, str]:
-    token = os.environ.get("GH_TOKEN")
-    if not token:
-        return False, "push 需要 GH_TOKEN 环境变量。"
+    """推送 main。鉴权优先用 `gh auth setup-git` 配的 credential helper（令牌在 keyring，不落盘）；
+    失败再回退到 GH_TOKEN 的 Bearer 一次性头。"""
     rc, out = _git(project_dir, ["remote", "get-url", "origin"])
     if rc != 0:
         _git(project_dir, ["remote", "add", "origin", REPO])
     env = dict(os.environ)
     env.update({"GCM_INTERACTIVE": "Never", "GIT_TERMINAL_PROMPT": "0"})
-    # 令牌只走一次性 Authorization 头；清空 credential helper 避免 GCM GUI 卡登录
-    hdr = "Authorization: *** " + token
+    # 优先：git 已配置的 credential helper（gh keyring）
     p = subprocess.run(
-        ["git", "-c", "credential.helper=",
-         "-c", f"http.https://github.com/.extraHeader={hdr}",
-         "push", "origin", "HEAD:main"],
+        ["git", "push", "origin", "HEAD:main"],
         cwd=project_dir, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
         timeout=240)
+    if p.returncode == 0:
+        return True, p.stdout.decode(errors="replace")
     out2 = p.stdout.decode(errors="replace")
-    return p.returncode == 0, out2
+    # 回退：GH_TOKEN（Bearer 一次性头，令牌不进文件/argv）
+    token = os.environ.get("GH_TOKEN")
+    if token:
+        hdr = "Authorization: *** " + token
+        p2 = subprocess.run(
+            ["git", "-c", "credential.helper=",
+             "-c", f"http.https://github.com/.extraHeader={hdr}",
+             "push", "origin", "HEAD:main"],
+            cwd=project_dir, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            timeout=240)
+        return p2.returncode == 0, p2.stdout.decode(errors="replace")
+    return False, out2 + "\n（push 需要 gh 登录或 GH_TOKEN）"
 
 
 def run_publish(project_dir: str, *, do_push: bool = False) -> dict:

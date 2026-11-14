@@ -3,14 +3,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from app.site import build_site  # noqa
 
-CFG = {"show_name": "无损检测前沿", "subtitle": "测试", "base_path": "/ai-podcast/"}
+CFG = {"show_name": "X射线无损检测与AI图像处理前沿", "subtitle": "测试", "base_path": "/ai-podcast/"}
 
 
 def test_empty_state(tmp_path):
     out = str(tmp_path / "docs")
     build_site([], out, CFG)
     idx = open(os.path.join(out, "index.html"), encoding="utf-8").read()
-    assert "无损检测前沿" in idx
+    assert "X射线无损检测与AI图像处理前沿" in idx
     assert ("筹备中" in idx) or ("还没有" in idx)          # 友好空状态
     assert os.path.exists(os.path.join(out, "assets", "style.css"))
     assert os.path.exists(os.path.join(out, ".nojekyll"))
@@ -23,7 +23,7 @@ def test_populated_episode(tmp_path):
         "episode_id": "ep-2026-01-01", "title": "TSV 测试集", "date": "2026-01-01",
         "items": [{"title": "TSV 检测", "url": "https://example.com/a",
                    "source_name": "X", "published": "2026-01-01"}],
-        "script": "大家好，这里是《无损检测前沿》。今天我们聊 TSV。我们下期见。",
+        "script": "大家好，这里是《X射线无损检测与AI图像处理前沿》。今天我们聊 TSV。我们下期见。",
         "audio": {"preview_url": "https://drive.google.com/file/d/ABC/preview",
                   "share_url": "https://drive.google.com/file/d/ABC/view",
                   "duration_sec": 120},

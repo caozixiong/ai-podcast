@@ -1,4 +1,4 @@
-# 无损检测前沿（AI Podcast Publisher）
+# X射线无损检测与AI图像处理前沿（AI Podcast Publisher）
 
 中文科技播客的自动发布系统：每天从**公开**新闻/论文里采集 X-ray/CT 无损检测、
 半导体 TSV/TGV、Innometric / Javis、电子显微镜、样品制备、AI 科研等资讯，

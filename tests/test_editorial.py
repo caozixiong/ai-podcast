@@ -7,7 +7,7 @@ from app.editorial import _parse_output, write_episode  # noqa
 def test_parse_output_strips_markdown_and_title():
     raw = (
         "### 开场\n"
-        "大家好，这里是《无损检测前沿》。今天我们聊 TSV 为什么重要。\n"
+        "大家好，这里是《X射线无损检测与AI图像处理前沿》。今天我们聊 TSV 为什么重要。\n"
         "**加粗** 也不该出现在正文里。\n"
         '{"title":"TSV 前沿速览"}'
     )
