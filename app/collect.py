@@ -14,7 +14,7 @@ import requests
 from dateutil import parser as dtparser
 
 TIMEOUT = 30
-UA = {"User-Agent": "ai-podcast-collector/0.1 (public-news-ingest)"}
+UA = {"User-Agent": "ai-podcast/1.0 (research; contact: caozixiong@users.noreply.github.com)"}
 
 
 def _norm_id(*parts: str) -> str:
