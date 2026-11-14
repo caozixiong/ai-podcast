@@ -114,7 +114,7 @@ def build_index(episodes: list[dict], cfg: dict) -> str:
             '<div class="empty"><div class="empty-ico">📡</div>'
             '<h2>节目正在筹备中</h2>'
             '<p>我们每天从公开新闻与论文里挑选 X-ray/CT 无损检测、TSV/TGV、'
-            '半导体检测与 AI 科研的好内容。第一集上线后会出现在这里。</p>'
+            '半导体检测与 AI 图像处理的好内容。第一集上线后会出现在这里。</p>'
             '<p class="hint">（当前还没有已发布的节目 —— 这是真实空状态，非占位内容）</p></div>'
         )
     return f"""<!doctype html>
@@ -129,7 +129,7 @@ def build_index(episodes: list[dict], cfg: dict) -> str:
   <header class="hero">
     <h1>{show}</h1>
     <p class="sub">{sub}</p>
-    <div><span class="tag">X-ray / CT 无损检测</span><span class="tag">TSV / TGV</span><span class="tag">半导体检测</span><span class="tag">AI 科研</span></div>
+    <div><span class="tag">X-ray / CT 无损检测</span><span class="tag">TSV / TGV</span><span class="tag">半导体检测</span><span class="tag">AI 图像处理</span></div>
   </header>
   <div class="search"><input id="search" type="search" placeholder="搜索节目（标题 / 关键词，如 TSV、Innometric）" aria-label="搜索节目"></div>
   {list_html}
