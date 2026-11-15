@@ -83,22 +83,52 @@ ol.src{padding-left:20px}ol.src li{margin:8px 0;word-break:break-word}
 .ai-note{background:var(--pill);border:1px solid var(--border);border-radius:12px;
   padding:12px 14px;color:var(--muted);font-size:.85rem;margin-top:20px}
 footer{color:var(--muted);font-size:.8rem;margin-top:40px;text-align:center}
+#pager{display:flex;align-items:center;justify-content:center;gap:14px;margin:22px 0 6px;flex-wrap:wrap}
+.pgbtn{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:10px;padding:8px 16px;font-size:.95rem;cursor:pointer;font-family:inherit}
+.pgbtn:hover{border-color:var(--accent);color:var(--accent)}
+#pageinfo{color:var(--muted);font-size:.85rem}
+.noresult{color:var(--muted);text-align:center;padding:24px}
 @media(max-width:520px){h1{font-size:1.6rem}.wrap{padding:18px 14px 48px}}
 """
 
 JS = """
 (function(){
+  var list=document.getElementById('list');
+  if(!list) return;
+  var items=Array.prototype.slice.call(list.querySelectorAll('.ep'));
+  var PER=5, page=0;
+  var prev=document.getElementById('prev'), next=document.getElementById('next');
+  var info=document.getElementById('pageinfo'), pager=document.getElementById('pager');
+  var nores=document.getElementById('noresult');
+  var pages=Math.max(1, Math.ceil(items.length/PER));
+  function applyPage(){
+    items.forEach(function(el,i){ el.style.display=(i>=page*PER && i<page*PER+PER)?'':'none'; });
+    info.textContent='第 '+(page+1)+' / '+pages+' 页 · 每页 '+PER+' 篇';
+    prev.style.display=(page>0)?'':'none';
+    next.style.display=(page<pages-1)?'':'none';
+    if(pager) pager.style.display='';
+  }
+  if(prev) prev.onclick=function(){ if(page>0){page--;applyPage();} };
+  if(next) next.onclick=function(){ if(page<pages-1){page++;applyPage();} };
   var box=document.getElementById('search');
-  if(!box) return;
-  var inp=box.querySelector('input');
-  var items=Array.prototype.slice.call(document.querySelectorAll('.ep'));
-  inp.addEventListener('input',function(){
-    var q=inp.value.trim().toLowerCase();
-    items.forEach(function(el){
-      var hay=(el.getAttribute('data-search')||'').toLowerCase();
-      el.style.display=(!q||hay.indexOf(q)>=0)?'':'none';
+  if(box){
+    var inp=box.querySelector('input');
+    inp.addEventListener('input',function(){
+      var q=inp.value.trim().toLowerCase();
+      if(q){
+        var hit=0;
+        items.forEach(function(el){
+          var ok=(el.getAttribute('data-search')||'').toLowerCase().indexOf(q)>=0;
+          el.style.display=ok?'':'none'; if(ok)hit++;
+        });
+        if(pager) pager.style.display='none';
+        if(nores) nores.style.display=hit?'none':'';
+      } else {
+        page=0; if(nores) nores.style.display='none'; applyPage();
+      }
     });
-  });
+  }
+  applyPage();
 })();
 """
 
@@ -108,7 +138,13 @@ def build_index(episodes: list[dict], cfg: dict) -> str:
     sub = _esc(cfg.get("subtitle", ""))
     if episodes:
         cards = "\n".join(_episode_card(ep) for ep in episodes)
-        list_html = f'<div id="list">{cards}</div>'
+        list_html = (
+            f'<div id="list">{cards}</div>'
+            '<div id="pager"><button id="prev" class="pgbtn">← 上一页</button>'
+            '<span id="pageinfo"></span>'
+            '<button id="next" class="pgbtn">下一页 →</button></div>'
+            '<p id="noresult" class="noresult" style="display:none">没有找到匹配的节目。</p>'
+        )
     else:
         list_html = (
             '<div class="empty"><div class="empty-ico">📡</div>'

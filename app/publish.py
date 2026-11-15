@@ -169,9 +169,12 @@ def run_publish(project_dir: str, *, do_push: bool = False) -> dict:
     else:
         report["stages"]["drive"] = "skipped（音频在本仓库 audio/，随 Pages 发布）"
 
-    # 5) 建网站（总是执行，空/文字版也要可看）— 输出到仓库根目录（Pages 源=根）
+    # 5) 建网站（总是执行，空/文字版也要可看）— 含【全部历史节目】+ 本集，最新在前；输出到仓库根目录（Pages 源=根）
     site_out = project_dir
-    build_site([ep.to_dict()], site_out, show)
+    prev = [e for e in store.load_episodes() if e.episode_id != ep.episode_id]
+    all_eps = [ep] + prev
+    all_eps.sort(key=lambda e: (e.date or e.episode_id), reverse=True)
+    build_site([e.to_dict() for e in all_eps], site_out, show)
     ep.status = "site_built"
     report["stages"]["site"] = "ok"
 

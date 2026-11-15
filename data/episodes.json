@@ -1,5 +1,304 @@
 [
   {
+    "episode_id": "ep-2026-11-15",
+    "title": "全息显微与AI：从玻璃通孔到电池衰减的无损洞察",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "id": "548a5d44fe09e556",
+        "title": "Nondestructive 3D Metrology of Through-Glass Via Geometry and Internal Wall Texture Using Holotomography",
+        "url": "https://arxiv.org/abs/2611.02225v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-01",
+        "summary": "Through-glass vias (TGVs) are increasingly important for semiconductor packaging, yet their internal geometry and wall texture remain difficult to characterize nondestructively. Here, we use holotomography (HT) to inspect the three-dimensional (3D) geometry and internal wall texture of intact, unfilled TGVs before metallization. HT reconstructs the refractive index (RI) distribution of the glass and via. Maps of RI and spatially filtered RI then localize the internal boundary. Geometric fitting quantifies via dimensions and taper, while spatial filtering separates slowly varying wall form from",
+        "relevance": 2
+      },
+      {
+        "id": "444388f6063e6740",
+        "title": "Lithium redistribution and electrode degradation in commercial NMC/Graphite and LCO/Graphite cells under high-rate cycling conditions",
+        "url": "https://arxiv.org/abs/2611.15818v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-11",
+        "summary": "Fast charging accelerates degradation in lithium-ion batteries, but the effects of cathode chemistry and charging protocol remain difficult to separate. Here, commercial NMC811/graphite (200 mAh) and LCO/graphite (45 mAh) coin cells were cycled for 100 cycles at 0.3C, 1C, 2C, and 3C, followed by scanning electron microscopy (SEM), X-ray diffraction (XRD), and nuclear reaction analysis (NRA). Both cell types exhibited a transition in cycling stability between 1C and 2C. NMC811/graphite retained approximately 99.7% of its initial discharge capacity at 0.3C and 1C, decreasing to 72.3% at 2C and 6",
+        "relevance": 1
+      },
+      {
+        "id": "3d9e02c353408e9a",
+        "title": "Nanostructuring Semiconductor Surfaces Using Self-Assembled Metal Nanoparticles for Optoelectronic Applications",
+        "url": "https://arxiv.org/abs/2611.14292v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-10",
+        "summary": "Semiconductor nanostructures are key light-management elements because their geometry can strengthen light-matter interaction, suppress reflection, and enhance optical coupling. Yet their adoption across material platforms is constrained by lithography, multistep pattern transfer, persistent masks, and material-specific etching. Here, we introduce a lithography-free two-step strategy in which thermally evaporated self-assembled Ga nanoparticles act as self-consuming masks during Ar inductively coupled plasma reactive-ion etching. Correlated transmission electron microscopy on GaAs reveals the ",
+        "relevance": 1
+      },
+      {
+        "id": "c264b12a78165482",
+        "title": "Statistical Analysis of the Structure from Noise Phenomenon in Generalized Procrustes Problems",
+        "url": "https://arxiv.org/abs/2611.13546v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-10",
+        "summary": "In cryo-electron microscopy (cryo-EM), observations are highly noisy, and scientists often use reference templates to guide matching, alignment, and averaging to reconstruct the molecular structure. However, these procedures can produce an output resembling the template even when the observations contain only noise, a phenomenon known as Einstein from noise (EfN). This phenomenon has attracted attention in statistics, where simplified observation models involving group actions have been studied to understand the resulting model bias. Characterizing the bias in the full cryo-EM pipeline remains",
+        "relevance": 1
+      },
+      {
+        "id": "a27b570ad220b97a",
+        "title": "先进封装扩产潮，还差哪些？ - 潮起网",
+        "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE8tSkUzRC1SUjBNakZESV9zdXg1MlQ5VFdRYkw0MVBVclBaTmdRSFUyeHBDMUVWUERsaE5aeHF6V2tRX0hoT1hhOGpPQVRMZzF1OUhmeUxCemV1c2ZHUGItTmZWdw?oc=5",
+        "source_name": "Google News RSS: TSV / 封装 / 检测 (中文)",
+        "published": "2026-11-08",
+        "summary": "先进封装扩产潮，还差哪些？ &nbsp;&nbsp; 潮起网",
+        "relevance": 1
+      },
+      {
+        "id": "e176f5908e740a4e",
+        "title": "Bezier-GP: Bezier-Surface-Based Gaussian Process for Chips-on-Wafer Warpage Modeling",
+        "url": "https://arxiv.org/abs/2611.04280v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-03",
+        "summary": "As the semiconductor industry transitions to the post-Moore paradigm, wafer warpage has become a critical quality issue in advanced packaging; particularly for 3D stacking and high-bandwidth memory manufacturing where die-level deformation can affect bonding quality, interconnect reliability, and yield. However, direct high-throughput measurement of individual chip warpage remains difficult in mass-production environments, while existing wafer-level metrology systems routinely provide dense 3D shape data at the wafer scale. This paper proposes a Bezier-surface-based Gaussian Process---known as",
+        "relevance": 1
+      },
+      {
+        "id": "5b1754f79d6dc810",
+        "title": "Growth and morphology of core-shell nanowires incorporating dissimilar hexagonal semiconductors: the case of InAs-ZnTe",
+        "url": "https://arxiv.org/abs/2610.39770v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-10-29",
+        "summary": "Core-shell nanowires incorporating semiconductors from two groups, III-V for the core and II-VI for the shell, have been grown by molecular beam epitaxy in two dedicated chambers connected under ultra-high vacuum, and studied by electron microscopy. During the growth of the shell, the wurtzite structure of the core is replicated in the shell, without any creation of defects. This is true for a wide range of shell thickness, from about one monolayer, up to 25 nm thanks to the good lattice match between the InAs material of the core and the ZnTe material of the shell. While (1 100) m-facets and ",
+        "relevance": 1
+      },
+      {
+        "id": "2d9fa03108b313c1",
+        "title": "Converting a superseded Raith electron beam pattern generator into an unattended Critical Dimension SEM",
+        "url": "https://arxiv.org/abs/2610.38203v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-10-28",
+        "summary": "Design-based metrology of academic electron beam lithography (EBL) is bottlenecked by low-throughput imaging. For integrated photonics, where nanometre-scale structural variation can significantly limit device performance, scanning electron microscopy (SEM) is the standard tool for critical dimension (CD) metrology, revealing the structure of devices that is not available from optical measurements. Manual SEM imaging on a wafer-scale is time-intensive, can feature operator-dependent distortions, and yields too few data to reliably close the nanofabrication calibration loop. The following detai",
+        "relevance": 1
+      },
+      {
+        "id": "fd8518ac7c9c130b",
+        "title": "Learning Multiscale Dynamics of Nanoparticle Self-Assembly",
+        "url": "https://arxiv.org/abs/2610.36498v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-10-27",
+        "summary": "Nanoparticle self-assembly offers a powerful route to programmable functional materials, but its dynamics remain difficult to understand because they arise from multiscale, many-body, and environment-dependent interactions. Liquid-phase transmission electron microscopy (LPTEM) enables real-time observation of these dynamics, yet extracting the underlying physical laws from highly stochastic trajectories remains a significant challenge. Here we develop a physics-informed, time-varying autoregressive framework that learns multiscale self-assembly dynamics directly from LPTEM videos. Continuous E",
+        "relevance": 1
+      },
+      {
+        "id": "a3b7833a6450f794",
+        "title": "Direct imaging of plasmonic coupling between gold nanoparticles and one-dimensional van der Waals materials",
+        "url": "https://arxiv.org/abs/2611.16132v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-12",
+        "summary": "Hybrids of plasmonic metals and van der Waals (vdW) materials combine electromagnetic field enhancement with the electronic properties of the vdW component, but the studies reported so far concern two-dimensional layers, and the near field at the metal/vdW interface is generally inferred from far-field measurements. Here we report the plasmonic coupling between Au nanoparticles and a one-dimensional (1D) vdW material, NbS3, and measure the near field at the Au-NbS3 contact directly. NbS3 nanowires and nanoribbons were grown by salt-assisted vapor-liquid-solid growth on graphene-covered TEM gri",
+        "relevance": 0
+      },
+      {
+        "id": "0c71d5aed6dd5177",
+        "title": "Depth determination from core-loss 4D-STEM",
+        "url": "https://arxiv.org/abs/2611.15037v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-11",
+        "summary": "Moving beyond specimen-projected micrographs in scanning transmission electron microscopy to determine the three-dimensional distribution of dopants is of vital importance for materials characterization and development. We present an approach for dopant depth determination using momentum-resolved core-loss four-dimensional scanning transmission electron microscopy data. Within the Born approximation, Fourier transformation over probe position reveals fringes whose frequency encodes the dopant's distance from the focal plane. Two principal challenges arise in extending this approach to realisti",
+        "relevance": 0
+      },
+      {
+        "id": "bda0d48664cc059c",
+        "title": "From Growth to Devices: Oxygen-Controlled Superconductivity in BSCCO Thin Films",
+        "url": "https://arxiv.org/abs/2611.14231v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-10",
+        "summary": "Realizing device-compatible high-$T_c$ superconductors requires simultaneous control of oxygen stoichiometry and tolerance to nanofabrication. Here, we investigate sputtered Bi$_2$Sr$_2$Ca$_{n-1}$Cu$_n$O$_{2n+4+δ}$ (BSCCO) thin films and establish a direct link between annealing conditions, oxygen incorporation, and superconducting transport. By independently varying the annealing temperature and duration, we identify an optimal annealing condition of $860\\,^{\\circ}$C for 3\\,h, which yields the highest superconducting transition temperature and the narrowest transition among the investigated s",
+        "relevance": 0
+      },
+      {
+        "id": "bdccfed783d74453",
+        "title": "Lightweight Deep Learning Framework for Astrocyte-Centric 3D Reconstruction across Normal and Stress-associated Ultrastructural States",
+        "url": "https://arxiv.org/abs/2611.13581v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-10",
+        "summary": "The morphology of astrocytes is closely associated with their ability to support and modulate neural circuit functions; however, its reconstruction from volume electron microscopy (vEM) data remains labor-intensive and computationally resource-intensive, placing substantial barriers on its broader adoption and scalability despite the high spatial resolution of vEM. We present AstroSeg-vEM, a lightweight, astrocyte-centric framework for morphology-preserving astrocyte segmentation, 3D reconstruction, and quantitative morphological analysis in vEM images. AstroSeg-vEM combines transformer-based ",
+        "relevance": 0
+      },
+      {
+        "id": "8aaa20024f76af1a",
+        "title": "A Geometry-Guided Feature-Space Framework for Interpretable Unsupervised 4D-STEM Analysis of Complex Multiphase Materials",
+        "url": "https://arxiv.org/abs/2611.10853v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-07",
+        "summary": "Rapid, high-fidelity analysis of four-dimensional scanning transmission electron microscopy (4D-STEM) datasets from heterogeneous materials remains challenging because coexisting phases, orientation variants, local strain gradients, and intrinsic TEM thin-foil effects produce complex, overlapping diffraction signatures. Here, we present a machine-learning (ML) framework that combines physics-informed geometric descriptors with weighted high-dimensional embeddings to identify latent structural patterns with minimal prior knowledge. By constructing a regularized descriptor space before embedding",
+        "relevance": 0
+      },
+      {
+        "id": "ec2fcc4f4bf982a5",
+        "title": "Conformationally frustrated epitaxy at heteromolecular interface",
+        "url": "https://arxiv.org/abs/2611.08851v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-06",
+        "summary": "Precise control of molecular heteroepitaxy offers a route to multilayer architectures with well-defined interfaces. However, the role of intramolecular flexibility in epitaxial matching remains insufficiently understood. Here, we investigate the heteroepitaxy of intact 1,3,5-tris(4-carboxyphenyl)benzene (BTB) on a molecular $δ$-layer composed of fully deprotonated BTB molecules on Ag(111). Combining scanning tunneling microscopy, low-energy electron microscopy and diffraction, X-ray photoelectron spectroscopy, and density functional theory, we identify the key interactions controlling molecula",
+        "relevance": 0
+      },
+      {
+        "id": "39af83951c7e40b5",
+        "title": "Triaxial $μ$-PIC for resolving Multi-Hit Ambiguity",
+        "url": "https://arxiv.org/abs/2611.07638v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-05",
+        "summary": "The micro pixel chamber ($μ$-PIC), a type of micro-pattern gaseous detectors (MPGD), features pixel electrodes structured similarly to a sliced proportional counter. Conventionally, $μ$-PIC electrodes are connected to orthogonal strip electrodes to reduce the number of readout circuits; however, this configuration introduces multi-hit ambiguity when tracing winding tracks or during high-rate operations. A well-known solution to this problem is the adoption of an additional readout axis. To this end, we designed a new electrode structure using Garfield++ simulations and fabricated a triaxial $μ",
+        "relevance": 0
+      },
+      {
+        "id": "71c5457ce100fd4b",
+        "title": "Quantitatively Probing the Tilt Angle Failures in 4D-STEM Polarisation Analysis",
+        "url": "https://arxiv.org/abs/2611.06274v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-04",
+        "summary": "Four-dimensional scanning transmission electron microscopy (4D-STEM) is increasingly used to map polarisation in ferroic textures such as domain walls, vortices, merons and skyrmions. These textures are accompanied by local strain, lattice rotation and misorientation, which also modulate the diffraction features used to infer polar order. Even small deviations from the zone axis can therefore produce contrast that is indistinguishable from a polarisation signal. Here we quantify the tilt sensitivity of two polarisation-sensitive signals, diffraction disc intensity and Kikuchi band intensity, i",
+        "relevance": 0
+      },
+      {
+        "id": "1d91b6f1fb7dcd8c",
+        "title": "Empirical Bayes Flow Matching for Continuous Cryo-EM Heterogeneity",
+        "url": "https://arxiv.org/abs/2611.05202v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-03",
+        "summary": "We address the problem of learning generative priors over high-dimensional latent variables from indirect, noisy observations, with a focus on continuous heterogeneity in cryo-electron microscopy (cryo-EM). In this setting, 3D atomic structures $x \\in \\mathbb{R}^{3N_a}$ are never directly observed and must be inferred from 2D projection images $y$ generated by a complex, non-linear forward operator. We propose Empirical Bayes Flow Matching (EB-FM), a method that learns a flow matching prior $p_θ(x)$ directly from observations using a Monte Carlo stochastic approximation Expectation-Maximizatio",
+        "relevance": 0
+      },
+      {
+        "id": "0896de9ada995ed7",
+        "title": "Effect of molybdenum content on phase transformations during continuous heating of metastable β Ti-Mo alloys",
+        "url": "https://arxiv.org/abs/2611.04858v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-03",
+        "summary": "Three metastable $β$ titanium alloys with different molybdenum contents, Ti-12Mo, Ti-15Mo and Ti-18Mo (wt.%), were investigated to determine the influence of $β$-phase stability on phase transformations during continuous heating. Electrical resistance measurement, dilatometry and differential scanning calorimetry were performed during linear heating at 5 °C/min up to 750 °C. The in-situ experiments were complemented by electron microscopy observations of specimens heated to selected temperatures and subsequently water-quenched. All alloys exhibited a sequence involving partial dissolution of a",
+        "relevance": 0
+      },
+      {
+        "id": "bcddd62d96282176",
+        "title": "Universal Free-Electron-Sideband Control",
+        "url": "https://arxiv.org/abs/2611.04432v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-03",
+        "summary": "Advances in free-electron quantum optics are establishing free electrons as a versatile quantum resource. Photon-induced near-field electron microscopy (PINEM) interactions and free drift provide elementary operations for shaping the longitudinal electron wavefunction, yet their full control capabilities remain unexplored. Here, we prove that a finite sequence of alternating monochromatic PINEM interactions and free drifts can approximate any prescribed inner-product-preserving map from a finite-dimensional input subspace into the full ideal electron-sideband Hilbert space to arbitrary accurac",
+        "relevance": 0
+      },
+      {
+        "id": "cb7de6e16f43d736",
+        "title": "Single-pass stochastic cooling for electron microscopy",
+        "url": "https://arxiv.org/abs/2611.03581v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-02",
+        "summary": "Scientific applications of free electrons, such as in electron microscopes and particle accelerators, are limited by the brightness of available electron sources. Accelerators can use phase space cooling to surpass these source limitations, whereas electron microscopes can only rely on particle filtering to increase beam coherence at the cost of reduced brightness. We show that strong electron-light coupling in nanophotonic structures makes it possible to achieve single-pass stochastic cooling inside an electron microscope for a lossless improvement of longitudinal emittance. This approach is ",
+        "relevance": 0
+      },
+      {
+        "id": "423d93ca5bef1f42",
+        "title": "Bg-Mix: On Using Image Backgrounds for Data Augmentation in Electron Microscopy Images",
+        "url": "https://arxiv.org/abs/2611.03455v2",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-02",
+        "summary": "Electron microscopy (EM) serves as a cornerstone in virology enabling the visualization of viral particles and is widely used in research, diagnostics and morphological characterization of pathogens. Computer-assisted image analysis can help facilitate and speed up this labor-intensive method, however, typical EM virus datasets are small and sparsely labeled, resulting in a lack of readily available deep learning models due to training limitations. To overcome data shortages and leverage content-rich, diverse sample backgrounds, we employed background-based data augmentation. To this end, we p",
+        "relevance": 0
+      },
+      {
+        "id": "b5e93006177e67b0",
+        "title": "A Topology-Based Approach to Representative Volume Element Assessment in Solid Oxide Cell Anodes Using Large Volume Tomography and Persistent Homology",
+        "url": "https://arxiv.org/abs/2611.03176v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-02",
+        "summary": "Determining the representative volume element is essential for establishing statistically meaningful microstructure-property relationships. Conventional approaches rely on the convergence of selected geometric descriptors, which may yield different estimates of the representative volume. Here, we propose a topology-based framework for assessing the representative scale of a nickel-yttria-stabilized zirconia solid oxide cell anode reconstructed using plasma focused ion beam-scanning electron microscopy (121.8 um x 83.97 um x 45.99 um). Persistent homology was used to characterize the pore netwo",
+        "relevance": 0
+      },
+      {
+        "id": "a6822e24b8c07643",
+        "title": "Observation of Superconductivity in a Cu-Rich High-Entropy Alloy",
+        "url": "https://arxiv.org/abs/2611.02469v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-02",
+        "summary": "A Cu-rich multielement alloy containing Zn, Sn, Ag, and Au was synthesized and studied to explore its structural and physical properties. The alloy was prepared by vacuum-sealed melting of high-purity elements followed by rapid quenching in cold water. Powder X-ray diffraction confirms that the alloy crystallizes in a face-centered cubic (fcc) Cu-type structure. Field-emission scanning electron microscopy and energy-dispersive X-ray spectroscopy (EDS) mapping show uniform distribution of all constituent elements. Magnetic measurements indicate the appearance of a superconducting transition at ",
+        "relevance": 0
+      },
+      {
+        "id": "8db63ad340a1a092",
+        "title": "Learning from high-resolution 2D images to reconstruct 3D microstructures",
+        "url": "https://arxiv.org/abs/2611.02204v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-01",
+        "summary": "High-resolution three-dimensional (3D) microstructure characterization remains difficult to undertake at scale because volumetric imaging at the required spatial resolution is expensive, time-consuming or destructive. In many settings, however, fine-resolution two-dimensional (2D) imaging and lower-resolution volumetric measurements are both readily available. We introduce a Privileged Cross-modal Relational Distillation (PCRD) framework that leverages fine-resolution 2D observations during training to improve specimen-specific 3D reconstruction from lower-resolution volumetric imaging alone. ",
+        "relevance": 0
+      },
+      {
+        "id": "0102785cb522f459",
+        "title": "Structural and Optical Properties of PVP-Modified ZnS Nanoparticles for Photocatalytic Dye Degradation",
+        "url": "https://arxiv.org/abs/2611.01660v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-11-01",
+        "summary": "Pristine and PVP-modified ZnS nanoparticles were investigated to examine how PVP addition affects structural, surface, optical, and methylene blue (MB) decolorization properties. X-ray diffraction confirmed cubic zinc-blende ZnS in all samples, with apparent Scherrer coherent-domain sizes of 3.10-3.31 nm. Electron microscopy revealed agglomeration, while HRTEM and electron diffraction confirmed locally crystalline regions in S1 and S4. The estimated direct Tauc gap decreased from 3.69 eV for S1 to 3.58 eV for S4. Between 100 and 300 K, the principal TO-like Raman band softened on heating, whil",
+        "relevance": 0
+      },
+      {
+        "id": "17345d82e996d4ba",
+        "title": "Thermal Stability and Structural Relaxation Kinetics of Commercially Pure Titanium",
+        "url": "https://arxiv.org/abs/2610.40737v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-10-29",
+        "summary": "This work explores the structural relaxation of cryorolled commercially pure titanium subjected to subsequent annealing.Nanostructured specimens with an average grain size of ~50 nm were produced by plastic deformation via cryogenic rolling at 100 K to a true strain of 1.20, followed by annealing at 425 K, 525 K, 725 K, and 945 K. Microstructural evolution was examined using electron microscopy and X-ray diffraction. Cryogenic rolling was found to induce pronounced grain fragmentation, with coherent scattering regions (CSRs) of 30-50 nm dominating the substructure. X-ray diffraction analysis r",
+        "relevance": 0
+      },
+      {
+        "id": "3dfa09a6e815f5e9",
+        "title": "Exceptional Superconducting Interfaces between Graphene and Atomic Chains in A15-MoRe",
+        "url": "https://arxiv.org/abs/2610.39694v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-10-29",
+        "summary": "Realizing highly transparent and magnetic-field-resilient superconducting contacts is a critical bottleneck for the advancement of two-dimensional (2D) quantum devices. Molybdenum-rhenium (MoRe) alloys have been empirically favored as they uniquely yield ballistic, highly transparent contacts to graphene that survive in high-magnetic-field regimes; however, the microscopic origin of this anomalous transparency has remained a long-standing puzzle. Here, we resolve this paradox by revealing that pristine graphene/MoRe interfaces are governed by the classical A15 superconducting phase. Combining ",
+        "relevance": 0
+      },
+      {
+        "id": "930ead030df5d948",
+        "title": "Near-Field Engineering of Silica-Shelled Plasmonic Nanoparticles toward Enhanced Near-Infrared Fluorescence",
+        "url": "https://arxiv.org/abs/2610.39525v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-10-29",
+        "summary": "Near-infrared (NIR) fluorescent molecules often suffer from low quantum yields, limiting their applications in sensing and imaging. Their fluorescence can be enhanced by coupling with plasmonic nanoparticles exhibiting resonances in the same spectral region. However, this approach requires precise nanoscale control over the plasmonic near-field. Here, we combine scanning transmission electron microscopy with electron energy-loss spectroscopy (STEM-EELS) and boundary element electromagnetic simulations to engineer silica-coated anisotropic plasmonic nanoparticles. We synthesised three types of ",
+        "relevance": 0
+      },
+      {
+        "id": "522f1068c7febcd1",
+        "title": "Superconductivity and local stacking polymorphism in LaNiGa2 thin films",
+        "url": "https://arxiv.org/abs/2610.37366v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-10-27",
+        "summary": "LaNiGa2 has attracted considerable interest as a candidate unconventional superconductor, particularly due to its reported time-reversal symmetry breaking and nonsymmorphic crystal structure hosting symmetry-protected electronic band degeneracies. Here, we report the growth and characterization of superconducting LaNiGa2 thin films on MgO substrates by magnetron sputtering. X-ray diffraction reveals highly crystalline, (010)-oriented films with well-defined in-plane alignment and rotational twinning. Electrical transport measurements establish superconductivity with a transition temperature of",
+        "relevance": 0
+      },
+      {
+        "id": "5eb9a1a79d0a876d",
+        "title": "Prussian blue and Prussian white thin-film electrodes: Single-step electrodeposition for anode and cathode applications",
+        "url": "https://arxiv.org/abs/2610.37023v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "published": "2026-10-27",
+        "summary": "This study examines how deposition potential influences the composition and nanoscale structure of Prussian Blue (PB)/Prussian White (PW)-family films, providing an experimental basis for assessing their proposed functions. Films were grown directly on Au/Cr/Si in a single potentiostatic step from a common aqueous bath at $-0.20$ to $+0.40$\\,V versus a saturated calomel electrode, with a fixed deposition charge of 10\\,mC. Electron microscopy, elemental analysis, X-ray photoelectron spectroscopy, and Raman spectroscopy revealed potential-dependent chemistry and nonmonotonic morphology. EDS indi",
+        "relevance": 0
+      }
+    ],
+    "script": "大家好，这里是《X射线无损检测与AI图像处理前沿》。今天咱们聊点硬核的，看看近期在无损检测和显微成像领域有哪些新动静。首先，半导体封装里的玻璃通孔一直是检测难点，据 arXiv: TSV / 封装 / 无损检测 / 显微 的报道，有团队利用全息断层扫描技术，在金属化之前就能无损地看清通孔的三维几何形状和内壁纹理。这招很妙，它通过重建折射率分布来定位内部边界，不仅能量化尺寸和锥度，还能把缓慢变化的壁面形态分离出来，这对保证封装良率太关键了。\n\n说到电池，快充带来的衰减问题一直困扰着工程师。同样据该领域公开资料，研究人员对比了两种主流正极材料在高速率循环下的表现，结合扫描电镜、X射线衍射和核反应分析，发现两种电池在特定倍率之间都存在稳定性转折。这提醒我们，不同化学体系对充电协议的敏感度差异很大，不能一概而论。\n\n在纳米制造方面，光刻虽然强大但成本高且步骤繁琐。据 arXiv 相关报道，一种无光刻的两步策略引起了关注：利用热蒸发的自组装镓纳米颗粒作为“自消耗掩模”，在等离子体刻蚀中直接形成半导体表面纳米结构。这种方法省去了复杂的图案转移和掩模，对于光电器件的光管理应用来说，是个极具潜力的低成本替代方案。\n\n不过，数据越多，陷阱也可能越多。在冷冻电镜领域，有个叫“从噪声中产生爱因斯坦”的现象，意思是如果背景噪音太大，算法可能会强行拟合出参考模板的样子，哪怕数据里全是噪点。据统计学家分析，这种模型偏差在复杂管线中很难完全消除，所以我们在用AI做结构重建时，必须时刻警惕这种虚假的相关性。\n\n产业界也在忙碌，据潮起网报道，先进封装正处于扩产潮中，但产能瓶颈依然存在。与此同时，晶圆翘曲成了3D堆叠和高带宽内存制造的大敌。针对这一痛点，有研究提出了一种基于贝塞尔曲面的高斯过程模型，利用晶圆级密集三维形状数据，来预测单颗芯片的翘曲情况。这比直接测量每一颗芯片要高效得多，非常适合量产环境。\n\n在材料生长领域，InAs和ZnTe这两种不同族系的半导体竟然能完美共格生长。据电子显微镜观察，核心层的纤锌矿结构在壳层中被完美复制，没有产生缺陷，这得益于两者良好的晶格匹配。这种核壳纳米线的生长机制，为设计新型多功能半导体器件提供了新思路。\n\n检测效率也是大家关心的。据 arXiv 报道，有团队改造了一台旧的电子束图案发生器，将其变成了无人值守的关键尺寸扫描电镜。这解决了传统SEM人工操作耗时且存在操作员依赖性的问题，对于纳米光子学中的校准闭环至关重要。\n\nAI在理解复杂动态方面也在发力。比如，通过物理信息神经网络，直接从液相透射电镜视频中学习纳米颗粒自组装的多尺度动力学。还有在4D-STEM分析中，利用几何引导的特征空间框架，从复杂的衍射信号中提取潜在的结构模式，即使材料是多相且存在应变梯度的，也能实现可解释的无监督分析。\n\n另外，关于4D-STEM的极化分析，研究人员量化了样品倾斜角度对信号的影响。因为微小的倾斜就能产生类似极化信号的对比度，所以搞清楚这种“假信号”的来源，对于准确映射铁电纹理中的畴壁和涡旋结构非常重要。\n\n在冷冻电镜的异质性分析上，一种名为经验贝叶斯流匹配的新方法出现了，它直接从含噪的二维投影图像中学习生成先验，解决了三维原子结构无法直接观测的问题。\n\n最后，还有一些有趣的材料学研究，比如铜富集高熵合金中观察到的超导性，以及通过STEM-EELS工程化设计硅壳等离子体纳米颗粒以增强近红外荧光。这些工作都展示了微观结构对宏观性能的深刻影响。\n\n总之，无论是通过全息技术看玻璃通孔，还是用AI从噪声中提炼真实结构，亦或是优化电池和封装工艺，核心都是要在无损或微损的前提下，获取更精准、更高效的微观信息。希望这些资讯能给大家的工作带来一点启发。我们下期见",
+    "audio": {
+      "path": "C:\\Projects\\ai-podcast\\audio\\ep-2026-11-15.mp3",
+      "duration_sec": 299.04,
+      "size_bytes": 1794240,
+      "engine": "edge-tts"
+    },
+    "status": "pushed",
+    "history": [],
+    "commit_sha": "c71129a6efe0383fc99b755512c1ff804256ad9e",
+    "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-15.html",
+    "created_at": "2026-11-15T08:31:19.865713-05:00",
+    "published_at": "2026-11-15T08:31:51.349138-05:00"
+  },
+  {
     "episode_id": "ep-2026-11-14",
     "title": "先进封装检测：从混合键合到硅光测试的产业全景",
     "date": "2026-11-14",

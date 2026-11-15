@@ -38,4 +38,9 @@ ol.src{padding-left:20px}ol.src li{margin:8px 0;word-break:break-word}
 .ai-note{background:var(--pill);border:1px solid var(--border);border-radius:12px;
   padding:12px 14px;color:var(--muted);font-size:.85rem;margin-top:20px}
 footer{color:var(--muted);font-size:.8rem;margin-top:40px;text-align:center}
+#pager{display:flex;align-items:center;justify-content:center;gap:14px;margin:22px 0 6px;flex-wrap:wrap}
+.pgbtn{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:10px;padding:8px 16px;font-size:.95rem;cursor:pointer;font-family:inherit}
+.pgbtn:hover{border-color:var(--accent);color:var(--accent)}
+#pageinfo{color:var(--muted);font-size:.85rem}
+.noresult{color:var(--muted);text-align:center;padding:24px}
 @media(max-width:520px){h1{font-size:1.6rem}.wrap{padding:18px 14px 48px}}

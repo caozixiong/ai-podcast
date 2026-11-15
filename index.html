@@ -24,22 +24,59 @@
         <a class="btn play" href="episodes/ep-2026-11-15.html">▶ 收听</a>
         <a class="link" href="episodes/ep-2026-11-15.html">逐字稿与来源</a>
       </div>
-    </article></div>
+    </article>
+
+    <article class="ep" data-search="先进封装检测：从混合键合到硅光测试的产业全景 CAGR9.8%：混合键合空洞检测设备，先进封装良率管控的核心量测装备 - 财富号 · 先进封装概念股有哪些?台美股先进封装投资一览| EBC金融集团 - EB…">
+      <div class="ep-head">
+        <h3><a href="episodes/ep-2026-11-14.html">先进封装检测：从混合键合到硅光测试的产业全景</a></h3>
+        <span class="meta">2026-11-14 · 6:39</span>
+      </div>
+      <p class="ep-sum">CAGR9.8%：混合键合空洞检测设备，先进封装良率管控的核心量测装备 - 财富号 · 先进封装概念股有哪些?台美股先进封装投资一览| EBC金融集团 - EBC Financial Group · 先进封装扩产潮，还差哪些？ - QQ News · 苏大维格(300331.SZ)：在先进封装检测领域的布局尚未实现量产…</p>
+      <div class="ep-actions">
+        <a class="btn play" href="episodes/ep-2026-11-14.html">▶ 收听</a>
+        <a class="link" href="episodes/ep-2026-11-14.html">逐字稿与来源</a>
+      </div>
+    </article></div><div id="pager"><button id="prev" class="pgbtn">← 上一页</button><span id="pageinfo"></span><button id="next" class="pgbtn">下一页 →</button></div><p id="noresult" class="noresult" style="display:none">没有找到匹配的节目。</p>
   <footer>《X射线无损检测与AI图像处理前沿》 · 公开资讯的中文口播解读 · 由 AI 辅助生成并人工约束来源</footer>
 </div>
 <script>
 (function(){
+  var list=document.getElementById('list');
+  if(!list) return;
+  var items=Array.prototype.slice.call(list.querySelectorAll('.ep'));
+  var PER=5, page=0;
+  var prev=document.getElementById('prev'), next=document.getElementById('next');
+  var info=document.getElementById('pageinfo'), pager=document.getElementById('pager');
+  var nores=document.getElementById('noresult');
+  var pages=Math.max(1, Math.ceil(items.length/PER));
+  function applyPage(){
+    items.forEach(function(el,i){ el.style.display=(i>=page*PER && i<page*PER+PER)?'':'none'; });
+    info.textContent='第 '+(page+1)+' / '+pages+' 页 · 每页 '+PER+' 篇';
+    prev.style.display=(page>0)?'':'none';
+    next.style.display=(page<pages-1)?'':'none';
+    if(pager) pager.style.display='';
+  }
+  if(prev) prev.onclick=function(){ if(page>0){page--;applyPage();} };
+  if(next) next.onclick=function(){ if(page<pages-1){page++;applyPage();} };
   var box=document.getElementById('search');
-  if(!box) return;
-  var inp=box.querySelector('input');
-  var items=Array.prototype.slice.call(document.querySelectorAll('.ep'));
-  inp.addEventListener('input',function(){
-    var q=inp.value.trim().toLowerCase();
-    items.forEach(function(el){
-      var hay=(el.getAttribute('data-search')||'').toLowerCase();
-      el.style.display=(!q||hay.indexOf(q)>=0)?'':'none';
+  if(box){
+    var inp=box.querySelector('input');
+    inp.addEventListener('input',function(){
+      var q=inp.value.trim().toLowerCase();
+      if(q){
+        var hit=0;
+        items.forEach(function(el){
+          var ok=(el.getAttribute('data-search')||'').toLowerCase().indexOf(q)>=0;
+          el.style.display=ok?'':'none'; if(ok)hit++;
+        });
+        if(pager) pager.style.display='none';
+        if(nores) nores.style.display=hit?'none':'';
+      } else {
+        page=0; if(nores) nores.style.display='none'; applyPage();
+      }
     });
-  });
+  }
+  applyPage();
 })();
 </script>
 </body></html>
