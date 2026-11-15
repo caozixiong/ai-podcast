@@ -58,9 +58,9 @@
   }
   if(prev) prev.onclick=function(){ if(page>0){page--;applyPage();} };
   if(next) next.onclick=function(){ if(page<pages-1){page++;applyPage();} };
-  var box=document.getElementById('search');
-  if(box){
-    var inp=box.querySelector('input');
+  var sbox=document.getElementById('search');
+  var inp=(sbox&&sbox.tagName==='INPUT')?sbox:(sbox?sbox.querySelector('input'):null);
+  if(inp){
     inp.addEventListener('input',function(){
       var q=inp.value.trim().toLowerCase();
       if(q){
