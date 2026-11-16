@@ -18,6 +18,7 @@ from zoneinfo import ZoneInfo
 
 from .state import EpisodeStore, Episode, STATE_DIR_DEFAULT
 from .collect import collect_sources
+from .enrich import select_items
 from .editorial import write_episode, LLMError
 from .tts import synthesize, TTSUnavailable
 from .drive import upload, remote_exists, DriveUnavailable
@@ -82,6 +83,88 @@ def _push(project_dir: str) -> tuple[bool, str]:
     return False, out2 + "\n（push 需要 gh 登录或 GH_TOKEN）"
 
 
+def _public_item(it: dict) -> dict:
+    """入库的来源记录：去掉原文全文（只用于写事实卡），保留事实卡便于事后核对。"""
+    return {k: v for k, v in it.items() if k != "text"}
+
+
+def compose_episode(show: dict, sources_cfg: dict, store: EpisodeStore, report: dict, *,
+                    on_violation: str | None = None, ignore_seen: bool = False) -> dict | None:
+    """采集 → 挑选/补原文 → 事实卡 → 撰稿 → 自检。成功返回 ep_data；跳过/受阻返回 None 并写 report。"""
+    e = show.get("episode", {})
+    items = collect_sources(sources_cfg, lookback_days=int(e.get("lookback_days", 7)),
+                            priority_keywords=sources_cfg.get("priority_keywords", []),
+                            max_items=40)
+    items = [it for it in items if it.get("relevance", 0) >= 0]
+    fresh = items if ignore_seen else [it for it in items if not store.is_seen(it["id"])]
+    selected = select_items(fresh, max_items=int(e.get("max_items", 6)),
+                            max_headline_items=int(e.get("max_headline_items", 2)))
+    report["stages"]["collect"] = {
+        "total": len(items), "fresh": len(fresh), "selected": len(selected),
+        "status": [it.get("fetch_status") for it in selected],
+    }
+    min_items = int(e.get("min_items", 2))
+    min_sub = int(e.get("min_substantive_items", 1))
+    substantive = sum(1 for it in selected if it.get("fetch_status") != "title")
+    if len(selected) < min_items or substantive < min_sub:
+        report["result"] = "skipped"
+        report["reason"] = (f"可用资讯不足（入选 {len(selected)} 条，其中有原文的 {substantive} 条；"
+                            f"要求至少 {min_items} 条且至少 {min_sub} 条有原文），今天跳过，不硬凑。")
+        return None
+
+    llm_cfg = show.get("llm", {})
+    os.environ.setdefault(llm_cfg.get("api_key_env", "GEMINI_API_KEY"),
+                          os.environ.get(llm_cfg.get("api_key_env", "GEMINI_API_KEY"), ""))
+    llm = LLMClient(model=llm_cfg.get("model"), fallback_model=llm_cfg.get("fallback_model"),
+                    base_url=llm_cfg.get("base_url"),
+                    temperature=llm_cfg.get("temperature", 0.3),
+                    max_tokens=llm_cfg.get("max_tokens", 2000),
+                    timeout_s=llm_cfg.get("timeout_s", 180))
+    if "generativelanguage.googleapis.com" in (llm_cfg.get("base_url") or "") and not llm.api_key:
+        report["stages"]["editorial"] = "blocked: 缺少 GEMINI_API_KEY"
+        report["result"] = "blocked"
+        report["reason"] = "缺少 GEMINI_API_KEY（Google AI Studio）。设好后重跑即可。"
+        return None
+    quality_cfg = show.get("quality", {})
+    try:
+        ep_data = write_episode(selected, llm,
+                                target_words_low=e.get("target_duration_min", 5) * 140,
+                                target_words_high=e.get("target_duration_max", 10) * 140,
+                                show_name=show.get("show_name", "播客"),
+                                feed_names=[s.get("name", "") for s in sources_cfg.get("sources", [])],
+                                on_violation=on_violation or quality_cfg.get("on_violation", "block"))
+    except _LE as ex:
+        report["stages"]["editorial"] = f"error: {ex}"
+        report["result"] = "blocked"
+        report["reason"] = str(ex)
+        return None
+    q = ep_data.get("quality", {})
+    report["stages"]["editorial"] = (f"ok (素材 {q.get('items')} 条，自检问题 "
+                                     f"{len(q.get('violations_first', []))}→{len(q.get('violations_final', []))}"
+                                     f"{'，已自动改写' if q.get('repaired') else ''})")
+    return ep_data
+
+
+def run_draft(project_dir: str, *, ignore_seen: bool = False) -> dict:
+    """只生成草稿（采集→事实卡→撰稿→自检），不配音、不建站、不推送、不记已读；自检问题只报告不拦截。
+    ignore_seen=True 时连已播过的素材也参与挑选（仅用于试跑）。"""
+    cfg = load_config(project_dir)
+    store = EpisodeStore(os.path.join(project_dir, "data"))
+    report: dict = {"date": today_str(), "stages": {}, "result": "running"}
+    ep_data = compose_episode(cfg["show"], cfg["sources"], store, report, on_violation="warn",
+                              ignore_seen=ignore_seen)
+    if ep_data is None:
+        return report
+    report["result"] = "draft"
+    report["title"] = ep_data["title"]
+    report["quality"] = ep_data["quality"]
+    report["items"] = [{"title": it.get("title"), "publisher": it.get("publisher"),
+                        "fetch_status": it.get("fetch_status"), "url": it.get("url"),
+                        "fact_card": it.get("fact_card")} for it in ep_data["items"]]
+    report["script"] = ep_data["script"]
+    return report
+
+
 def run_publish(project_dir: str, *, do_push: bool = False) -> dict:
     show, sources_cfg = load_config(project_dir)["show"], load_config(project_dir)["sources"]
     store = EpisodeStore(os.path.join(project_dir, "data"))
@@ -95,47 +178,14 @@ def run_publish(project_dir: str, *, do_push: bool = False) -> dict:
         report["reason"] = "今天已经发布过一集，跳过（不重复发布）。"
         return report
 
-    # 1) 采集
-    e = show.get("episode", {})
-    items = collect_sources(sources_cfg, lookback_days=int(e.get("lookback_days", 7)),
-                            priority_keywords=sources_cfg.get("priority_keywords", []),
-                            max_items=40)
-    items = [it for it in items if it.get("relevance", 0) >= 0]
-    fresh = [it for it in items if not store.is_seen(it["id"])]
-    report["stages"]["collect"] = {"total": len(items), "fresh": len(fresh)}
-    min_items = int(e.get("min_items", 2))
-    if len(fresh) < min_items:
-        report["result"] = "skipped"
-        report["reason"] = f"新鲜资讯不足（{len(fresh)} < {min_items}），今天跳过，不硬凑。"
+    # 1-2) 采集 + 事实卡 + 撰稿 + 自检
+    ep_data = compose_episode(show, sources_cfg, store, report)
+    if ep_data is None:
         return report
-
-    # 2) 撰稿（需要 GEMINI_API_KEY）
-    llm_cfg = show.get("llm", {})
-    os.environ.setdefault(llm_cfg.get("api_key_env", "GEMINI_API_KEY"),
-                          os.environ.get(llm_cfg.get("api_key_env", "GEMINI_API_KEY"), ""))
-    llm = LLMClient(model=llm_cfg.get("model"), fallback_model=llm_cfg.get("fallback_model"),
-                    base_url=llm_cfg.get("base_url"),
-                    temperature=llm_cfg.get("temperature", 0.6),
-                    max_tokens=llm_cfg.get("max_tokens", 4000))
-    if "generativelanguage.googleapis.com" in (llm_cfg.get("base_url") or "") and not llm.api_key:
-        report["stages"]["editorial"] = "blocked: 缺少 GEMINI_API_KEY"
-        report["result"] = "blocked"
-        report["reason"] = "缺少 GEMINI_API_KEY（Google AI Studio）。设好后重跑即可。"
-        return report
-    try:
-        ep_data = write_episode(fresh, llm,
-                               target_words_low=e.get("target_duration_min", 5) * 140,
-                               target_words_high=e.get("target_duration_max", 10) * 140,
-                               show_name=show.get("show_name", "播客"))
-    except _LE as ex:
-        report["stages"]["editorial"] = f"error: {ex}"
-        report["result"] = "blocked"
-        report["reason"] = str(ex)
-        return report
-    report["stages"]["editorial"] = "ok"
 
     ep = Episode(episode_id=f"ep-{today}", title=ep_data["title"], date=today,
-                 items=ep_data["items"], script=ep_data["script"],
+                 items=[_public_item(it) for it in ep_data["items"]], script=ep_data["script"],
+                 quality=ep_data.get("quality", {}),
                  created_at=datetime.now(TZ).isoformat())
 
     # 3) TTS（需要 edge-tts/网络 或 SAPI）

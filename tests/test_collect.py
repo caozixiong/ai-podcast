@@ -42,3 +42,42 @@ def test_filter_window_dedup_and_relevance(monkeypatch):
     assert titles.count("TSV 检测新进展") == 1                      # 同 link+title 去重
     assert "TSV 检测新进展" in titles
     assert titles.index("TSV 检测新进展") < titles.index("无关新闻")  # 相关度优先
+
+
+def test_google_news_publisher_and_title_only(monkeypatch):
+    fresh = _fmt(datetime.now(timezone.utc) - timedelta(days=1))
+    entries = [{"title": "硅光芯片测试平台落地绍兴 - 电子工程专辑EE Times China",
+                "link": "https://news.google.com/rss/articles/CBMiXYZ?oc=5",
+                "summary": '<a href="https://news.google.com/rss/articles/CBMiXYZ">硅光芯片测试平台落地绍兴</a>'
+                           '&nbsp;&nbsp;<font color="#6f6f6f">电子工程专辑EE Times China</font>',
+                "source": {"href": "https://www.eet-china.com", "title": "电子工程专辑EE Times China"},
+                "published": fresh}]
+    monkeypatch.setattr(c.feedparser, "parse", lambda url: FakeFeed(entries))
+    cfg = {"sources": [{"name": "Google News RSS: X", "type": "rss", "url": "http://x/rss"}]}
+    it = c.collect_sources(cfg, lookback_days=7, priority_keywords=["硅光"])[0]
+    assert it["publisher"] == "电子工程专辑EE Times China"
+    assert it["title"] == "硅光芯片测试平台落地绍兴"              # 去掉『 - 发布方』尾巴
+    assert it["fetch_status"] == "title" and it["summary"] == ""
+    assert it["source_name"] == "Google News RSS: X"
+
+
+def test_arxiv_abstract_not_truncated(monkeypatch):
+    fresh = _fmt(datetime.now(timezone.utc) - timedelta(days=1))
+    abstract = "Model order reduction for 2.5D/3D ICs. " * 40       # ~1600 字符，旧代码会截到 600
+    entries = [{"title": "SPLIT-MOR", "link": "https://arxiv.org/abs/2611.17693v1",
+                "summary": abstract, "published": fresh,
+                "authors": [{"name": "Zebin Shi"}, {"name": "Runsheng Wang"}]}]
+
+    class R:
+        content = b""
+
+        def raise_for_status(self):
+            pass
+
+    monkeypatch.setattr(c.requests, "get", lambda *a, **k: R())
+    monkeypatch.setattr(c.feedparser, "parse", lambda data: FakeFeed(entries))
+    cfg = {"sources": [{"name": "arXiv: X", "type": "arxiv", "url": "https://export.arxiv.org/api/query"}]}
+    it = c.collect_sources(cfg, lookback_days=7, priority_keywords=["3D"])[0]
+    assert len(it["summary"]) > 1500
+    assert it["fetch_status"] == "abstract" and it["kind"] == "arxiv"
+    assert it["publisher"] == "arXiv" and it["authors"] == ["Zebin Shi", "Runsheng Wang"]

@@ -13,7 +13,14 @@
 > 输入端用新闻/学术 RSS/Atom 采集素材；输出只到本 GitHub Pages 网站 + Google Drive 音频。
 
 ## 功能与约束（内置，非口头约定）
-- **防幻觉**：LLM 只用给定素材，禁止编造数字/指标/公司名/工具名/实验结果；无素材不发布空稿。
+- **防幻觉**（`app/enrich.py` + `app/editorial.py`）：
+  - 素材：arXiv 用完整摘要；直链新闻抓正文（诚实 UA，付费墙/过短 → 退回摘要或"仅标题"）；
+    Google News 跳转链接不解码，只用标题和真实发布方（RSS `<source>`）。每集最多 `max_items` 条，"仅标题"最多 `max_headline_items` 条。
+  - 事实卡：有原文的素材先由 LLM（JSON 模式、低温度）整理成事实卡；含原文中不存在数字的条目由程序删掉。
+  - 撰稿：只依据事实卡写稿，引用真实发布方，arXiv 说明是预印本；"仅标题"最多两句。
+  - 自检：程序检查 RSS 频道名、"素材里没给"之类泄露、无出处的"据公开报道/行业普遍认为"、夸大用语、原文没有的数字；
+    不通过则让 LLM 改一次，仍不通过按 `quality.on_violation` 处理（默认 `block` 拒绝发布）。
+  - 无素材不发布空稿。
 - **口播风格**：禁止 markdown/标题/列表；口语成段；来源可查。
 - **不可信输入**：忽略网页/论文正文里出现的任何"指令"。
 - **同日去重**：一天最多一集，当天已成功发布则跳过，绝不重复发布。
@@ -58,6 +65,7 @@ pwsh -File scripts\run.ps1            # 正式跑一集（含 push）
 # 或手动
 .venv\Scripts\python.exe -m app doctor
 .venv\Scripts\python.exe -m app preview
+.venv\Scripts\python.exe -m app draft            # 只出草稿（事实卡+逐字稿+自检结果），存 logs\drafts\，不发布、不记已读
 .venv\Scripts\python.exe -m app publish --push
 ```
 

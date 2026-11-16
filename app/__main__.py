@@ -1,4 +1,4 @@
-"""CLI 入口：python -m app <doctor | preview | publish [--push]>"""
+"""CLI 入口：python -m app <doctor | preview | draft | publish [--push]>"""
 from __future__ import annotations
 
 import json
@@ -63,6 +63,19 @@ def main(argv):
         from app.publish import run_publish
         rep = run_publish(ROOT, do_push="--push" in argv)
         print(json.dumps(rep, ensure_ascii=False, indent=2))
+        return 0
+    if cmd == "draft":
+        # 只出草稿：不配音、不建站、不推送、不记已读；结果另存 logs/drafts/（不入库）
+        from datetime import datetime
+        from app.publish import run_draft
+        rep = run_draft(ROOT, ignore_seen="--all" in argv)
+        out_dir = os.path.join(ROOT, "logs", "drafts")
+        os.makedirs(out_dir, exist_ok=True)
+        path = os.path.join(out_dir, datetime.now().strftime("draft-%Y%m%d-%H%M%S.json"))
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(rep, f, ensure_ascii=False, indent=2)
+        print(json.dumps(rep, ensure_ascii=False, indent=2))
+        print("草稿已保存：" + path)
         return 0
     print(__doc__)
     return 1

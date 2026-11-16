@@ -39,3 +39,22 @@ def test_populated_episode(tmp_path):
     assert 'href="../assets/style.css"' in page              # episode 页用 ../ 相对路径
     idx = open(os.path.join(out, "index.html"), encoding="utf-8").read()
     assert "TSV 测试集" in idx
+
+
+def test_sources_show_publisher_and_status(tmp_path):
+    ep = {
+        "episode_id": "ep-2026-01-02", "title": "新流程", "date": "2026-01-02",
+        "items": [
+            {"title": "论文", "url": "https://arxiv.org/abs/1", "kind": "arxiv", "publisher": "arXiv",
+             "source_name": "arXiv: TSV / 封装", "fetch_status": "abstract", "published": "2026-01-01"},
+            {"title": "新闻", "url": "https://news.google.com/x", "kind": "news", "publisher": "DIGITIMES",
+             "source_name": "Google News RSS: TSV", "fetch_status": "title", "published": "2026-01-01"},
+        ],
+        "script": "大家好。我们下期见。", "audio": {}, "quality": {"pipeline": "fact-cards-v1"},
+    }
+    out = str(tmp_path / "docs")
+    build_site([ep], out, CFG)
+    page = open(os.path.join(out, "episodes", "ep-2026-01-02.html"), encoding="utf-8").read()
+    assert "arXiv 预印本" in page and "DIGITIMES" in page and "（仅标题）" in page
+    assert "Google News RSS" not in page
+    assert "程序核对" in page

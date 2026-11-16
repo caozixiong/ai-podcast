@@ -8,6 +8,8 @@
   "episode": {
     "min_items": 2,
     "max_items": 6,
+    "max_headline_items": 2,
+    "min_substantive_items": 1,
     "lookback_days": 30,
     "target_duration_min": 5,
     "target_duration_max": 10
@@ -17,9 +19,9 @@
     "model": "qwen3.8:27b",
     "fallback_model": "qwen3.6:27b",
     "base_url": "http://127.0.0.1:11434",
-    "temperature": 0.5,
-    "max_tokens": 1400,
-    "timeout_s": 180,
+    "temperature": 0.3,
+    "max_tokens": 2000,
+    "timeout_s": 240,
     "_gemini_alternative": {
       "provider": "google_ai_studio",
       "model": "gemini-2.5-flash",
@@ -27,6 +29,10 @@
       "api_key_env": "GEMINI_API_KEY",
       "note": "本机环境 Gemini 生成接口 404，默认走本地 Ollama（免费）；换到能访问 Gemini 的机器可改用此配置。"
     }
+  },
+  "quality": {
+    "on_violation": "block",
+    "_note": "口播稿程序自检不通过（自动改写一次后仍有问题）时：block=拒绝发布；warn=照常发布，只记录问题"
   },
   "tts": {
     "engine": "edge-tts",

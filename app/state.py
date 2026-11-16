@@ -61,6 +61,7 @@ class Episode:
     audio: dict = field(default_factory=dict)   # {drive_id, share_url, duration_sec, size_bytes, local_path}
     status: str = "collected"       # collected->scripted->audio_ready->uploaded->site_built->pushed->verified
     history: list = field(default_factory=list)
+    quality: dict = field(default_factory=dict)  # 事实卡/自检记录（新流程才有）
     commit_sha: str = ""
     pages_url: str = ""
     created_at: str = ""

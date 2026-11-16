@@ -34,14 +34,14 @@ class LLMClient:
         self.timeout_s = timeout_s
         self.max_retries = max_retries
 
-    def _one(self, system, user, model, temperature, max_tokens) -> str:
+    def _one(self, system, user, model, temperature, max_tokens, json_mode=False) -> str:
         if "generativelanguage.googleapis.com" in self.base_url:
-            return self._gemini(system, user, model, temperature, max_tokens)
+            return self._gemini(system, user, model, temperature, max_tokens, json_mode)
         if self.base_url.rstrip("/").endswith("/v1"):
-            return self._openai(system, user, model, temperature, max_tokens)
-        return self._ollama_native(system, user, model, temperature, max_tokens)
+            return self._openai(system, user, model, temperature, max_tokens, json_mode)
+        return self._ollama_native(system, user, model, temperature, max_tokens, json_mode)
 
-    def _openai(self, system, user, model, temperature, max_tokens) -> str:
+    def _openai(self, system, user, model, temperature, max_tokens, json_mode=False) -> str:
         """OpenAI 兼容端点：Ollama / LM Studio / 其它。"""
         url = f"{self.base_url}/chat/completions"
         headers = {"Content-Type": "application/json"}
@@ -54,6 +54,8 @@ class LLMClient:
             "messages": [{"role": "system", "content": system},
                          {"role": "user", "content": user}],
         }
+        if json_mode:
+            body["response_format"] = {"type": "json_object"}
         last_err = None
         for attempt in range(self.max_retries + 1):
             try:
@@ -71,7 +73,7 @@ class LLMClient:
                 raise
         raise LLMError(f"模型 {model}（OpenAI 兼容）调用失败：{last_err}")
 
-    def _ollama_native(self, system, user, model, temperature, max_tokens) -> str:
+    def _ollama_native(self, system, user, model, temperature, max_tokens, json_mode=False) -> str:
         """Ollama 原生 /api/chat：对思考型模型加 think:false 拿干净 content。"""
         url = f"{self.base_url.rstrip('/')}/api/chat"
         body = {
@@ -83,6 +85,8 @@ class LLMClient:
                 "num_predict": self.max_tokens if max_tokens is None else max_tokens,
             },
         }
+        if json_mode:
+            body["format"] = "json"
         last_err = None
         for attempt in range(self.max_retries + 1):
             try:
@@ -101,7 +105,7 @@ class LLMClient:
                 raise
         raise LLMError(f"Ollama {model} 调用失败：{last_err}")
 
-    def _gemini(self, system, user, model, temperature, max_tokens) -> str:
+    def _gemini(self, system, user, model, temperature, max_tokens, json_mode=False) -> str:
         """Google AI Studio 原生 generateContent。"""
         if not self.api_key:
             raise LLMError("调用 Gemini 需要 GEMINI_API_KEY。")
@@ -115,6 +119,8 @@ class LLMClient:
                 "maxOutputTokens": self.max_tokens if max_tokens is None else max_tokens,
             },
         }
+        if json_mode:
+            body["generationConfig"]["responseMimeType"] = "application/json"
         last_err = None
         for attempt in range(self.max_retries + 1):
             try:
@@ -136,10 +142,12 @@ class LLMClient:
                 raise
         raise LLMError(f"Gemini {model} 调用失败：{last_err}")
 
-    def complete(self, system: str, user: str, *, temperature=None, max_tokens=None) -> str:
+    def complete(self, system: str, user: str, *, temperature=None, max_tokens=None,
+                 json_mode: bool = False) -> str:
+        """json_mode=True 时要求模型只输出一个 JSON 对象（Ollama format=json 等）。"""
         try:
-            return self._one(system, user, self.model, temperature, max_tokens)
+            return self._one(system, user, self.model, temperature, max_tokens, json_mode)
         except LLMError:
             if not self.fallback_model:
                 raise
-        return self._one(system, user, self.fallback_model, temperature, max_tokens)
+        return self._one(system, user, self.fallback_model, temperature, max_tokens, json_mode)

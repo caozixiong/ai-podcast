@@ -19,7 +19,7 @@ try:
     p = subprocess.run(
         [PY, "-m", "app", "publish", "--push"],
         cwd=ROOT, env=env,
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=900)
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=1800)  # 事实卡+撰稿+自检需多次调用本地模型
     out = p.stdout.decode(errors="replace")
     rep = {}
     i = out.find("{")
@@ -38,6 +38,8 @@ try:
         print("⏭️ 今日跳过：%s" % rep.get("reason", "素材不足"))
     else:
         print("⚠️ 发布状态=%s" % (result or "unknown"))
+        if rep.get("reason"):
+            print("   原因：%s" % rep["reason"])
         print(out[-800:])
 except Exception as e:
     print("❌ 发布异常：%s: %s" % (type(e).__name__, e))

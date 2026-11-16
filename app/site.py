@@ -176,6 +176,20 @@ def build_index(episodes: list[dict], cfg: dict) -> str:
 """
 
 
+AI_NOTE_LEGACY = ('本节目由 AI 基于上述公开来源辅助生成，并受"只用给定素材、不编造数值、来源可查"的约束；'
+                  '音频若无法嵌入播放，请通过 Google Drive 备用链接收听。节目内容仅供学习交流，不构成任何技术/投资建议。')
+AI_NOTE_CHECKED = ('本节目由 AI 基于上述公开来源辅助生成：论文依据 arXiv 摘要（预印本，未经同行评审），'
+                   '新闻依据可获取的正文；标注"仅标题"的条目只读取了标题。逐字稿发布前已由程序核对数字、出处和禁用说法，'
+                   '但仍可能有理解偏差，请以原文为准。节目内容仅供学习交流，不构成任何技术/投资建议。')
+_STATUS_NOTE = {"title": "（仅标题）"}
+
+
+def _source_label(it: dict) -> str:
+    if it.get("kind") == "arxiv":
+        return "arXiv 预印本"
+    return it.get("publisher") or it.get("source_name") or ""
+
+
 def build_episode(ep: dict, cfg: dict) -> str:
     eid = str(ep.get("episode_id", "")).replace("/", "_")
     title = _esc(ep.get("title"))
@@ -206,8 +220,10 @@ def build_episode(ep: dict, cfg: dict) -> str:
 
     srcs = "".join(
         f'<li><a href="{_esc(it.get("url"))}" target="_blank" rel="noopener">{_esc(it.get("title"))}</a>'
-        f' <span class="hint">— {_esc(it.get("source_name"))} · {_esc(it.get("published") or "日期未知")}</span></li>'
+        f' <span class="hint">— {_esc(_source_label(it))} · {_esc(it.get("published") or "日期未知")}'
+        f'{_esc(_STATUS_NOTE.get(it.get("fetch_status"), ""))}</span></li>'
         for it in ep.get("items", []) if it.get("url")) or '<li class="hint">（本集无外链来源）</li>'
+    ai_note = AI_NOTE_CHECKED if ep.get("quality") else AI_NOTE_LEGACY
 
     script = ep.get("script", "")
     # 逐字稿按空行/句号粗略分段
@@ -233,8 +249,7 @@ def build_episode(ep: dict, cfg: dict) -> str:
   <ol class="src">{srcs}</ol>
   <h2 class="sec">逐字稿</h2>
   <div class="script">{script_html}</div>
-  <div class="ai-note">本节目由 AI 基于上述公开来源辅助生成，并受"只用给定素材、不编造数值、来源可查"的约束；
-  音频若无法嵌入播放，请通过 Google Drive 备用链接收听。节目内容仅供学习交流，不构成任何技术/投资建议。</div>
+  <div class="ai-note">{ai_note}</div>
 </div>
 </body></html>
 """
