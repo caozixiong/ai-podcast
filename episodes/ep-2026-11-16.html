@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>先进封装测试AI化与SPLIT-MOR热仿真新突破 · X射线无损检测与AI图像处理前沿</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="wrap">
+  <p><a href="../">← 返回首页</a></p>
+  <header class="hero"><h1>先进封装测试AI化与SPLIT-MOR热仿真新突破</h1><p class="sub">2026-11-16 · 5:29</p></header>
+  <div class="player"><audio controls preload="metadata" src="../audio/ep-2026-11-16.mp3" style="width:100%"></audio><p class="note">音频随本仓库发布；若无法播放，请刷新或稍后重试。</p></div>
+  <div class="actions"><a class="btn play" href="../audio/ep-2026-11-16.mp3" download="ep-2026-11-16.mp3">⬇ 下载 MP3</a><a class="link" href="#" onclick="window.print();return false;">打印/复制逐字稿</a></div>
+  <h2 class="sec">本期来源（公开信息）</h2>
+  <ol class="src"><li><a href="https://news.google.com/rss/articles/CBMikgFBVV95cUxNeXRycWU5N0RwOGFQdkFHbDlCVmxWa21HTlcxZHdXNWdONzU4R0pPV0JaeW44c0tkV0I3dUtRRmVMNFY0Tk9jOXNMUjZlN0hPWDJLdnhOYnlIOXU5TlBqWWZMRWtnVEoyTWhHbUVvRU12U2RVdE1IbXo5VmFhRXB1dTdCeFpMMmNHb3hBc1Y5TlJrZw?oc=5" target="_blank" rel="noopener">先進封裝將熱與接觸難題提前至晶圓測試 AI效益將先集中於測試判定與停機管理 - DIGITIMES</a> <span class="hint">— Google News RSS: TSV / 封装 / 检测 (中文) · 2026-11-16</span></li><li><a href="https://arxiv.org/abs/2611.17693v1" target="_blank" rel="noopener">SPLIT-MOR: Fast and Accurate Model Order Reduction for Nonlinear Transient Thermal Simulation of 2.5D/3D ICs</a> <span class="hint">— arXiv: TSV / 封装 / 无损检测 / 显微 · 2026-11-13</span></li></ol>
+  <h2 class="sec">逐字稿</h2>
+  <div class="script"><p>大家好，这里是《X射线无损检测与AI图像处理前沿》。今天咱们聊两个特别有意思的话题，一个关于先进封装里那些让人头疼的热问题和接触难题，另一个是关于怎么用更聪明的数学方法去模拟芯片的瞬态热行为。这两件事虽然看起来一个是工程实践，一个是算法理论，但其实都指向了同一个核心痛点，那就是在越来越复杂的三维堆叠结构里，我们怎么更快地发现问题，更准地预测风险。</p><p>首先来看第一条，据 Google News RSS: TSV / 封装 / 检测 (中文) 的报道，DIGITIMES 提到先进封装正在把原本属于后道工序的热管理和接触可靠性难题，提前到了晶圆测试阶段。大家知道，以前我们做封装，很多热耦合和电气接触的问题，往往是在封装完成之后，甚至到了系统级测试才会暴露出来。那时候再回头去查，成本非常高，而且定位起来特别困难。但现在，随着 2.5D 和 3D 封装技术的普及，比如 TSV 硅通孔这些结构，热路径和电气路径变得极其复杂。如果晶圆阶段没测好，后面封装好了再发现问题，那就真的是“生米煮成熟饭”了。报道里特别指出，AI 的效益目前会先集中在测试判定和停机管理这两个环节。为什么是这两个？因为晶圆测试的数据量巨大，而且很多失效模式是非线性的，传统规则很难覆盖所有情况。AI 在这里的作用，不是去替代物理定律，而是去处理那些海量的、高维的测试数据，帮助工程师从噪声里找出真正的异常信号。比如，某个 TSV 的接触电阻可能因为微小的热膨胀而波动，AI 可以学习这种波动模式，提前判断哪些晶圆存在潜在风险，从而在早期就拦截下来，避免它们流入封装环节造成更大的浪费。另外，停机管理也是个痛点，测试机台一旦因为误判或者设备故障停机，损失是巨大的。AI 可以通过预测性维护，分析设备状态和测试数据的关联，提前预警，减少非计划停机。所以，据公开报道，这一轮 AI 在先进封装测试里的落地，首先不是去做什么花哨的图像识别，而是扎扎实实地解决测试效率和质量一致性的问题，这是非常务实的一步。</p><p>接下来看第二条，来自 arXiv: TSV / 封装 / 无损检测 / 显微 的一篇论文，标题是 SPLIT-MOR: Fast and Accurate Model Order Reduction for Nonlinear Transient Thermal Simulation of 2.5D/3D ICs。这篇论文提出的方法叫 SPLIT-MOR，全称是子域分段线性化结合区间... 这里摘要没写全，但核心思想很清楚。大家知道，做热仿真，尤其是瞬态热仿真，对于评估先进封装的热可靠性至关重要。但是，传统的数值方法，比如有限元分析，计算量非常大，慢得像蜗牛爬。为了解决这个问题，模型降阶技术 MOR 被广泛使用。但是，传统的线性 MOR 有个大麻烦，那就是它处理不了非线性项。在先进封装里，泄漏功耗是随温度变化的，热导率和热容也是温度相关的，这些都是非线性项。如果你强行用线性方法去近似，误差会很大。而现有的超降阶方法，虽然能处理非线性，但需要大量的非线性训练数据，训练成本太高，不划算。这篇论文提出的 SPLIT-MOR，就是为了解决这个矛盾。它的思路是，把整个模型分成几个子域，在每个子域里做分段线性化。听起来有点抽象，但你可以想象一下，把一个复杂的、弯曲的热传导路径，切成几段比较直的、线性的片段，然后分别处理。这样既保留了非线性的特征，又避免了全模型非线性求解的高昂代价。据公开报道，这种方法旨在实现快速且准确的瞬态热仿真。这对于我们做无损检测的同行来说，意味着什么？意味着我们可以更快地获得芯片内部的热分布预测数据。热分布直接影响 X 射线成像中的某些伪影或者结构变形，如果我们能有一个快速、准确的热模型，就可以更好地解释我们在图像里看到的那些细微变化，从而更准确地判断是热效应导致的正常变形，还是真正的结构缺陷。所以，AI 和先进算法在这里的作用，是帮我们构建一个更轻量、更准确的物理仿真引擎，让我们在做数据驱动的检测时，有一个更可靠的物理基准。</p><p>总结一下，今天这两条资讯，一条告诉我们 AI 正在先进封装的测试前端发力，通过智能判定和停机管理来提升效率和质量；另一条告诉我们，新的数学方法正在让复杂的热仿真变得更快更准，为我们理解芯片内部的热行为提供了更强大的工具。这两者结合，其实就是我们在用数据和算法，去驯服先进封装里那些复杂的热和电问题。我们下期见。</p></div>
+  <div class="ai-note">本节目由 AI 基于上述公开来源辅助生成，并受"只用给定素材、不编造数值、来源可查"的约束；
+  音频若无法嵌入播放，请通过 Google Drive 备用链接收听。节目内容仅供学习交流，不构成任何技术/投资建议。</div>
+</div>
+</body></html>
