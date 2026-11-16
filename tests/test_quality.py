@@ -63,6 +63,14 @@ def test_unsupported_numbers_ignores_names_and_dims():
     assert unsupported_numbers("市场增长 95%", corpus) == ["95"]
 
 
+def test_range_check_catches_truncated_endpoint():
+    from app.editorial import unsupported_ranges
+    corpus = _norm("架构师估计只有200到300人；交期从3到6个月延长到6至8个月；反射率 11-15%")
+    assert unsupported_ranges("只有200到30人", corpus) == ["200 到 30"]
+    assert unsupported_ranges("只有200到300人，交期6至8个月，反射率 11% 到 15%", corpus) == []
+    assert unsupported_ranges("2026-2032 年", _norm("2026-2032 年复合增速")) == []
+
+
 def test_fact_card_drops_invented_numbers():
     llm = ScriptedLLM([_card_json()])
     card = build_fact_card(ARXIV, llm)

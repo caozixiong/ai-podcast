@@ -1,0 +1,10 @@
+{
+  "_note": "只供 `python -m app republish` 使用：Google News 文章 id（链接里 /articles/ 后面那段）→ 发布方原文链接。每条都由人在浏览器里打开核对过；日常发布不读这个文件。",
+  "map": {
+    "CBMia0FVX3lxTFBFREtWbFlDREhGaXZCdzZvbEVHUEwtMG5EUzNmbG1naWFaNjJPLWpYSmNKRV9WYU1UVWlONGpzcVNUZU5YMVN2MW12Q1k5OExlTEZoMzE1Sk1MYmJwYTUyYkxMcXBMVzlmQV80": "https://caifuhao.eastmoney.com/news/20261111113806765826040",
+    "CBMiWEFVX3lxTFBIUk5RTU1SYXUzOURtTTZaSkNJaktnTGNwYUFGU3owRjBQeXJ3R2NKMTNZVVBKckEwWEpDSXcyTlNJRWptQ3VabnluYlNoNHVKNEVGZ3ZtZU0": "https://www.ebc.com/zh-cn/jinrong/318205.html",
+    "CBMiVkFVX3lxTE9welJRZTFmbnpIS0dxcTl5UThMd01NMUJtNmpOWWlRdzZuSjNGeFJDbEJWUFY2Zl9SR0h2bFlpbmRmLURISTNRZ1NTWFQ2Rmt0MFJDa2x3": "https://news.qq.com/rain/a/20261108A05O1Z00",
+    "CBMiakFVX3lxTFAzM2d3OUhvNmRNcll1S0Y5NWlGbDY4RVVEeWxBdFV1aDZLeXVRcXZxVEd1aXg0N1NqN1NhRzBJRjdBTnFMTXNzNVAwV2xtX29fNEp0TVN3THNVTHN6b2pqMkk4MDlvbmNDT2c": "https://es.tradingview.com/news/gelonghui:7ce28ac35e3f9:0/",
+    "CBMiU0FVX3lxTFBTNVdMR3dUdHd5bEVaelpWLXdxOTNmT0Fnem90eFhiTk9CWFRYUTNRLXJfVXVLVDBlWE9JUUlhUHB1Q2Q0NXBfcExabEdNOXpVc1Jz": "https://www.eet-china.com/info/75828.html"
+  }
+}

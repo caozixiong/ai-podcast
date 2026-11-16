@@ -88,6 +88,29 @@ def _authors(entry) -> list[str]:
     return out[:8]
 
 
+def arxiv_id_from_url(url: str) -> str:
+    m = re.search(r"arxiv\.org/(?:abs|pdf)/([^?#/]+?)(?:\.pdf)?$", (url or "").strip())
+    return m.group(1) if m else ""
+
+
+def fetch_arxiv_by_ids(arxiv_ids: list[str]) -> dict[str, dict]:
+    """按 arXiv id 一次性取完整摘要（公开 API，单次请求）。返回 {arxiv_id: {summary, authors, title}}。"""
+    ids = [i for i in dict.fromkeys(arxiv_ids) if i]
+    if not ids:
+        return {}
+    url = ("https://export.arxiv.org/api/query?id_list=" + ",".join(ids)
+           + f"&max_results={len(ids)}")
+    r = requests.get(url, timeout=TIMEOUT, headers=UA)
+    r.raise_for_status()
+    out = {}
+    for e in feedparser.parse(r.content).get("entries", []):
+        aid = arxiv_id_from_url(e.get("id") or e.get("link") or "")
+        if aid:
+            out[aid] = {"summary": _clean(e.get("summary", ""), ARXIV_ABSTRACT_LIMIT),
+                        "authors": _authors(e), "title": _clean(e.get("title", ""), None)}
+    return out
+
+
 def collect_sources(sources_cfg: dict, *, lookback_days: int = 7,
                     priority_keywords: list[str] | None = None,
                     max_items: int = 40) -> list[dict]:

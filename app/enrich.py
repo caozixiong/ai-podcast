@@ -17,7 +17,7 @@ from bs4 import BeautifulSoup
 from .collect import UA, is_google_news
 
 FETCH_TIMEOUT = 20
-MIN_FULLTEXT_CHARS = 400
+MIN_FULLTEXT_CHARS = 150     # 公司公告类简讯可能只有一两百字（如格隆汇快讯）
 MAX_TEXT_CHARS = 8000
 MIN_SUMMARY_CHARS = 200
 
@@ -95,7 +95,7 @@ def select_items(items: list[dict], *, max_items: int = 6, max_headline_items: i
         status = it.get("fetch_status") or "title"
         text = ""
         if status == "pending":
-            status, text = fetch(it["url"])
+            status, text = fetch(it.get("direct_url") or it["url"])
             if status != "fulltext":
                 if len(it.get("summary", "")) >= MIN_SUMMARY_CHARS:
                     status, text = "summary", it["summary"]

@@ -25,7 +25,7 @@ SHOW_DEFAULT = "X射线无损检测与AI图像处理前沿"
 SYSTEM_FACTS = """你是严谨的科技资料整理员。只根据【原文】提取信息，只输出一个 JSON 对象，不要输出任何其他文字。
 
 规则：
-1) 只写原文明确写出的内容。原文没有的就留空字符串或空列表，绝不补充你自己的知识或推测。
+1) 只写原文明确写出的内容。原文没有的就留空字符串或空列表，绝不补充你自己的知识或推测。引述某人或某机构的观点、演讲内容时，在条目里写明是谁说的。
 2) 数字、单位、比较对象照原文抄写，不换算单位、不四舍五入、不改写成中文数字。
 3) 用中文表述；专业术语第一次出现时附英文原词，例如"二氧化硅（silica）"。拿不准的中文译法就保留英文原词。
 4) 原文没有明确说用了机器学习、深度学习或神经网络，is_ai 必须是 false。
@@ -54,7 +54,7 @@ SYSTEM_SCRIPT = """你是中文科技播客《{show}》的撰稿人。听众是�
 二、出处要真实
 4. 用事实卡里的发布方称呼来源，例如"据 DIGITIMES 报道""据电子工程专辑报道"。讲论文时说"arXiv 上一篇预印本论文"，并在本集里说明一次：预印本还没有经过同行评审。不要把论文叫"报道"。
 5. 获取状态为"仅标题"的条目：只用两句话——"某某发表了一篇文章，题目是《……》"，再加一句"全文暂未获取，细节这里不展开"。不得补充任何细节、原因、例子或个人评论。
-6. 换到下一条时明确说"另一条来自……"，不要让两条来源的内容混在一起。
+6. 换到下一条时明确说"另一条来自……"，不要让两条来源的内容混在一起。会议或活动报道里，嘉宾演讲的内容要说明是谁讲的，不要说成主办方或平台本身的情况；公司表态按原文说清形式（例如"在投资者关系活动中表示"），不要改成"发布公告"。
 
 三、事实与观点分开
 7. 你自己的理解、联想和行业判断，必须用"我个人的理解是""从做检测的角度看，可能……"这类第一人称说法标出，每条最多两句。
@@ -112,6 +112,20 @@ def unsupported_numbers(text: str, corpus_norm: str) -> list[str]:
     return sorted(n for n in found if n not in corpus_norm)
 
 
+_RANGE_SEP = r"\s*(?:%|％)?\s*(?:到|至|~|～|-|－|—)\s*"
+_RANGE_RE = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)" + _RANGE_SEP + r"(\d+(?:\.\d+)?)(?![\d.]*\d)")
+
+
+def unsupported_ranges(text: str, corpus_norm: str) -> list[str]:
+    """『200 到 30 人』这类区间：两端数字必须在原文里以同样的区间形式出现（单个数字检查抓不到）。"""
+    bad = []
+    for a, b in _RANGE_RE.findall(_norm(text)):
+        pat = r"(?<![\d.])" + re.escape(a) + _RANGE_SEP + re.escape(b) + r"(?![\d])"
+        if not re.search(pat, corpus_norm):
+            bad.append(f"{a} 到 {b}")
+    return sorted(set(bad))
+
+
 def _corpus(items: list[dict]) -> str:
     parts = []
     for it in items:
@@ -139,6 +153,9 @@ def check_script(script: str, items: list[dict], feed_names=()) -> list[str]:
     bad = unsupported_numbers(script, corpus)
     if bad:
         problems.append("出现了原文里没有的数字：" + "、".join(bad[:8]) + "；删除，或改成事实卡里的原数字")
+    bad_ranges = unsupported_ranges(script, corpus)
+    if bad_ranges:
+        problems.append("数值范围和原文对不上：" + "、".join(bad_ranges[:6]) + "；照事实卡里的原范围改正")
     if any(it.get("kind") == "arxiv" for it in items) and "预印本" not in script:
         problems.append("讲到了 arXiv 论文，但没有说明是预印本（未经同行评审）")
     if "$" in script or "^" in script or re.search(r"\\[A-Za-z]+", script):

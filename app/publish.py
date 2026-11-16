@@ -17,7 +17,9 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from .state import EpisodeStore, Episode, STATE_DIR_DEFAULT
-from .collect import collect_sources
+import re
+
+from .collect import collect_sources, fetch_arxiv_by_ids, arxiv_id_from_url
 from .enrich import select_items
 from .editorial import write_episode, LLMError
 from .tts import synthesize, TTSUnavailable
@@ -165,6 +167,20 @@ def run_draft(project_dir: str, *, ignore_seen: bool = False) -> dict:
     return report
 
 
+def _gn_article_id(url: str) -> str:
+    m = re.search(r"news\.google\.com/(?:rss/)?articles/([^?/#]+)", url or "")
+    return m.group(1) if m else ""
+
+
+def _load_direct_urls(project_dir: str) -> dict:
+    """config/direct_urls.json：Google News 文章 id → 人工核对过的发布方原文链接（只供 republish 用）。"""
+    try:
+        with open(os.path.join(project_dir, "config", "direct_urls.json"), encoding="utf-8") as f:
+            return dict(json.load(f).get("map", {}))
+    except (OSError, ValueError):
+        return {}
+
+
 def run_republish(project_dir: str, episode_id: str, *, do_push: bool = False) -> dict:
     """用新流程（事实卡+自检）按原来源重新生成某一集：覆盖逐字稿、标题、音频与节目页。
 
@@ -187,19 +203,45 @@ def run_republish(project_dir: str, episode_id: str, *, do_push: bool = False) -
                            priority_keywords=sources_cfg.get("priority_keywords", []),
                            max_items=500)
     by_id = {it["id"]: it for it in pool if it.get("id")}
+    direct = _load_direct_urls(project_dir)
     chosen = []
     for old_it in old.items:
         if old_it.get("id") in by_id:
-            chosen.append(by_id[old_it["id"]])
+            it = dict(by_id[old_it["id"]])
         elif old_it.get("url"):
             url = old_it["url"]
-            chosen.append({"id": old_it.get("id", ""), "title": old_it.get("title", ""), "url": url,
-                           "source_name": old_it.get("source_name", ""),
-                           "publisher": old_it.get("publisher", ""),
-                           "kind": "arxiv" if "arxiv.org" in url else "news",
-                           "published": old_it.get("published", ""), "summary": "",
-                           "fetch_status": "title", "relevance": 0})
-    selected = select_items(chosen, max_items=len(chosen), max_headline_items=len(chosen))
+            title, publisher = old_it.get("title", ""), old_it.get("publisher", "")
+            if not publisher and " - " in title and "arxiv.org" not in url:
+                title, publisher = (s.strip() for s in title.rsplit(" - ", 1))
+            it = {"id": old_it.get("id", ""), "title": title, "url": url,
+                  "source_name": old_it.get("source_name", ""), "publisher": publisher,
+                  "kind": "arxiv" if "arxiv.org" in url else "news",
+                  "published": old_it.get("published", ""), "summary": "",
+                  "fetch_status": "title", "relevance": 0}
+        else:
+            continue
+        gid = _gn_article_id(it.get("url", ""))
+        if gid and gid in direct:                 # 人工核对过的发布方原文链接
+            it["direct_url"], it["fetch_status"] = direct[gid], "pending"
+        chosen.append(it)
+
+    # 已不在当前 arXiv 列表里的论文：按 id 从公开 API 取完整摘要
+    need = [arxiv_id_from_url(it["url"]) for it in chosen
+            if it.get("kind") == "arxiv" and it.get("fetch_status") == "title"]
+    if need:
+        try:
+            got = fetch_arxiv_by_ids(need)
+        except Exception as ex:
+            got = {}
+            report["stages"]["arxiv_lookup"] = f"error: {ex}"
+        for it in chosen:
+            a = got.get(arxiv_id_from_url(it.get("url", "")))
+            if a and len(a["summary"]) >= 200 and it.get("fetch_status") == "title":
+                it.update(summary=a["summary"], authors=a["authors"], publisher="arXiv",
+                          kind="arxiv", fetch_status="abstract")
+
+    selected = select_items(chosen, max_items=int(e.get("max_items", 6)),
+                            max_headline_items=int(e.get("max_headline_items", 2)))
     report["stages"]["collect"] = {"original": len(old.items), "matched": len(chosen),
                                    "status": [it.get("fetch_status") for it in selected]}
     if not any(it.get("fetch_status") != "title" for it in selected):
