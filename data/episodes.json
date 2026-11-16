@@ -1,5 +1,117 @@
 [
   {
+    "episode_id": "ep-2026-11-16",
+    "title": "先进封装热仿真加速新方法",
+    "date": "2026-11-16",
+    "items": [
+      {
+        "id": "650241692367c9fe",
+        "title": "先進封裝將熱與接觸難題提前至晶圓測試 AI效益將先集中於測試判定與停機管理",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNeXRycWU5N0RwOGFQdkFHbDlCVmxWa21HTlcxZHdXNWdONzU4R0pPV0JaeW44c0tkV0I3dUtRRmVMNFY0Tk9jOXNMUjZlN0hPWDJLdnhOYnlIOXU5TlBqWWZMRWtnVEoyTWhHbUVvRU12U2RVdE1IbXo5VmFhRXB1dTdCeFpMMmNHb3hBc1Y5TlJrZw?oc=5",
+        "source_name": "Google News RSS: TSV / 封装 / 检测 (中文)",
+        "publisher": "DIGITIMES",
+        "kind": "news",
+        "authors": [],
+        "published": "2026-11-16",
+        "summary": "",
+        "fetch_status": "title",
+        "relevance": 0,
+        "fact_card": {
+          "core_claim": "先進封裝將熱與接觸難題提前至晶圓測試 AI效益將先集中於測試判定與停機管理",
+          "key_facts": [],
+          "numbers": [],
+          "method_type": "",
+          "is_ai": null,
+          "maturity": "",
+          "caveats": [],
+          "terms": [],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "122a2e62c0840f85",
+        "title": "SPLIT-MOR: Fast and Accurate Model Order Reduction for Nonlinear Transient Thermal Simulation of 2.5D/3D ICs",
+        "url": "https://arxiv.org/abs/2611.17693v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Zebin Shi",
+          "Tianxiang Zhu",
+          "Yibo Lin",
+          "Runsheng Wang"
+        ],
+        "published": "2026-11-13",
+        "summary": "Fast and accurate transient thermal simulation is essential to thermal reliability analysis and dynamic thermal management of advanced packages, and model order reduction (MOR) techniques are widely applied to overcome the efficiency bottleneck of rigorous numerical methods. However, nonlinear terms including temperature-dependent leakage power, thermal conductivity, and heat capacity prevent the application of conventional linear MOR, while hyper-reduction solutions require costly nonlinear training data. In this work, we propose SPLIT-MOR (Subdomain-wise Piecewise Linearization with Interval Tensors), a novel nonlinear MOR method that requires no additional training set. SPLIT-MOR computes reduced component tensors by subdomain clustering and temperature-interval partitioning in the offline stage, and updates the reduced coefficient matrices and load vectors efficiently in the online stage. Experimental results show that the online solving time of SPLIT-MOR achieves up to an 830x speedup over COMSOL and a 7.5x speedup over the state-of-the-art hyper-reduction method MDEIM, with a 27x total reduction in the offline time. The relative average error remains below 0.11%, and the maximum error is below 0.86 degrees Celsius, demonstrating the high accuracy of our method.",
+        "fetch_status": "abstract",
+        "relevance": 0,
+        "fact_card": {
+          "core_claim": "提出了一种名为 SPLIT-MOR 的非线性模型降阶方法，用于 2.5D/3D IC 的快速瞬态热仿真，该方法无需额外训练集，相比 COMSOL 和 MDEIM 实现了显著加速且保持高精度。",
+          "key_facts": [
+            "传统线性模型降阶（MOR）技术因温度相关的漏电流、热导率和热容等非线性项而无法直接应用。",
+            "超约化（hyper-reduction）解决方案需要昂贵的非线性训练数据。",
+            "SPLIT-MOR 在离线阶段通过子域聚类（subdomain clustering）和温度区间划分（temperature-interval partitioning）计算缩减分量张量。",
+            "SPLIT-MOR 在在线阶段高效更新缩减系数矩阵和负载向量。",
+            "实验结果显示 SPLIT-MOR 的平均相对误差低于 0.11%，最大误差低于 0.86 摄氏度。"
+          ],
+          "numbers": [
+            "在线求解时间相比 COMSOL 实现高达 830x 的加速",
+            "在线求解时间相比最先进超约化方法 MDEIM 实现 7.5x 的加速",
+            "离线时间总体减少 27x",
+            "平均相对误差低于 0.11%",
+            "最大误差低于 0.86 摄氏度"
+          ],
+          "method_type": "数值模型降阶",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [],
+          "terms": [
+            "Model Order Reduction = 模型降阶",
+            "SPLIT-MOR = 子域分段线性化与区间张量",
+            "Subdomain-wise Piecewise Linearization with Interval Tensors = 子域分段线性化与区间张量",
+            "hyper-reduction = 超约化",
+            "MDEIM = MDEIM"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      }
+    ],
+    "script": "大家好，这里是《X射线无损检测与AI图像处理前沿》。\n\n首先来看一条来自 DIGITIMES 的消息。DIGITIMES 发表了一篇文章，题目是《先進封裝將熱與接觸難題提前至晶圓測試 AI效益將先集中於測試判定與停機管理》。全文暂未获取，细节这里不展开。\n\n另一条来自 arXiv 的预印本论文，需要说明的是，预印本还没有经过同行评审。这篇论文由 Zebin Shi 等人撰写，研究的是针对 2.5D 和 3D IC 快速瞬态热仿真的非线性模型降阶方法。\n\n在先进封装中，由于存在温度相关的漏电流、热导率和热容等非线性项，传统的线性模型降阶技术无法直接应用。而现有的超约化解决方案虽然能处理非线性，但需要昂贵的非线性训练数据。为了解决这个问题，作者提出了一种名为 SPLIT-MOR 的方法，即子域分段线性化与区间张量。\n\nSPLIT-MOR 的工作流程分为离线和在线两个阶段。在离线阶段，该方法通过子域聚类和温度区间划分来计算缩减分量张量。在在线阶段，它高效地更新缩减系数矩阵和负载向量。这种设计使得该方法无需额外的训练集，就能实现快速求解。\n\n论文在数值实验中验证了该方法的效果。结果显示，SPLIT-MOR 的平均相对误差低于 0.11%，最大误差低于 0.86 摄氏度。在速度方面，在线求解时间相比 COMSOL 实现了高达 830 倍的加速，相比最先进超约化方法 MDEIM 实现了 7.5 倍的加速。此外，离线时间总体减少了 27 倍。\n\n我个人的理解是，对于从事热仿真或封装设计的工程师来说，这种无需训练数据且能大幅加速的方法，可能在迭代设计阶段很有价值。不过，论文目前仅在数值实验层面进行了验证，实际工程应用中的表现还需进一步观察。\n\n我们下期见。",
+    "audio": {
+      "path": "C:\\Projects\\ai-podcast\\audio\\ep-2026-11-16.mp3",
+      "duration_sec": 132.86,
+      "size_bytes": 797184,
+      "engine": "edge-tts"
+    },
+    "status": "site_built",
+    "history": [
+      {
+        "replaced_at": "2026-11-16T13:47:49.771822-05:00",
+        "old_title": "先进封装测试AI化与SPLIT-MOR热仿真新突破",
+        "old_commit": "8804a39737dc332969e739234a51e2b23c84a3fd",
+        "reason": "按原来源用事实卡+程序自检流程重新生成"
+      }
+    ],
+    "quality": {
+      "pipeline": "fact-cards-v1",
+      "items": 2,
+      "fetch_status": {
+        "先進封裝將熱與接觸難題提前至晶圓測試 AI效益將先集中於測試判定與停機管理": "title",
+        "SPLIT-MOR: Fast and Accurate Model Order": "abstract"
+      },
+      "card_errors": [],
+      "violations_first": [],
+      "repaired": false,
+      "violations_final": []
+    },
+    "commit_sha": "8804a39737dc332969e739234a51e2b23c84a3fd",
+    "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-16.html",
+    "created_at": "2026-11-16T08:31:16.161710-05:00",
+    "published_at": "2026-11-16T08:31:40.476531-05:00"
+  },
+  {
     "episode_id": "ep-2026-11-15",
     "title": "全息显微与AI：从玻璃通孔到电池衰减的无损洞察",
     "date": "2026-11-15",
@@ -293,6 +405,7 @@
     },
     "status": "pushed",
     "history": [],
+    "quality": {},
     "commit_sha": "c71129a6efe0383fc99b755512c1ff804256ad9e",
     "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-15.html",
     "created_at": "2026-11-15T08:31:19.865713-05:00",
@@ -358,6 +471,7 @@
     },
     "status": "site_built",
     "history": [],
+    "quality": {},
     "commit_sha": "",
     "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-14.html",
     "created_at": "2026-11-14T00:14:10.993785-05:00",
