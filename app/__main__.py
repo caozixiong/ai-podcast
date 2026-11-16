@@ -1,4 +1,4 @@
-"""CLI 入口：python -m app <doctor | preview | draft | publish [--push]>"""
+"""CLI 入口：python -m app <doctor | preview | draft [--all] | publish [--push] | republish <episode_id> [--push]>"""
 from __future__ import annotations
 
 import json
@@ -64,6 +64,16 @@ def main(argv):
         rep = run_publish(ROOT, do_push="--push" in argv)
         print(json.dumps(rep, ensure_ascii=False, indent=2))
         return 0
+    if cmd == "republish":
+        # python -m app republish <episode_id> [--push]：按原来源用新流程重做某一集
+        ids = [a for a in argv[1:] if not a.startswith("--")]
+        if not ids:
+            print("用法：python -m app republish <episode_id> [--push]")
+            return 1
+        from app.publish import run_republish
+        rep = run_republish(ROOT, ids[0], do_push="--push" in argv)
+        print(json.dumps(rep, ensure_ascii=False, indent=2))
+        return 0 if rep.get("result") == "republished" else 2
     if cmd == "draft":
         # 只出草稿：不配音、不建站、不推送、不记已读；结果另存 logs/drafts/（不入库）
         from datetime import datetime

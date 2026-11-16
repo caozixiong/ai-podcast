@@ -43,6 +43,12 @@ def _parse_pub(entry) -> datetime | None:
     return None
 
 
+def _legacy_key_title(text: str) -> str:
+    """去重 id 用的标题：与旧版 _clean 完全一致（含『 - 发布方』尾巴），保证已播条目的 id 不变。"""
+    text = re.sub(r"<[^>]+>", " ", text or "")
+    return re.sub(r"\s+", " ", text).strip()[:600]
+
+
 def _clean(text: str, limit: int | None = 600) -> str:
     if not text:
         return ""
@@ -125,7 +131,7 @@ def collect_sources(sources_cfg: dict, *, lookback_days: int = 7,
             # 有明确日期但超出时间窗 → 丢弃，避免播报旧新闻；无日期的保留（后续按相关度排）
             if pub is not None and pub < cutoff:
                 continue
-            key = _norm_id(str(e.get("id", "")), link, title)
+            key = _norm_id(str(e.get("id", "")), link, _legacy_key_title(e.get("title", "")))
             if key in seen:
                 continue
             seen.add(key)

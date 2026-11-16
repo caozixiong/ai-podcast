@@ -165,6 +165,119 @@ def run_draft(project_dir: str, *, ignore_seen: bool = False) -> dict:
     return report
 
 
+def run_republish(project_dir: str, episode_id: str, *, do_push: bool = False) -> dict:
+    """用新流程（事实卡+自检）按原来源重新生成某一集：覆盖逐字稿、标题、音频与节目页。
+
+    - 来源：按旧记录里的条目 id 从当前 RSS/arXiv 重新采集（拿到完整摘要与真实发布方）；
+      已不在时间窗内的条目退化为"仅标题"。
+    - 自检不通过（block）或音频失败 → 不动旧节目。
+    - 新音频先写临时文件，校验通过后再替换；旧版本保留在 git 历史里，history 字段记录替换。
+    """
+    cfg = load_config(project_dir)
+    show, sources_cfg = cfg["show"], cfg["sources"]
+    store = EpisodeStore(os.path.join(project_dir, "data"))
+    report: dict = {"date": today_str(), "episode_id": episode_id, "stages": {}, "result": "running"}
+    old = store.get(episode_id)
+    if old is None:
+        report.update(result="error", reason=f"找不到节目 {episode_id}")
+        return report
+
+    e = show.get("episode", {})
+    pool = collect_sources(sources_cfg, lookback_days=int(e.get("lookback_days", 7)),
+                           priority_keywords=sources_cfg.get("priority_keywords", []),
+                           max_items=500)
+    by_id = {it["id"]: it for it in pool if it.get("id")}
+    chosen = []
+    for old_it in old.items:
+        if old_it.get("id") in by_id:
+            chosen.append(by_id[old_it["id"]])
+        elif old_it.get("url"):
+            url = old_it["url"]
+            chosen.append({"id": old_it.get("id", ""), "title": old_it.get("title", ""), "url": url,
+                           "source_name": old_it.get("source_name", ""),
+                           "publisher": old_it.get("publisher", ""),
+                           "kind": "arxiv" if "arxiv.org" in url else "news",
+                           "published": old_it.get("published", ""), "summary": "",
+                           "fetch_status": "title", "relevance": 0})
+    selected = select_items(chosen, max_items=len(chosen), max_headline_items=len(chosen))
+    report["stages"]["collect"] = {"original": len(old.items), "matched": len(chosen),
+                                   "status": [it.get("fetch_status") for it in selected]}
+    if not any(it.get("fetch_status") != "title" for it in selected):
+        report.update(result="skipped", reason="原来源里没有一条能拿到原文，不重做（保留旧节目）。")
+        return report
+
+    llm_cfg = show.get("llm", {})
+    llm = LLMClient(model=llm_cfg.get("model"), fallback_model=llm_cfg.get("fallback_model"),
+                    base_url=llm_cfg.get("base_url"),
+                    temperature=llm_cfg.get("temperature", 0.3),
+                    max_tokens=llm_cfg.get("max_tokens", 2000),
+                    timeout_s=llm_cfg.get("timeout_s", 180))
+    try:
+        ep_data = write_episode(selected, llm,
+                                target_words_low=e.get("target_duration_min", 5) * 140,
+                                target_words_high=e.get("target_duration_max", 10) * 140,
+                                show_name=show.get("show_name", "播客"),
+                                feed_names=[s.get("name", "") for s in sources_cfg.get("sources", [])],
+                                on_violation=show.get("quality", {}).get("on_violation", "block"))
+    except _LE as ex:
+        report.update(result="blocked", reason=f"{ex}（保留旧节目）")
+        report["stages"]["editorial"] = f"error: {ex}"
+        return report
+    q = ep_data["quality"]
+    report["stages"]["editorial"] = (f"ok (自检问题 {len(q['violations_first'])}→{len(q['violations_final'])}"
+                                     f"{'，已自动改写' if q['repaired'] else ''})")
+
+    # 音频：先写临时文件，校验通过再替换
+    mp3 = os.path.join(project_dir, "audio", f"{episode_id}.mp3")
+    tmp = mp3[:-4] + ".new.mp3"
+    tts_cfg = show.get("tts", {})
+    try:
+        info = synthesize(ep_data["script"], tmp, voice=tts_cfg.get("voice", "zh-CN-YunxiNeural"),
+                          rate=tts_cfg.get("rate", "+0%"),
+                          min_sec=float(tts_cfg.get("min_duration_sec", 10)),
+                          max_sec=float(tts_cfg.get("max_duration_sec", 1500)))
+    except TTSUnavailable as ex:
+        if os.path.exists(tmp):
+            os.unlink(tmp)
+        report.update(result="blocked", reason=f"音频生成失败：{ex}（保留旧节目）")
+        return report
+    os.replace(tmp, mp3)
+    info["path"] = mp3
+    report["stages"]["tts"] = f"ok ({info['duration_sec']}s via {info['engine']})"
+
+    now = datetime.now(TZ).isoformat()
+    ep = Episode(episode_id=old.episode_id, title=ep_data["title"], date=old.date,
+                 items=[_public_item(it) for it in ep_data["items"]], script=ep_data["script"],
+                 audio=info, status="site_built", quality=q,
+                 history=list(old.history) + [{
+                     "replaced_at": now, "old_title": old.title, "old_commit": old.commit_sha,
+                     "reason": "按原来源用事实卡+程序自检流程重新生成"}],
+                 commit_sha=old.commit_sha, pages_url=old.pages_url,
+                 created_at=old.created_at, published_at=old.published_at)
+    store.upsert(ep)
+    all_eps = sorted(store.load_episodes(), key=lambda x: (x.date or x.episode_id), reverse=True)
+    build_site([x.to_dict() for x in all_eps], project_dir, show)
+    report["stages"]["site"] = "ok"
+    report["title"] = ep.title
+
+    if do_push:
+        _git(project_dir, ["add", "-A"])
+        _git(project_dir, ["commit", "-m",
+             f"episode {episode_id}: 按新流程重新生成（事实卡+自检）—{ep.title[:40]}"])
+        ok, out = _push(project_dir)
+        if ok:
+            rc2, sha = _git(project_dir, ["rev-parse", "HEAD"])
+            ep.status, ep.commit_sha = "pushed", sha.strip()
+            store.upsert(ep)
+            report["stages"]["push"] = f"ok sha={sha.strip()[:10]}"
+        else:
+            report["stages"]["push"] = f"error: {out[-300:]}"
+            report["result"] = "push_failed"
+            return report
+    report["result"] = "republished"
+    return report
+
+
 def run_publish(project_dir: str, *, do_push: bool = False) -> dict:
     show, sources_cfg = load_config(project_dir)["show"], load_config(project_dir)["sources"]
     store = EpisodeStore(os.path.join(project_dir, "data"))

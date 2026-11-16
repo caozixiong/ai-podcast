@@ -59,6 +59,8 @@ def test_google_news_publisher_and_title_only(monkeypatch):
     assert it["title"] == "硅光芯片测试平台落地绍兴"              # 去掉『 - 发布方』尾巴
     assert it["fetch_status"] == "title" and it["summary"] == ""
     assert it["source_name"] == "Google News RSS: X"
+    # 去重 id 必须沿用旧算法（含『 - 发布方』的原标题），否则已播新闻会被当成新的
+    assert it["id"] == c._norm_id("", entries[0]["link"], entries[0]["title"])
 
 
 def test_arxiv_abstract_not_truncated(monkeypatch):
