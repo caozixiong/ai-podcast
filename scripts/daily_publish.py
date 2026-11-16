@@ -33,7 +33,7 @@ try:
     if result in ("ok", "pushed", "site_built"):
         print("✅ 《%s》已发布" % rep.get("title", "?"))
         print("   音频: %s" % stages.get("tts", "?"))
-        print("   链接: %seisodes/%s.html" % (SITE, rep.get("episode_id", "?")))
+        print("   链接: %sepisodes/%s.html" % (SITE, rep.get("episode_id", "?")))
     elif result == "skipped":
         print("⏭️ 今日跳过：%s" % rep.get("reason", "素材不足"))
     else:
