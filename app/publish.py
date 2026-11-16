@@ -246,12 +246,17 @@ def run_republish(project_dir: str, episode_id: str, *, do_push: bool = False) -
     report["stages"]["tts"] = f"ok ({info['duration_sec']}s via {info['engine']})"
 
     now = datetime.now(TZ).isoformat()
+    history = list(old.history)
+    if history and old.status != "pushed" and history[-1].get("old_commit") == old.commit_sha:
+        entry = dict(history.pop())               # 上次重做还没推送：不叠加记录，保留最初的旧标题
+    else:
+        entry = {"old_title": old.title, "old_commit": old.commit_sha,
+                 "reason": "按原来源用事实卡+程序自检流程重新生成"}
+    entry["replaced_at"] = now
     ep = Episode(episode_id=old.episode_id, title=ep_data["title"], date=old.date,
                  items=[_public_item(it) for it in ep_data["items"]], script=ep_data["script"],
                  audio=info, status="site_built", quality=q,
-                 history=list(old.history) + [{
-                     "replaced_at": now, "old_title": old.title, "old_commit": old.commit_sha,
-                     "reason": "按原来源用事实卡+程序自检流程重新生成"}],
+                 history=history + [entry],
                  commit_sha=old.commit_sha, pages_url=old.pages_url,
                  created_at=old.created_at, published_at=old.published_at)
     store.upsert(ep)
