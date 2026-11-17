@@ -1,5 +1,207 @@
 [
   {
+    "episode_id": "ep-2026-11-17",
+    "title": "芯片匹配、磁天体与混合键合前沿",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "title": "DT-MATCH: Defect- and Topology-Aware Chiplet Matching for Yield Optimization in Heterogeneous Integration",
+        "publisher": "arXiv",
+        "fetch_status": "abstract",
+        "url": "https://arxiv.org/abs/2611.19544v1",
+        "fact_card": {
+          "core_claim": "提出了一种名为 DT-MATCH 的缺陷与拓扑感知芯片小片（chiplet）匹配框架，旨在现实组装约束下最大化功能 SoC 的数量。",
+          "key_facts": [
+            "异构集成（heterogeneous integration）和先进封装引入了由制造缺陷和复杂的 die-to-die (D2D) 互连约束导致的新良率挑战。",
+            "DT-MATCH 提供了两种互补的方法：基于整数线性规划（integer linear programming, ILP）的方法和基于贪心随机自适应搜索过程（greedy randomized adaptive search procedure, GRASP）的方法。",
+            "基于 ILP 的方法使用批处理策略（batching strategy）来近似精确公式。",
+            "基于 GRASP 的方法提供显著加速，但不保证良率最优性。",
+            "两种方法都使用预处理流水线（preprocessing pipeline）来减小问题规模。",
+            "在工业设计上的实验结果表明，基于 ILP 的方法实现了更优的解质量，而基于 GRASP 的方法运行时间更低且解质量与基于 ILP 的解相当。"
+          ],
+          "numbers": [],
+          "method_type": "数值模型降阶",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "基于 GRASP 的方法不保证良率最优性（does not guarantee yield optimality）。"
+          ],
+          "terms": [
+            "heterogeneous integration = 异构集成",
+            "chiplet = 芯片小片",
+            "system-on-chip (SoC) = 片上系统",
+            "die-to-die (D2D) interconnect = die-to-die 互连",
+            "integer linear programming (ILP) = 整数线性规划",
+            "greedy randomized adaptive search procedure (GRASP) = 贪心随机自适应搜索过程"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "title": "埃科光电亮相深圳国际全触与显示展，荣膺年度玻璃基板TGV优秀企业奖_埃科光电_合肥",
+        "publisher": "中国工控网",
+        "fetch_status": "title",
+        "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE84MDhPLXl5aHRMbmRIaWZjaFRjSlQ5YVJMVVp5cE5nYmFhRndBYk05dmFLOFBRSkNVdXgtS3dEYTFydEJnS1JZUENEdElsNG5mS3hBdUlabmhpMzRP?oc=5",
+        "fact_card": {
+          "core_claim": "埃科光电亮相深圳国际全触与显示展，荣膺年度玻璃基板TGV优秀企业奖_埃科光电_合肥",
+          "key_facts": [],
+          "numbers": [],
+          "method_type": "",
+          "is_ai": null,
+          "maturity": "",
+          "caveats": [],
+          "terms": [],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "title": "Optical writing of Dzyaloshinskii Néel-type skyrmions",
+        "publisher": "arXiv",
+        "fetch_status": "abstract",
+        "url": "https://arxiv.org/abs/2611.20878v1",
+        "fact_card": {
+          "core_claim": "在超薄 Co/Pt 薄膜中，皮秒级圆偏振激光脉冲序列可以写入仅由 Dzyaloshinskii-Moriya 相互作用稳定的、具有固定手性的 Néel 型磁天体。",
+          "key_facts": [
+            "超短激光脉冲为信息处理提供了写入纳米尺度拓扑磁性纹理的途径。",
+            "磁偶极相互作用通常驱动磁天体形成，但保持了相反手性之间的简并，导致没有唯一选择的自旋构型。",
+            "研究在超薄 Co/Pt 薄膜中展示了皮秒级圆偏振激光脉冲序列可以写入 Néel 型、固定手性的磁天体。",
+            "这些磁天体仅由 Dzyaloshinskii-Moriya 相互作用稳定。",
+            "结合洛伦兹透射电子显微镜和磁光显微镜，在从纳米到微米的多个长度尺度上重建了其内部自旋结构。",
+            "利用非对称磁天体扩展测量，确定了 Dzyaloshinskii-Moriya 相互作用的符号和大小，并识别了写入的手性。"
+          ],
+          "numbers": [
+            "皮秒（picosecond）",
+            "纳米（nanometres）",
+            "微米（micrometers）"
+          ],
+          "method_type": "实验测量",
+          "is_ai": false,
+          "maturity": "实验室实验（真实样品测量）",
+          "caveats": [],
+          "terms": [
+            "Dzyaloshinskii-Moriya interaction = Dzyaloshinskii-Moriya 相互作用",
+            "Néel-type skyrmions = Néel 型磁天体",
+            "Lorentz transmission electron microscopy = 洛伦兹透射电子显微镜",
+            "magneto-optical microscopy = 磁光显微镜",
+            "chirality = 手性",
+            "opto-spintronic = 光自旋电子"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "title": "Three-dimensional dopant depth determination from momentum-resolved core-loss 4D-STEM data",
+        "publisher": "arXiv",
+        "fetch_status": "abstract",
+        "url": "https://arxiv.org/abs/2611.15037v2",
+        "fact_card": {
+          "core_claim": "在Born近似下，通过对动量分辨的4D-STEM核心损失数据集进行傅里叶变换，可以利用条纹频率确定掺杂剂相对于焦平面的三维深度分布，并通过贝叶斯框架在模拟数据中实现纳米至亚纳米级深度精度。",
+          "key_facts": [
+            "在Born近似下，对动量分辨的核心损失4D-STEM数据集沿探针位置进行傅里叶变换会揭示出条纹，其频率编码了掺杂剂距离焦平面的距离。",
+            "动态散射（dynamical scattering）会降低条纹对比度，但可以通过在非主要晶带轴（off major zone axes）采集数据部分恢复。",
+            "核心损失散射通常伴随过高的剂量，使用贝叶斯框架（Bayesian framework）可以缓解这一问题。",
+            "在模拟的掺杂铁（Fe-doped）钛酸锶（strontium titanate）样品上，该方法实现了纳米到亚纳米的深度精度。",
+            "深度精度取决于信背比（signal-to-background），在100到1000个核心损失计数范围内有效。"
+          ],
+          "numbers": [
+            "100 to 1000 core-loss counts",
+            "nanometre to sub-nanometre depth precision"
+          ],
+          "method_type": "统计理论分析 / 数值模拟验证",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "方法基于Born近似（Born approximation）。",
+            "条纹对比度受动态散射影响而降低，需通过非主要晶带轴采集部分恢复。",
+            "核心损失散射通常涉及过高的剂量。",
+            "精度验证基于模拟的掺杂铁钛酸锶样品，而非实验测量。"
+          ],
+          "terms": [
+            "4D-STEM = 四维扫描透射电子显微镜",
+            "core-loss = 核心损失",
+            "Born approximation = Born近似",
+            "dynamical scattering = 动态散射",
+            "Bayesian framework = 贝叶斯框架",
+            "strontium titanate = 钛酸锶"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "title": "Technical Challenges for Ultra Fine Pitch Hybrid Bonding",
+        "publisher": "arXiv",
+        "fetch_status": "abstract",
+        "url": "https://arxiv.org/abs/2611.18713v1",
+        "fact_card": {
+          "core_claim": "混合键合（Hybrid bonding）作为下一代先进封装的基础技术，在向亚微米级超细间距发展时面临对准、平整度、CMP控制及缺陷检测等多重技术挑战，需通过工艺改进和设备创新以支持高产量制造。",
+          "key_facts": [
+            "混合键合是实现chiplet、逻辑、内存和专用加速器异构集成所需的超高密度互连的基础技术。",
+            "行业正推动互连间距接近个位数微米（single-digit microns）及以下。",
+            "主要技术挑战包括实现极紧的晶圆和芯片对准公差、在纳米尺度保持表面平整度和清洁度、控制CMP过程中的铜凹陷（copper dishing）和介质侵蚀，以及确保无缺陷的氧化物和铜-铜键合界面。",
+            "扩展到超细间距需要在计量（metrology）、缺陷检测、热管理和良率控制方面进行改进以支持高产量制造。",
+            "与硅中介层（silicon interposers）、晶圆对晶圆（wafer-to-wafer）和芯片对晶圆（die-to-wafer）键合架构以及异构材料堆叠的集成进一步增加了工艺复杂性。",
+            "该演讲回顾了超细间距混合键合的关键技术障碍，并讨论了支持未来高性能计算、AI和先进系统级封装应用所需的工艺解决方案和设备创新。"
+          ],
+          "numbers": [
+            "single-digit microns and below"
+          ],
+          "method_type": "行业分析 / 技术综述",
+          "is_ai": false,
+          "maturity": "不适用",
+          "caveats": [],
+          "terms": [
+            "Hybrid bonding = 混合键合",
+            "chiplets = 芯粒",
+            "copper dishing = 铜凹陷",
+            "CMP = 化学机械抛光",
+            "metrology = 计量",
+            "silicon interposers = 硅中介层",
+            "wafer-to-wafer = 晶圆对晶圆",
+            "die-to-wafer = 芯片对晶圆"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      }
+    ],
+    "script": "大家好，这里是《X射线无损检测与AI图像处理前沿》。\n\n首先来看 arXiv 上一篇预印本论文，这里需要说明的是，预印本还没有经过同行评审。这篇论文由 Xuanyi Tan 等人撰写，提出了一种名为 DT-MATCH 的框架，旨在异构集成场景下优化芯片小片匹配以提升良率。论文指出，先进封装中的制造缺陷和复杂的 die-to-die 互连约束带来了新的良率挑战。DT-MATCH 提供了两种互补的方法：一种是基于整数线性规划的方法，它使用批处理策略来近似精确公式，实验结果表明其实现了更优的解质量；另一种是基于贪心随机自适应搜索过程的方法，这种方法运行时间更低，解质量与前者相当，但论文明确指出它不保证良率最优性。两种方法都使用了预处理流水线来减小问题规模。目前这些结论是基于工业设计上的数值实验得出的。\n\n另一条来自中国工控网的资讯。埃科光电发表了一篇文章，题目是《埃科光电亮相深圳国际全触与显示展，荣膺年度玻璃基板TGV优秀企业奖》。全文暂未获取，细节这里不展开。\n\n接下来是另一篇 arXiv 预印本论文，作者为 Dinar Khusyainov 等人。这项研究在超薄 Co/Pt 薄膜中，利用皮秒级圆偏振激光脉冲序列，成功写入了仅由 Dzyaloshinskii-Moriya 相互作用稳定的、具有固定手性的 Néel 型磁天体。通常磁偶极相互作用会驱动磁天体形成，但会导致相反手性之间的简并，而该研究通过特定激光脉冲解决了这一问题。研究团队结合洛伦兹透射电子显微镜和磁光显微镜，在从纳米到微米的多个长度尺度上重建了其内部自旋结构，并确定了 Dzyaloshinskii-Moriya 相互作用的符号和大小。这是一项基于真实样品的实验室实验。\n\n再看一篇 arXiv 预印本论文，作者是 Michael Deimetry。该研究探讨了如何从动量分辨的核心损失 4D-STEM 数据中确定掺杂剂的三维深度分布。在 Born 近似下，通过对数据集沿探针位置进行傅里叶变换，可以揭示出条纹，其频率编码了掺杂剂距离焦平面的距离。虽然动态散射会降低条纹对比度，但可以通过在非主要晶带轴采集数据部分恢复。为了缓解核心损失散射通常伴随的过高剂量问题，研究引入了贝叶斯框架。在模拟的掺杂铁钛酸锶样品上，该方法实现了纳米到亚纳米的深度精度，且深度精度在 100 到 1000 个核心损失计数范围内有效。需要强调的是，这一精度验证是基于模拟数据，而非实验测量，且方法依赖于 Born 近似。\n\n最后一条来自 arXiv 的预印本论文，作者 Charles G. Woychik 等人。这篇技术综述讨论了超细间距混合键合面临的挑战。混合键合是支持芯粒、逻辑、内存和专用加速器异构集成的基础技术，行业正推动互连间距接近个位数微米及以下。主要技术挑战包括实现极紧的晶圆和芯片对准公差、在纳米尺度保持表面平整度和清洁度、控制化学机械抛光过程中的铜凹陷和介质侵蚀，以及确保无缺陷的氧化物和铜-铜键合界面。此外，扩展到超细间距还需要在计量、缺陷检测、热管理和良率控制方面进行改进，以支持高产量制造。与硅中介层、晶圆对晶圆以及芯片对晶圆键合架构的集成进一步增加了工艺复杂性。\n\n我们下期见。",
+    "audio": {
+      "path": ".\\audio\\ep-2026-11-17.mp3",
+      "duration_sec": 238.94,
+      "size_bytes": 1433664,
+      "engine": "edge-tts"
+    },
+    "status": "pushed",
+    "history": [],
+    "quality": {
+      "pipeline": "fact-cards-v1",
+      "items": 5,
+      "fetch_status": {
+        "DT-MATCH: Defect- and Topology-Aware Chi": "abstract",
+        "埃科光电亮相深圳国际全触与显示展，荣膺年度玻璃基板TGV优秀企业奖_埃科光电_合": "title",
+        "Optical writing of Dzyaloshinskii Néel-t": "abstract",
+        "Three-dimensional dopant depth determina": "abstract",
+        "Technical Challenges for Ultra Fine Pitc": "abstract"
+      },
+      "card_errors": [],
+      "violations_first": [
+        "数值范围和原文对不上：100 到 1000；照事实卡里的原范围改正"
+      ],
+      "repaired": true,
+      "violations_final": [
+        "数值范围和原文对不上：100 到 1000；照事实卡里的原范围改正"
+      ]
+    },
+    "commit_sha": "bc8721d0f7f9eb4a7b213be27be7b95d7aa8dc56",
+    "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-17.html",
+    "created_at": "2026-11-17T14:32:19.480852-05:00",
+    "published_at": "2026-11-17T14:32:49.528384-05:00"
+  },
+  {
     "episode_id": "ep-2026-11-16",
     "title": "先进封装热仿真加速新方法",
     "date": "2026-11-16",
