@@ -1,5 +1,319 @@
 [
   {
+    "episode_id": "ep-2026-11-18",
+    "title": "电子显微分析与纳米材料前沿",
+    "date": "2026-11-18",
+    "items": [
+      {
+        "id": "68ff4a2fa7da6f91",
+        "title": "quantEM: Quantitative Electron Microscopy Analysis from Differentiable Physics to Neural Priors",
+        "url": "https://arxiv.org/abs/2611.21903v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Colin Ophus",
+          "Arthur RC McCray",
+          "Georgios Varnavides",
+          "Stephanie M Ribet"
+        ],
+        "published": "2026-11-16",
+        "summary": "Quantitative electron microscopy includes imaging, diffraction, spectroscopy, and tomography measurements, and the analysis of these measurements increasingly requires solving inverse problems with physical forward models. Open-source software has made many of these analyses widely available, but most packages are organized around a single modality, so that multimodal analyses require moving data between packages, and new methods cannot easily reuse the physical models and optimizers of existing ones. Here we present quantEM, an open-source Python package for quantitative electron microscopy that uses PyTorch tensors for computation and automatic differentiation, and Zarr for storage. We implement each analysis method by writing a differentiable forward model and choosing a representation, loss function, constraints, and optimizer from a library of components, so that every method runs on CPUs and GPUs, can be saved and resumed, and uses the same calibrated data structures and visualization tools. We describe the current modules, including orientation and strain mapping, direct and iterative ptychography, tomography with neural representations, and X-ray and electron energy-loss spectroscopy, and show how we assemble combined methods such as ptychographic tomography from existing components. quantEM is available under the MIT license, together with documentation, tutorials, and curated example datasets.",
+        "fetch_status": "abstract",
+        "relevance": 1,
+        "fact_card": {
+          "core_claim": "quantEM 是一个开源 Python 包，利用 PyTorch 张量和自动微分实现定量电子显微镜分析，通过可微分物理前向模型和组件库支持多模态分析。",
+          "key_facts": [
+            "定量电子显微镜包括成像、衍射、光谱和断层扫描测量，其分析日益需要利用物理前向模型求解逆问题。",
+            "现有开源软件大多围绕单一模态组织，导致多模态分析需要在不同软件包之间移动数据，且新方法难以复用现有的物理模型和优化器。",
+            "quantEM 使用 PyTorch 张量进行计算和自动微分，并使用 Zarr 进行存储。",
+            "每个分析方法通过编写可微分前向模型，并从组件库中选择表示、损失函数、约束和优化器来实现。",
+            "所有方法均可在 CPU 和 GPU 上运行，支持保存和恢复，并使用相同的校准数据结构和可视化工具。",
+            "当前模块包括取向和应变映射、直接和迭代ptychography（叠层成像）、具有神经表示的断层扫描，以及 X 射线和电子能量损失光谱。"
+          ],
+          "numbers": [],
+          "method_type": "开源软件包开发 / 数值模型",
+          "is_ai": false,
+          "maturity": "不适用",
+          "caveats": [],
+          "terms": [
+            "quantEM = quantEM",
+            "PyTorch = PyTorch",
+            "Zarr = Zarr",
+            "ptychography = 叠层成像",
+            "MIT license = MIT 许可证"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "09105a712ea558db",
+        "title": "High-resolution top-down nanopatterning of NbN thin films for superconducting metamaterials",
+        "url": "https://arxiv.org/abs/2611.21848v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Francesca Incalza",
+          "Davide Mondin",
+          "Dip Joti Paul",
+          "Matteo Castellani",
+          "Alejandro Simon",
+          "Rocco A. Vitalone",
+          "Dmitri N. Basov",
+          "Karl K. Berggren"
+        ],
+        "published": "2026-11-16",
+        "summary": "Periodic nanopatterning offers a route to tailoring vortex motion and the electromagnetic response of superconducting films, providing a basis for superconducting metamaterials. Here, we report a high-resolution top-down nanopatterning process for ultrathin epitaxial NbN films on sapphire substrates. Electron-beam lithography using hydrogen silsesquioxane (HSQ) and ZEP 530A resists was optimized through proximity-effect correction and adhesion-layer integration. Dense superconducting nanowire grids with pitches down to 70 nm were fabricated, alongside millimeter-square areas patterned with 100-nm-pitch hole arrays with high pattern fidelity. A thin Si capping layer was found to significantly improve HSQ adhesion on epitaxial NbN. The nanopatterns were successfully transferred into 5-nm-thick NbN films by reactive ion etching (RIE). Structural and dimensional characterization was performed using scanning electron microscopy (SEM), transmission electron microscopy (TEM), and atomic force microscopy (AFM), enabling cross-validation of nanoscale feature dimensions and etch quality. Electrical transport measurements reveal periodic resistance minima and switching-current oscillations at magnetic fields set by the hole-array pitch, consistent with enhanced vortex pinning when the vortex configuration matches the patterned lattice. Cryogenic THz time-domain spectroscopy further reveals a reduced superfluid density in the nanopatterned region relative to pristine NbN, while both regions have a spectroscopic superconducting transition near 14 K. These results establish a robust fabrication platform for superconducting nanopatterns targeting vortex pinning, metamaterials, and quantum-device applications.",
+        "fetch_status": "abstract",
+        "relevance": 1,
+        "fact_card": {
+          "core_claim": "报告了一种用于蓝宝石衬底上超薄外延NbN薄膜的高分辨率自上而下纳米图案化工艺，成功制备了70 nm间距的超导纳米线网格和100 nm间距的孔阵列，并验证了其在涡旋钉扎和超导特性调控中的应用潜力。",
+          "key_facts": [
+            "使用氢硅氧烷（HSQ）和ZEP 530A抗蚀剂，通过邻近效应校正和粘附层集成优化了电子束光刻工艺。",
+            "发现薄Si覆盖层能显著改善HSQ在外延NbN上的粘附性。",
+            "通过反应离子刻蚀（RIE）将纳米图案成功转移到5 nm厚的NbN薄膜中。",
+            "利用扫描电子显微镜（SEM）、透射电子显微镜（TEM）和原子力显微镜（AFM）对结构、尺寸及刻蚀质量进行了表征和交叉验证。",
+            "电输运测量显示，在由孔阵列间距决定的磁场下出现周期性电阻极小值和开关电流振荡，这与涡旋构型匹配图案化晶格时增强的涡旋钉扎一致。",
+            "低温太赫兹时域光谱显示，与原始NbN相比，纳米图案化区域的超流密度降低，但两区域的光谱超导转变温度均在14 K附近。"
+          ],
+          "numbers": [
+            "70 nm (pitches down to 70 nm)",
+            "100 nm (100-nm-pitch hole arrays)",
+            "5 nm (5-nm-thick NbN films)",
+            "14 K (spectroscopic superconducting transition near 14 K)"
+          ],
+          "method_type": "实验测量",
+          "is_ai": false,
+          "maturity": "实验室实验（真实样品测量）",
+          "caveats": [],
+          "terms": [
+            "NbN = 氮化铌",
+            "HSQ = 氢硅氧烷",
+            "RIE = 反应离子刻蚀",
+            "SEM = 扫描电子显微镜",
+            "TEM = 透射电子显微镜",
+            "AFM = 原子力显微镜"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "7691cd531cdc948a",
+        "title": "Engineering antiferromagnetic (LaVO3)m/(PrVO3)n superlattices",
+        "url": "https://arxiv.org/abs/2611.22861v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "A. Benedit-Cardenas",
+          "G. Masset",
+          "M. Bugnet",
+          "M. Martirosyan",
+          "G. Steciuk",
+          "S. Migot",
+          "J. Ghanbaja",
+          "L. Pasquier"
+        ],
+        "published": "2026-11-17",
+        "summary": "In this study, we demonstrate the atomic-scale engineering of antiferromagnetic (LaVO3)m/(PrVO3)n superlattices grown by MBE on (001)-oriented SrTiO3 substrates. Our work achieved a precise layer-by-layer control, revealing how interface-driven structural distortions can be systematically tuned. X-ray diffraction and reciprocal space mapping confirm both the epitaxial strain state and the high crystalline quality of the superlattices. High-resolution scanning transmission electron microscopy further uncovers layer-resolved atomic displacements, where La3+ and Pr3+ exhibit antipolar motions modulated by the superlattice periodicity. The alternate stackings of LaVO3 and PrVO3 yield a unique antiferromagnetic transition temperature, which can be tuned by adjusting their relative proportions. This behavior exists despite the distinct spin ordering temperatures observed in the constituent materials. Layer-resolved spectroscopic measurements reveal that the hybridization of La and Pr 5d orbitals with O 2p orbitals is also modulated and directly correlated to the oxygen octahedra rotations. By determining the orbital hybridization and mapping the cation displacements as proxies, we can visualize indirectly the trilinear coupling between oxygen octahedra rotations and antipolar rare earth displacements. Notably, the interfacial oxygen octahedra connectivity between cubic SrTiO3 substrate and orthorhombic vanadate layers significantly influences the structural distortions. These distortions, almost quenched near the interface, relax over few unit cells, demonstrating how strain and interfacial effects propagate through the superlattice. This study illustrates how artificial superlattices can be engineered to control structural distortions at the atomic scale, offering a pathway to tune the magnetic properties through strain-distortion relationships in perovskite oxides.",
+        "fetch_status": "abstract",
+        "relevance": 0,
+        "fact_card": {
+          "core_claim": "通过分子束外延（MBE）在SrTiO3衬底上制备了原子尺度可控的反铁磁(LaVO3)m/(PrVO3)n超晶格，揭示了界面驱动的结构畸变及其对磁性和轨道杂化的调控机制。",
+          "key_facts": [
+            "利用MBE技术在(001)-取向的SrTiO3衬底上生长了反铁磁(LaVO3)m/(PrVO3)n超晶格，实现了逐层精确控制。",
+            "X射线衍射和倒易空间映射证实了超晶格的 epitaxial strain state（外延应变状态）和高结晶质量。",
+            "高分辨扫描透射电子显微镜揭示了层分辨的原子位移，其中La3+和Pr3+表现出受超晶格周期性调制的反极性运动（antipolar motions）。",
+            "LaVO3和PrVO3的交替堆叠产生独特的反铁磁转变温度，可通过调整两者的相对比例进行调节，尽管组分材料具有不同的自旋有序温度。",
+            "层分辨光谱测量显示，La和Pr的5d轨道与O的2p轨道的杂化受到调制，并与氧八面体旋转直接相关。",
+            "立方SrTiO3衬底与正交晶系钒酸盐层之间的界面氧八面体连接性显著影响结构畸变，这些畸变在界面附近几乎被抑制，并在几个晶胞内弛豫。"
+          ],
+          "numbers": [
+            "(001)-oriented",
+            "La3+",
+            "Pr3+",
+            "5d orbitals",
+            "O 2p orbitals",
+            "few unit cells"
+          ],
+          "method_type": "实验测量",
+          "is_ai": false,
+          "maturity": "实验室实验（真实样品测量）",
+          "caveats": [],
+          "terms": [
+            "MBE = 分子束外延",
+            "antiferromagnetic = 反铁磁",
+            "superlattices = 超晶格",
+            "epitaxial strain state = 外延应变状态",
+            "antipolar motions = 反极性运动",
+            "oxygen octahedra rotations = 氧八面体旋转",
+            "trilinear coupling = 三线性耦合",
+            "perovskite oxides = 钙钛矿氧化物"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "997bfadc9efe54f7",
+        "title": "Zernike-efficient phase contrast with a scanned electron probe",
+        "url": "https://arxiv.org/abs/2611.22341v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Philipp Pelz"
+        ],
+        "published": "2026-11-17",
+        "summary": "For weak-phase objects, scanning transmission electron microscopy (STEM) with a far-field detector transfers at most half of the phase information per electron that Zernike phase-contrast (ZPC) conventional transmission electron microscopy (CTEM) achieves. We propose APEX (Apex Phase-plate EXit-wave imaging), a scanned-probe mode that combines a defocused probe, a $π/2$ phase element in a magnified image of the probe crossover, and in-focus image-plane detection at each scan position. It applies the generalized Zernike framework of Dwyer and Paganin to a scanned probe. In a linear model of a thin weak-phase object with an ideal phase dot, APEX transfers nearly the full Zernike Fisher information over a wide band, substantially more than diffraction-plane four-dimensional STEM (4D-STEM). In idealized simulations of myoglobin in vitreous ice at a cryo-EM dose (elastic scattering only, no chromatic aberration, full coherence), ideal-dot APEX at a probe defocus of 1 $μ$m reconstructs the phase more accurately than defocused 4D-STEM ptychography with one untuned probe setting. At a defocus of about 25 $μ$m, a crossed laser phase plate (XLPP) acts as the $π/2$ element, and APEX of a periodic specimen cell comes close to CTEM with the same plate. In two dimensions, this mode is equivalent to laser phase-plate CTEM of a small, scanned area. A single simulated APEX scan with the XLPP also separates two myoglobin phase screens 150 nm apart in vacuum, at known depths, which is not possible with one ZPC CTEM exposure.",
+        "fetch_status": "abstract",
+        "relevance": 0,
+        "fact_card": {
+          "core_claim": "提出了一种名为APEX的扫描探针成像模式，结合离焦探针、π/2相位元件和像平面检测，在弱相位物体成像中比4D-STEM传输更多的Zernike Fisher信息，并在模拟中表现出优于离焦4D-STEM叠层成像的相位重建精度。",
+          "key_facts": [
+            "对于弱相位物体，使用远场探测器的扫描透射电子显微镜（STEM）每个电子传输的相位信息最多只有Zernike相位衬度（ZPC）常规透射电子显微镜（CTEM）的一半。",
+            "APEX模式结合了离焦探针、在探针交叉点放大图像中的π/2相位元件以及每个扫描位置的聚焦像平面检测。",
+            "在薄弱相位物体和理想相位点的线性模型中，APEX在宽带范围内传输了几乎全部的Zernike Fisher信息，显著多于衍射平面四维STEM（4D-STEM）。",
+            "在肌红蛋白在玻璃态冰中的理想化模拟中（仅弹性散射，无色差，完全相干），探针离焦1 μm时的理想点APEX比使用一个未调谐探针设置的离焦4D-STEM叠层成像更准确地重建相位。",
+            "在约25 μm的离焦下，交叉激光相位板（XLPP）作为π/2元件，周期性样品单元的APEX成像接近于使用相同相位板的CTEM。",
+            "单次使用XLPP的模拟APEX扫描可以在真空中分离相距150 nm的两个肌红蛋白相位屏，这是单次ZPC CTEM曝光无法实现的。"
+          ],
+          "numbers": [
+            "1 μm (探针离焦距离)",
+            "25 μm (离焦距离)",
+            "150 nm (两个肌红蛋白相位屏在真空中的间距)"
+          ],
+          "method_type": "数值模型降阶 / 理论分析 / 模拟验证",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "模拟假设仅包含弹性散射，无色差，且为完全相干。",
+            "线性模型假设使用理想相位点（ideal phase dot）。"
+          ],
+          "terms": [
+            "Zernike phase-contrast (ZPC) = Zernike相位衬度",
+            "scanning transmission electron microscopy (STEM) = 扫描透射电子显微镜",
+            "conventional transmission electron microscopy (CTEM) = 常规透射电子显微镜",
+            "APEX (Apex Phase-plate EXit-wave imaging) = APEX（顶点相位板出射波成像）",
+            "four-dimensional STEM (4D-STEM) = 四维STEM",
+            "crossed laser phase plate (XLPP) = 交叉激光相位板",
+            "Fisher information = Fisher信息"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "a0b6f1fb67d95c14",
+        "title": "Swift Heavy Ion Tracks in Polymorphs of Titanium Dioxide: The Effects of Electron Beam and Crystal Structures",
+        "url": "https://arxiv.org/abs/2611.22153v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Xiaoting Jia",
+          "Lijun Xu",
+          "Ruslan A. Rymzhanov",
+          "Wenqiang Liu",
+          "Peipei Hu",
+          "Shengxia Zhang",
+          "Jiande Liu",
+          "Jian Zeng"
+        ],
+        "published": "2026-11-17",
+        "summary": "Swift heavy ion (SHI) irradiation generates nanoscale damage in materials, offering opportunities for controlled modification of structural properties. Understanding the fundamental processes governing damage formation in altered regions remains a longstanding challenge. This work explores how crystal structure influences swift heavy ion-induced damage formation and evolution in rutile and anatase TiO2. Combining transmission electron microscopy (TEM) and molecular dynamics simulations, we investigate how differences in atomic arrangement govern track morphology and structural recovery. Although irradiation produces amorphous tracks in both polymorphs, their morphologies differ considerably. In rutile, tracks develop pronounced diameter variations, forming hourglass-like structures, whereas in anatase they retain a relatively uniform cylindrical shape. Molecular dynamics simulations reveal that these differences arise from the distinct recrystallization behavior of the two crystal structures during rapid cooling, leading to different pathways of track evolution and recovery. Particular attention is paid to electron beam induced effects during TEM characterization, which can substantially modify the structure and apparent morphology of ion tracks. Prolonged electron beam exposure promotes the recrystallization of initially amorphous tracks and surface hillocks, accompanied by the development of Fresnel contrast. These findings highlight the importance of understanding beam-induced transformations for the reliable interpretation of TEM observations of radiation-damaged materials.",
+        "fetch_status": "abstract",
+        "relevance": 0,
+        "fact_card": {
+          "core_claim": "本文通过透射电子显微镜（TEM）和分子动力学模拟，揭示了金红石型和锐钛矿型二氧化钛中快重离子（SHI）辐照损伤形态差异源于两者在快速冷却过程中不同的再结晶行为，并强调了电子束诱导效应对TEM观测结果解释的重要性。",
+          "key_facts": [
+            "快重离子（SHI）辐照在材料中产生纳米尺度损伤，为结构特性的可控改性提供了机会。",
+            "研究结合透射电子显微镜（TEM）和分子动力学模拟，探讨原子排列差异如何控制径迹（track）形态和结构恢复。",
+            "虽然两种多晶型（金红石型和锐钛矿型）二氧化钛辐照后均产生非晶径迹，但其形态差异显著。",
+            "金红石型（rutile）中的径迹表现出明显的直径变化，形成沙漏状结构；而锐钛矿型（anatase）中的径迹保持相对均匀的圆柱形。",
+            "分子动力学模拟显示，这些差异源于两种晶体结构在快速冷却期间不同的再结晶行为，导致径迹演化和恢复路径不同。",
+            "长时间电子束照射会促进初始非晶径迹和表面鼓包（hillocks）的再结晶，并伴随菲涅耳衬度（Fresnel contrast）的发展。"
+          ],
+          "numbers": [],
+          "method_type": "实验测量与数值模拟结合",
+          "is_ai": false,
+          "maturity": "实验室实验（真实样品测量）",
+          "caveats": [
+            "电子束诱导效应会显著改变离子径迹的结构和表观形态，因此理解这些转变对于可靠解释辐射损伤材料的TEM观测至关重要。"
+          ],
+          "terms": [
+            "Swift heavy ion (SHI) = 快重离子",
+            "Titanium Dioxide (TiO2) = 二氧化钛",
+            "Rutile = 金红石型",
+            "Anatase = 锐钛矿型",
+            "Transmission electron microscopy (TEM) = 透射电子显微镜",
+            "Molecular dynamics simulations = 分子动力学模拟",
+            "Fresnel contrast = 菲涅耳衬度"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "a3d626f2d60eb75b",
+        "title": "玻璃基板进入大客户认证阶段 量产预期现分化",
+        "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOaU1kZU5ES3RIVHZGWUxUTXlKbWFpc0NUV18tb3BSSUpUYWY2YjVXNXdZY0s4U2oxVEFhc3dHa1hTRG12OE5BR19HbUl5LXQzaUhxUmVqMzYxLXp2VUVvZlNtUUlhbmpEckV0NnI3WEpkdEdFWFVUaXBZakRFOWtkWi1iY2Z4UEpOc19FbHh5VE9PVFJSbVMzNHVHbjg3UnJSbmVOek01ellLYkx4NFFxeGRhUWhKWVBGdFRBQ09ZS1hrVE11MHhEYzlJc09YOHdyeUE5bFhtSjI?oc=5",
+        "source_name": "Google News RSS: TSV / 封装 / 检测 (中文)",
+        "publisher": "디지털투데이",
+        "kind": "news",
+        "authors": [],
+        "published": "2026-11-15",
+        "summary": "",
+        "fetch_status": "title",
+        "relevance": 0,
+        "fact_card": {
+          "core_claim": "玻璃基板进入大客户认证阶段 量产预期现分化",
+          "key_facts": [],
+          "numbers": [],
+          "method_type": "",
+          "is_ai": null,
+          "maturity": "",
+          "caveats": [],
+          "terms": [],
+          "dropped": [],
+          "error": ""
+        }
+      }
+    ],
+    "script": "大家好，这里是《X射线无损检测与AI图像处理前沿》。\n\n第一条来自 arXiv 预印本，这是一篇未经同行评审的论文。作者 Colin Ophus 等人开发了一个名为 quantEM 的开源 Python 包。这个工具利用 PyTorch 张量和自动微分技术，实现了定量电子显微镜分析。它通过可微分物理前向模型和组件库，支持多模态分析。目前该模块包括取向和应变映射、直接和迭代叠层成像、具有神经表示的断层扫描，以及 X 射线和电子能量损失光谱。所有方法均可在 CPU 和 GPU 上运行，并使用相同的校准数据结构和可视化工具。\n\n另一条来自 arXiv 预印本，同样未经同行评审。作者 Francesca Incalza 等人报告了一种用于蓝宝石衬底上超薄外延氮化铌薄膜的高分辨率自上而下纳米图案化工艺。他们成功制备了 70 nm 间距的超导纳米线网格和 100 nm 间距的孔阵列。实验使用了 5 nm 厚的氮化铌薄膜，并通过反应离子刻蚀将纳米图案转移。电输运测量显示，在由孔阵列间距决定的磁场下出现周期性电阻极小值。低温太赫兹时域光谱显示，纳米图案化区域的超流密度降低，但光谱超导转变温度均在 14 K 附近。\n\n另一条来自 arXiv 预印本，未经同行评审。作者 A. Benedit-Cardenas 等人通过分子束外延技术在 (001)-取向的 SrTiO3 衬底上制备了原子尺度可控的反铁磁 (LaVO3)m/(PrVO3)n 超晶格。高分辨扫描透射电子显微镜揭示了层分辨的原子位移，其中 La3+ 和 Pr3+ 表现出受超晶格周期性调制的反极性运动。层分辨光谱测量显示，La 和 Pr 的 5d 轨道与 O 的 2p 轨道的杂化受到调制，并与氧八面体旋转直接相关。这些结构畸变在界面附近几乎被抑制，并在几个晶胞内弛豫。\n\n另一条来自 arXiv 预印本，未经同行评审。作者 Philipp Pelz 提出了一种名为 APEX 的扫描探针成像模式。该模式结合离焦探针、π/2 相位元件和像平面检测。在弱相位物体成像中，APEX 比四维 STEM 传输更多的 Zernike Fisher 信息。在肌红蛋白在玻璃态冰中的理想化模拟中，探针离焦 1 μm 时的理想点 APEX 比使用一个未调谐探针设置的离焦四维 STEM 叠层成像更准确地重建相位。在约 25 μm 的离焦下，交叉激光相位板作为 π/2 元件，周期性样品单元的 APEX 成像接近于使用相同相位板的常规透射电子显微镜。单次使用交叉激光相位板的模拟 APEX 扫描可以在真空中分离相距 150 nm 的两个肌红蛋白相位屏。需要注意的是，这些结论基于仅包含弹性散射、无色差且完全相干的模拟假设。\n\n另一条来自 arXiv 预印本，未经同行评审。作者 Xiaoting Jia 等人通过透射电子显微镜和分子动力学模拟，研究了金红石型和锐钛矿型二氧化钛中快重离子辐照损伤形态的差异。研究发现，金红石型中的径迹表现出明显的直径变化，形成沙漏状结构；而锐钛矿型中的径迹保持相对均匀的圆柱形。分子动力学模拟显示，这些差异源于两种晶体结构在快速冷却期间不同的再结晶行为。此外，长时间电子束照射会促进初始非晶径迹和表面鼓包的再结晶，并伴随菲涅耳衬度的发展。\n\n最后一则消息来自 디지털투데이。该媒体发表了一篇文章，题目是《玻璃基板进入大客户认证阶段 量产预期现分化》。全文暂未获取，细节这里不展开。\n\n我们下期见。",
+    "audio": {
+      "path": "C:\\Projects\\ai-podcast\\audio\\ep-2026-11-18.mp3",
+      "duration_sec": 250.9,
+      "size_bytes": 1505376,
+      "engine": "edge-tts"
+    },
+    "status": "pushed",
+    "history": [],
+    "quality": {
+      "pipeline": "fact-cards-v1",
+      "items": 6,
+      "fetch_status": {
+        "quantEM: Quantitative Electron Microscop": "abstract",
+        "High-resolution top-down nanopatterning ": "abstract",
+        "Engineering antiferromagnetic (LaVO3)m/(": "abstract",
+        "Zernike-efficient phase contrast with a ": "abstract",
+        "Swift Heavy Ion Tracks in Polymorphs of ": "abstract",
+        "玻璃基板进入大客户认证阶段 量产预期现分化": "title"
+      },
+      "card_errors": [],
+      "violations_first": [],
+      "repaired": false,
+      "violations_final": []
+    },
+    "commit_sha": "ab9ece2c78f6ba389cc7d00381af1f5de2483d96",
+    "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-18.html",
+    "created_at": "2026-11-18T08:32:16.526962-05:00",
+    "published_at": "2026-11-18T08:32:35.741721-05:00"
+  },
+  {
     "episode_id": "ep-2026-11-17",
     "title": "芯片匹配、磁天体与混合键合前沿",
     "date": "2026-11-17",
