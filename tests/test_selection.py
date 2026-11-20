@@ -319,6 +319,13 @@ def test_gather_candidates_filters_seen_before_picking(monkeypatch, tmp_path):
     got = pub.gather_candidates(show, {}, store)
     assert [i["id"] for i in got["eligible"]] == ["new1"]
     assert got["warnings"] == ["A1: timeout"] and len(got["fresh"]) == 2
+    # 另一套流程的账本格式不对：不崩，给出警告
+    bad = EpisodeStore(str(tmp_path / "other"))
+    os.makedirs(bad.state_dir)
+    with open(bad.episodes_path, "w", encoding="utf-8") as f:
+        json.dump([{"id": "gm-1", "name": "缺字段的记录"}], f)
+    got_bad = pub.gather_candidates(show, {}, bad)
+    assert any("读不出来" in w for w in got_bad["warnings"]) and got_bad["eligible"]
     # --all 试跑：播过的也参与（60 条示例标题只差一个编号，会被当成同一条而只留一条）
     again = {i["id"] for i in pub.gather_candidates(show, {}, store, ignore_seen=True)["eligible"]}
     assert again == {"s0", "new1"}

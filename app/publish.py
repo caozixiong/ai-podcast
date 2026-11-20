@@ -140,18 +140,27 @@ def gather_candidates(show: dict, sources_cfg: dict, store: EpisodeStore, *,
     fresh = items if ignore_seen else [it for it in items if not store.is_seen(it["id"])]
     min_rel = int(e.get("min_relevance", 0))
     on_topic = [it for it in fresh if it.get("relevance", 0) >= min_rel]
-    past_titles = [] if ignore_seen else [it.get("title", "") for ep in store.load_episodes()
-                                          for it in ep.items]
+    past_titles = []
+    if not ignore_seen:
+        try:
+            past_titles = [it.get("title", "") for ep in store.load_episodes()
+                           for it in ep.items if isinstance(it, dict)]
+        except (TypeError, AttributeError) as ex:       # 账本格式不对：不拦发布，但要报出来
+            warnings.append(f"节目记录 {store.episodes_path} 读不出来（{ex}），本次没有和往期标题比对重复")
     eligible, repeats = drop_repeats(on_topic, past_titles)
     return {"items": items, "fresh": fresh, "eligible": eligible, "repeats": repeats,
             "min_relevance": min_rel, "warnings": warnings}
 
 
-def run_candidates(project_dir: str, *, ignore_seen: bool = False) -> dict:
-    """选题预览：只采集和打分，不调用模型、不发布、不记已读。用来查"今天会选什么、为什么"。"""
+def run_candidates(project_dir: str, *, ignore_seen: bool = False, state_dir: str | None = None) -> dict:
+    """选题预览：只采集和打分，不调用模型、不发布、不记已读。用来查"今天会选什么、为什么"。
+
+    state_dir：换一套"播过什么"的账本（默认 data/）。Gemini 对照流程用 gemini/data，
+    这样两边用同一套选题规则，但各记各的已播素材。
+    """
     cfg = load_config(project_dir)
     show, sources_cfg = cfg["show"], cfg["sources"]
-    store = EpisodeStore(os.path.join(project_dir, "data"))
+    store = EpisodeStore(state_dir or os.path.join(project_dir, "data"))
     e = show.get("episode", {})
     pool = gather_candidates(show, sources_cfg, store, ignore_seen=ignore_seen)
     # 预览不抓网页正文：直链新闻按"有摘要就算有原文"估计
@@ -181,7 +190,8 @@ def run_candidates(project_dir: str, *, ignore_seen: bool = False) -> dict:
     return {"date": today_str(), "min_relevance": pool["min_relevance"],
             "total": len(pool["items"]), "fresh": len(pool["fresh"]),
             "on_topic": len(pool["eligible"]), "selected": len(selected),
-            "warnings": pool["warnings"], "rows": [row(it) for it in pool["items"]]}
+            "warnings": pool["warnings"], "rows": [row(it) for it in pool["items"]],
+            "selected_items": [_public_item(it) for it in selected]}
 
 
 def compose_episode(show: dict, sources_cfg: dict, store: EpisodeStore, report: dict, *,
@@ -492,6 +502,12 @@ def run_publish(project_dir: str, *, do_push: bool = False) -> dict:
     build_site([e.to_dict() for e in all_eps], site_out, show)
     ep.status = "site_built"
     report["stages"]["site"] = "ok"
+
+    # 5.5) 先把本集记进状态账本再提交：推上去的 data/episodes.json 里就有今天这一集。
+    #      Gemini 对照流程按它取同一批素材；以前账本要等第二天才跟着下一集一起提交。
+    ep.pages_url = (show.get("pages_url", "") + f"episodes/{ep.episode_id}.html")
+    store.upsert(ep)
+    store.mark_seen([it["id"] for it in ep.items])
 
     # 6) 提交 + 推送
     if do_push:

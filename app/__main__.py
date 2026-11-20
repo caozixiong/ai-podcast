@@ -1,4 +1,4 @@
-"""CLI 入口：python -m app <doctor | preview | candidates [--all] | draft [--all] | publish [--push] | republish <episode_id> [--push]>"""
+"""CLI 入口：python -m app <doctor | preview | candidates [--all] [--json] [--state-dir DIR] | draft [--all] | publish [--push] | republish <episode_id> [--push]>"""
 from __future__ import annotations
 
 import json
@@ -76,21 +76,22 @@ def main(argv):
         return 0 if rep.get("result") == "republished" else 2
     if cmd == "candidates":
         # 选题预览：只采集+打分，不调用模型、不发布、不记已读。--all 连已播过的也算进来
+        #   --state-dir DIR：换一套已播账本（如 gemini/data）；--json：只输出 JSON，selected_items 是入选素材的完整记录
         from app.publish import run_candidates
-        rep = run_candidates(ROOT, ignore_seen="--all" in argv)
+        state_dir = argv[argv.index("--state-dir") + 1] if "--state-dir" in argv[:-1] else None
+        rep = run_candidates(ROOT, ignore_seen="--all" in argv, state_dir=state_dir)
+        if "--json" in argv:
+            print(json.dumps(rep, ensure_ascii=False, indent=2))
+            return 0
         print(f"候选 {rep['total']} 条，未播过 {rep['fresh']} 条，切题（相关度≥{rep['min_relevance']}）"
               f"{rep['on_topic']} 条，入选 {rep['selected']} 条")
         for w in rep["warnings"]:
             print("采集警告：" + w)
         order = {"入选": 0, "候补": 1, "与往期重复": 2, "不切题": 3, "已播过": 4}
         for r in sorted(rep["rows"], key=lambda r: (order.get(r["state"], 9), -r["relevance"])):
-            if "--json" in argv:
-                continue
             print(f"[{r['state']}] {r['relevance']:>2} | {r['kind']} | {r['published']} | "
                   f"{(r['publisher'] or '')[:12]} | {(r['title'] or '')[:90]}")
             print("        " + "；".join(r["hits"]))
-        if "--json" in argv:
-            print(json.dumps(rep, ensure_ascii=False, indent=2))
         return 0
     if cmd == "draft":
         # 只出草稿：不配音、不建站、不推送、不记已读；结果另存 logs/drafts/（不入库）
