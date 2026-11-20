@@ -8,13 +8,14 @@
 <body>
 <div class="wrap">
   <p><a href="../">← 返回首页</a></p>
-  <header class="hero"><h1>先进封装热仿真加速新方法</h1><p class="sub">2026-11-16 · 2:12</p></header>
+  <header class="hero"><h1>先进封装热仿真加速新方法</h1><p class="sub">2026-11-16 · 2:12</p>
+    <p class="by"><span class="tag by-tag">本页由 Hermes Qwen3.8:27b 创建</span></p></header>
   <div class="player"><audio controls preload="metadata" src="../audio/ep-2026-11-16.mp3" style="width:100%"></audio><p class="note">音频随本仓库发布；若无法播放，请刷新或稍后重试。</p></div>
   <div class="actions"><a class="btn play" href="../audio/ep-2026-11-16.mp3" download="ep-2026-11-16.mp3">⬇ 下载 MP3</a><a class="link" href="#" onclick="window.print();return false;">打印/复制逐字稿</a></div>
   <h2 class="sec">本期来源（公开信息）</h2>
   <ol class="src"><li><a href="https://news.google.com/rss/articles/CBMikgFBVV95cUxNeXRycWU5N0RwOGFQdkFHbDlCVmxWa21HTlcxZHdXNWdONzU4R0pPV0JaeW44c0tkV0I3dUtRRmVMNFY0Tk9jOXNMUjZlN0hPWDJLdnhOYnlIOXU5TlBqWWZMRWtnVEoyTWhHbUVvRU12U2RVdE1IbXo5VmFhRXB1dTdCeFpMMmNHb3hBc1Y5TlJrZw?oc=5" target="_blank" rel="noopener">先進封裝將熱與接觸難題提前至晶圓測試 AI效益將先集中於測試判定與停機管理</a> <span class="hint">— DIGITIMES · 2026-11-16（仅标题）</span></li><li><a href="https://arxiv.org/abs/2611.17693v1" target="_blank" rel="noopener">SPLIT-MOR: Fast and Accurate Model Order Reduction for Nonlinear Transient Thermal Simulation of 2.5D/3D ICs</a> <span class="hint">— arXiv 预印本 · 2026-11-13</span></li></ol>
   <h2 class="sec">逐字稿</h2>
   <div class="script"><p>大家好，这里是《X射线无损检测与AI图像处理前沿》。</p><p>首先来看一条来自 DIGITIMES 的消息。DIGITIMES 发表了一篇文章，题目是《先進封裝將熱與接觸難題提前至晶圓測試 AI效益將先集中於測試判定與停機管理》。全文暂未获取，细节这里不展开。</p><p>另一条来自 arXiv 的预印本论文，需要说明的是，预印本还没有经过同行评审。这篇论文由 Zebin Shi 等人撰写，研究的是针对 2.5D 和 3D IC 快速瞬态热仿真的非线性模型降阶方法。</p><p>在先进封装中，由于存在温度相关的漏电流、热导率和热容等非线性项，传统的线性模型降阶技术无法直接应用。而现有的超约化解决方案虽然能处理非线性，但需要昂贵的非线性训练数据。为了解决这个问题，作者提出了一种名为 SPLIT-MOR 的方法，即子域分段线性化与区间张量。</p><p>SPLIT-MOR 的工作流程分为离线和在线两个阶段。在离线阶段，该方法通过子域聚类和温度区间划分来计算缩减分量张量。在在线阶段，它高效地更新缩减系数矩阵和负载向量。这种设计使得该方法无需额外的训练集，就能实现快速求解。</p><p>论文在数值实验中验证了该方法的效果。结果显示，SPLIT-MOR 的平均相对误差低于 0.11%，最大误差低于 0.86 摄氏度。在速度方面，在线求解时间相比 COMSOL 实现了高达 830 倍的加速，相比最先进超约化方法 MDEIM 实现了 7.5 倍的加速。此外，离线时间总体减少了 27 倍。</p><p>我个人的理解是，对于从事热仿真或封装设计的工程师来说，这种无需训练数据且能大幅加速的方法，可能在迭代设计阶段很有价值。不过，论文目前仅在数值实验层面进行了验证，实际工程应用中的表现还需进一步观察。</p><p>我们下期见。</p></div>
-  <div class="ai-note">本节目由 AI 基于上述公开来源辅助生成：论文依据 arXiv 摘要（预印本，未经同行评审），新闻依据可获取的正文；标注"仅标题"的条目只读取了标题。逐字稿发布前已由程序核对数字、出处和禁用说法，但仍可能有理解偏差，请以原文为准。节目内容仅供学习交流，不构成任何技术/投资建议。</div>
+  <div class="ai-note">本页由 Hermes Qwen3.8:27b 创建。本节目由 AI 基于上述公开来源辅助生成：论文依据 arXiv 摘要（预印本，未经同行评审），新闻依据可获取的正文；标注"仅标题"的条目只读取了标题。逐字稿发布前已由程序核对数字、出处和禁用说法，但仍可能有理解偏差，请以原文为准。节目内容仅供学习交流，不构成任何技术/投资建议。</div>
 </div>
 </body></html>

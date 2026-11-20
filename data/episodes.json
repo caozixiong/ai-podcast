@@ -1,5 +1,265 @@
 [
   {
+    "episode_id": "ep-2026-11-19",
+    "title": "MS2自组装、MRI偏差与冷冻电镜B因子",
+    "date": "2026-11-19",
+    "items": [
+      {
+        "id": "9705ad454208f7d4",
+        "title": "Electrostatic interactions drive the self-assembly of secondary coat-protein layers around wild-type MS2 particles",
+        "url": "https://arxiv.org/abs/2611.24513v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "LaNell A. Williams",
+          "Amelia W. Paine",
+          "Kellianne Kornick",
+          "Rees F. Garmann",
+          "Vinothan N. Manoharan"
+        ],
+        "published": "2026-11-18",
+        "summary": "The protein capsids of many icosahedral RNA viruses can self-assemble in vitro in the absence of any host cell factors. For bacteriophage MS2 and related viruses, previous studies have focused on the role of specific RNA-protein interactions in driving the assembly process. However, the contribution of electrostatics remains unclear. We show that MS2 coat protein dimers can assemble into additional capsid layers around intact wild-type MS2 particles, even in the absence of free RNA. We characterize the size and morphology of the particles through transmission electron microscopy, gel electrophoresis, and dynamic light scattering, and we use binding and infectivity assays to determine how the maturation protein affects layer formation. Our results are consistent with a heterogeneous nucleation-and-growth assembly pathway, in which the nucleation barrier is controlled by the protein concentration, and electrostatic attraction between the positively charged coat proteins and negatively charged capsid drives growth. Interestingly, the secondary layers rarely fully encapsulate the wild-type particles, suggesting that elastic energy may limit their growth. These results highlight the importance of electrostatics in the assembly of protein shells, even in systems such as MS2 that are known for their strong, specific RNA-protein interactions.",
+        "fetch_status": "abstract",
+        "relevance": 1,
+        "fact_card": {
+          "core_claim": "静电相互作用驱动衣壳蛋白二聚体在野生型MS2病毒颗粒周围自组装形成额外的衣壳层，即使在没有游离RNA的情况下也能发生。",
+          "key_facts": [
+            "许多二十面体RNA病毒的蛋白衣壳可以在体外无宿主细胞因子的情况下自组装。",
+            "MS2衣壳蛋白二聚体可以在完整的野生型MS2颗粒周围组装成额外的衣壳层，且无需游离RNA。",
+            "研究通过透射电子显微镜、凝胶电泳和动态光散射表征了颗粒的大小和形态。",
+            "结合和感染性测定用于确定成熟蛋白如何影响层的形成。",
+            "结果与异质成核-生长组装途径一致，其中成核势垒由蛋白浓度控制，正电荷衣壳蛋白与负电荷衣壳之间的静电吸引驱动生长。",
+            "次要层很少完全包裹野生型颗粒，暗示弹性能量可能限制其生长。"
+          ],
+          "numbers": [],
+          "method_type": "实验测量",
+          "is_ai": false,
+          "maturity": "实验室实验（真实样品测量）",
+          "caveats": [
+            "次要层很少完全包裹野生型颗粒，暗示弹性能量可能限制其生长。"
+          ],
+          "terms": [
+            "MS2 = MS2噬菌体",
+            "coat protein = 衣壳蛋白",
+            "transmission electron microscopy = 透射电子显微镜",
+            "gel electrophoresis = 凝胶电泳",
+            "dynamic light scattering = 动态光散射",
+            "heterogeneous nucleation-and-growth = 异质成核-生长"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "18ad1e5a09ec1fc0",
+        "title": "【明日主题前瞻】总投资50亿元，又一先进封装项目开工",
+        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5pVlVyM3U4cE4zMU5MMGxTMGd5NkdxMFNndE16SVZFUDA3M0pCX05hekVwUGJadkpuUmZaajk4WnJRZVVCX1VBZw?oc=5",
+        "source_name": "Google News RSS: TSV / 封装 / 检测 (中文)",
+        "publisher": "财联社",
+        "kind": "news",
+        "authors": [],
+        "published": "2026-11-18",
+        "summary": "",
+        "fetch_status": "title",
+        "relevance": 1,
+        "fact_card": {
+          "core_claim": "【明日主题前瞻】总投资50亿元，又一先进封装项目开工",
+          "key_facts": [],
+          "numbers": [],
+          "method_type": "",
+          "is_ai": null,
+          "maturity": "",
+          "caveats": [],
+          "terms": [],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "4334e298347afde8",
+        "title": "华汉伟业携量产级TGV全工艺流程AOI检测方案亮相第二十四届封测年会_华汉伟业_半导体",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9NTzRZZWVoUG1UU05ZdnJpLUxTdFJKRUFKMElINlc3TG9tZG1wc3RnLS1FcElXcXctWm12VFFQMjZGaGphUnE5eUxYNms5d3BWM25lUmtVUXFLUEE?oc=5",
+        "source_name": "Google News RSS: TSV / 封装 / 检测 (中文)",
+        "publisher": "中国工控网",
+        "kind": "news",
+        "authors": [],
+        "published": "2026-11-09",
+        "summary": "",
+        "fetch_status": "title",
+        "relevance": 1,
+        "fact_card": {
+          "core_claim": "华汉伟业携量产级TGV全工艺流程AOI检测方案亮相第二十四届封测年会_华汉伟业_半导体",
+          "key_facts": [],
+          "numbers": [],
+          "method_type": "",
+          "is_ai": null,
+          "maturity": "",
+          "caveats": [],
+          "terms": [],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "e609771e8ba1c790",
+        "title": "Shedding Light on Quantum Non-Classicality: Witnessing Wigner Negativity with Free Electrons",
+        "url": "https://arxiv.org/abs/2611.24834v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Sunjun Hwang",
+          "Leong Chuan Kwek"
+        ],
+        "published": "2026-11-18",
+        "summary": "Certifying quantum non-classicality like Wigner negativity typically demands full optical state tomography. This work introduces a noise-resilient framework for witnessing optical Wigner negativity using phase-resolved quantum photon-induced near-field electron microscopy (QPINEM). By mapping electron coherences directly to symmetrically ordered optical characteristic functions within a coupling-limited phase-space region, the protocol bypasses full optical reconstruction. A post-measurement witness matrix is constructed via Bochner's theorem from recorded electron spectra, where negative eigenvalues certify non-classicality. To ensure reliability under realistic experimental conditions, a noise-aware selection procedure decouples discovery from statistical validation. Benchmarked across various optical preparations-including vacuum-Fock superpositions, odd cat states, and GKP states-the protocol provides a statistically bounded pathway for probing quantum features with free electrons.",
+        "fetch_status": "abstract",
+        "relevance": 0,
+        "fact_card": {
+          "core_claim": "提出一种利用相位分辨量子光子诱导近场电子显微镜（QPINEM）见证光学维格纳负性的抗噪声框架，通过电子相干性映射绕过完整光学态层析。",
+          "key_facts": [
+            "传统认证维格纳负性通常需要进行完整的光学态层析（full optical state tomography）。",
+            "该方法将电子相干性直接映射到耦合受限相空间区域内的对称排序光学特征函数（symmetrically ordered optical characteristic functions）。",
+            "通过Bochner定理从记录的电子光谱构建测量后见证矩阵（post-measurement witness matrix），其中负特征值认证非经典性。",
+            "引入噪声感知选择程序（noise-aware selection procedure），将发现过程与统计验证解耦，以确保在现实实验条件下的可靠性。",
+            "该协议在真空-福克叠加态（vacuum-Fock superpositions）、奇数猫态（odd cat states）和GKP态等多种光学制备方案中进行了基准测试。"
+          ],
+          "numbers": [],
+          "method_type": "理论方法/实验协议设计",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "映射过程受限于耦合受限的相空间区域（coupling-limited phase-space region）。"
+          ],
+          "terms": [
+            "Wigner negativity = 维格纳负性",
+            "QPINEM = 量子光子诱导近场电子显微镜",
+            "Bochner's theorem = Bochner定理",
+            "GKP states = GKP态"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "877fc1e26e4b14dd",
+        "title": "Unmyelinated axons alter the biological interpretation of MRI biomarkers of demyelination",
+        "url": "https://arxiv.org/abs/2611.24487v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Ali Abdollahzadeh",
+          "Ricardo Coronado-Leija",
+          "Elizabeth Chasen",
+          "Sungheon G. Kim",
+          "Dmitry S. Novikov",
+          "Els Fieremans"
+        ],
+        "published": "2026-11-18",
+        "summary": "Quantitative MRI methods are widely used to probe white matter microstructure; yet diffusion- and relaxation-based metrics are often interpreted primarily in terms of myelinated axons, implicitly assuming a negligible contribution from unmyelinated axons. Here, combining diffusion MRI (dMRI), relaxation-based MRI, and electron microscopy (EM) in the cuprizone mouse model of demyelination and recovery, we examine how unmyelinated axons shape MRI-derived microstructural indices, including axonal water fraction and $g$-ratio. To enable quantitative cellular-level comparisons, we developed automated tools for instance-level EM segmentation of white matter, allowing morphological analysis of myelinated and unmyelinated axonal populations. We find that, in the mouse model, diffusion-derived estimates of axonal water fraction reflect contributions from both axonal populations at sufficiently short diffusion times; accounting for unmyelinated axons removes an apparent bias and reveals that this metric corresponds to the total intra-axonal space rather than myelinated fibers alone. Similarly, MRI-derived $g$-ratio estimates correlate strongly with EM only when both axonal populations are included. We further demonstrate that within-voxel $g$-ratio heterogeneity introduces a systematic negative bias of up to $8\\%$, increasing with the fraction of unmyelinated axons and variability in myelin thickness. Together, these findings change the biological interpretation of MRI biomarkers during demyelination by demonstrating that unmyelinated axons are a major determinant of MRI-derived white matter indices and that combining diffusion and relaxation contrasts enables a more accurate and interpretable quantification of demyelination. They further highlight the need for quantitative biomarkers that account for axonal heterogeneity in both health and disease.",
+        "fetch_status": "abstract",
+        "relevance": 0,
+        "fact_card": {
+          "core_claim": "无髓鞘轴突是MRI衍生白质微观结构指标的主要决定因素，结合扩散和弛豫对比度能更准确地量化脱髓鞘。",
+          "key_facts": [
+            "在杯rizone小鼠脱髓鞘和恢复模型中，结合扩散MRI（dMRI）、基于弛豫的MRI和电子显微镜（EM）进行研究。",
+            "开发了用于白质实例级EM分割的自动化工具，以实现对有髓鞘和无髓鞘轴突群体的形态学分析。",
+            "在足够短的扩散时间下，扩散衍生的轴突水分分数估计值反映了两种轴突群体的贡献。",
+            "考虑无髓鞘轴突后，轴突水分分数指标对应于总轴突内空间，而非仅有髓鞘纤维。",
+            "MRI衍生的g-ratio估计值仅当包含两种轴突群体时，才与EM结果强相关。",
+            "体素内g-ratio异质性引入了高达8%的系统性负偏差，且该偏差随无髓鞘轴突比例和髓鞘厚度变异性增加而增加。"
+          ],
+          "numbers": [
+            "高达 8% 的系统性负偏差（systematic negative bias）"
+          ],
+          "method_type": "实验测量",
+          "is_ai": false,
+          "maturity": "实验室实验（真实样品测量）",
+          "caveats": [
+            "研究基于杯rizone小鼠模型（cuprizone mouse model）"
+          ],
+          "terms": [
+            "dMRI = 扩散MRI",
+            "EM = 电子显微镜",
+            "g-ratio = g-ratio",
+            "cuprizone = 杯rizone"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "8f43808e4080984e",
+        "title": "Micrograph B-factor estimation via Wilson statistics",
+        "url": "https://arxiv.org/abs/2611.24150v1",
+        "source_name": "arXiv: TSV / 封装 / 无损检测 / 显微",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Ayelet Heimowitz",
+          "Amit Singer"
+        ],
+        "published": "2026-11-18",
+        "summary": "The single-particle cryo-electron microscopy imaging process is known to cause exponential decay in the amplitude and power spectra of proteins. This decay is modeled by the B factor and is currently corrected as a post-processing stage of the 3D reconstruction. As a consequence, all experimental images in the dataset are assumed to share the same B factor. In this paper, we suggest a novel approach wherein the B factor is determined and corrected as a preprocessing step to the reconstruction. We show such an approach can improve reconstruction resolution.",
+        "fetch_status": "abstract",
+        "relevance": 0,
+        "fact_card": {
+          "core_claim": "提出一种在三维重建前作为预处理步骤确定并校正B因子的新方法，以改善单颗粒冷冻电子显微镜的重建分辨率。",
+          "key_facts": [
+            "单颗粒冷冻电子显微镜成像过程已知会导致蛋白质振幅和功率谱的指数衰减。",
+            "这种衰减由B因子（B factor）建模，目前通常作为三维重建的后处理阶段进行校正。",
+            "现有方法假设数据集中的所有实验图像共享同一个B因子。",
+            "本文建议一种新方法，将B因子的确定和校正作为重建前的预处理步骤。",
+            "作者表明这种方法可以提高重建分辨率。"
+          ],
+          "numbers": [],
+          "method_type": "统计理论分析",
+          "is_ai": false,
+          "maturity": "不适用",
+          "caveats": [],
+          "terms": [
+            "B factor = B因子",
+            "Wilson statistics = Wilson统计",
+            "single-particle cryo-electron microscopy = 单颗粒冷冻电子显微镜"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      }
+    ],
+    "script": "大家好，这里是《X射线无损检测与AI图像处理前沿》。\n\n首先来看 arXiv 上一篇预印本论文，需要说明的是，预印本还没有经过同行评审。LaNell A. Williams 等人发表的研究指出，静电相互作用驱动衣壳蛋白二聚体在野生型 MS2 噬菌体颗粒周围自组装形成额外的衣壳层，即使在没有游离 RNA 的情况下也能发生。研究团队通过透射电子显微镜、凝胶电泳和动态光散射表征了颗粒的大小和形态，并结合感染性测定确定成熟蛋白如何影响层的形成。结果与异质成核-生长组装途径一致，其中成核势垒由蛋白浓度控制，正电荷衣壳蛋白与负电荷衣壳之间的静电吸引驱动生长。不过，次要层很少完全包裹野生型颗粒，这暗示弹性能量可能限制其生长。\n\n另一条来自财联社。财联社发表了一篇文章，题目是《【明日主题前瞻】总投资50亿元，又一先进封装项目开工》。全文暂未获取，细节这里不展开。\n\n另一条来自中国工控网。中国工控网发表了一篇文章，题目是《华汉伟业携量产级TGV全工艺流程AOI检测方案亮相第二十四届封测年会华汉伟业半导体》。全文暂未获取，细节这里不展开。\n\n回到 arXiv，Sunjun Hwang 等人提出了一种利用相位分辨量子光子诱导近场电子显微镜见证光学维格纳负性的抗噪声框架。传统认证维格纳负性通常需要进行完整的光学态层析，而该方法将电子相干性直接映射到耦合受限相空间区域内的对称排序光学特征函数。通过 Bochner 定理从记录的电子光谱构建测量后见证矩阵，其中负特征值认证非经典性。该协议在真空-福克叠加态、奇数猫态和 GKP 态等多种光学制备方案中进行了基准测试。需要注意的是，映射过程受限于耦合受限的相空间区域。\n\n另一篇 arXiv 预印本由 Ali Abdollahzadeh 等人撰写，研究发现在杯rizone小鼠脱髓鞘和恢复模型中，无髓鞘轴突是 MRI 衍生白质微观结构指标的主要决定因素。他们开发了用于白质实例级电子显微镜分割的自动化工具，以实现对有髓鞘和无髓鞘轴突群体的形态学分析。研究指出，在足够短的扩散时间下，扩散衍生的轴突水分分数估计值反映了两种轴突群体的贡献。考虑无髓鞘轴突后，轴突水分分数指标对应于总轴突内空间，而非仅有髓鞘纤维。MRI 衍生的 g-ratio 估计值仅当包含两种轴突群体时，才与电子显微镜结果强相关。此外，体素内 g-ratio 异质性引入了高达 8% 的系统性负偏差，且该偏差随无髓鞘轴突比例和髓鞘厚度变异性增加而增加。\n\n最后一条来自 arXiv，Ayelet Heimowitz 等人提出了一种在三维重建前作为预处理步骤确定并校正 B 因子的新方法，以改善单颗粒冷冻电子显微镜的重建分辨率。单颗粒冷冻电子显微镜成像过程已知会导致蛋白质振幅和功率谱的指数衰减，这种衰减由 B 因子建模，目前通常作为三维重建的后处理阶段进行校正。现有方法假设数据集中的所有实验图像共享同一个 B 因子，而本文建议将 B 因子的确定和校正作为重建前的预处理步骤，作者表明这种方法可以提高重建分辨率。\n\n我们下期见。",
+    "audio": {
+      "path": "C:\\Projects\\ai-podcast\\audio\\ep-2026-11-19.mp3",
+      "duration_sec": 233.98,
+      "size_bytes": 1403856,
+      "engine": "edge-tts"
+    },
+    "status": "pushed",
+    "history": [],
+    "quality": {
+      "pipeline": "fact-cards-v1",
+      "items": 6,
+      "fetch_status": {
+        "Electrostatic interactions drive the sel": "abstract",
+        "【明日主题前瞻】总投资50亿元，又一先进封装项目开工": "title",
+        "华汉伟业携量产级TGV全工艺流程AOI检测方案亮相第二十四届封测年会_华汉伟业_": "title",
+        "Shedding Light on Quantum Non-Classicali": "abstract",
+        "Unmyelinated axons alter the biological ": "abstract",
+        "Micrograph B-factor estimation via Wilso": "abstract"
+      },
+      "card_errors": [],
+      "violations_first": [],
+      "repaired": false,
+      "violations_final": []
+    },
+    "commit_sha": "bfbe03c70e83c93ced2f2911e44d5c5c596b6807",
+    "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-19.html",
+    "created_at": "2026-11-19T08:31:53.372938-05:00",
+    "published_at": "2026-11-19T08:32:28.473056-05:00"
+  },
+  {
     "episode_id": "ep-2026-11-18",
     "title": "电子显微分析与纳米材料前沿",
     "date": "2026-11-18",
