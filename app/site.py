@@ -293,6 +293,8 @@ def build_site(episodes: list[dict], out_dir: str, cfg: dict) -> dict:
     need = (cfg.get("compare") or {}).get("only_if_exists")
     if need and not os.path.exists(os.path.join(out_dir, need)):
         cfg = {k: v for k, v in cfg.items() if k != "compare"}      # 对照版本还没上线：先不放入口，免得死链
+    comp = cfg.get("compare") or {}
+    pattern = comp.get("episode_pattern")       # 如 gemini/episodes/gm-{date}.html：同一天的对照节目
     os.makedirs(os.path.join(out_dir, "assets"), exist_ok=True)
     os.makedirs(os.path.join(out_dir, "episodes"), exist_ok=True)
     os.makedirs(os.path.join(out_dir, "audio"), exist_ok=True)
@@ -305,8 +307,13 @@ def build_site(episodes: list[dict], out_dir: str, cfg: dict) -> dict:
         if not eid:
             continue
         safe = str(eid).replace("/", "_")
+        ep_cfg = cfg
+        if pattern:
+            rel = pattern.format(date=ep.get("date") or "", id=safe)
+            if os.path.exists(os.path.join(out_dir, rel)):          # 对方同一天有节目：这一页直接链到那一期
+                ep_cfg = dict(cfg, compare=dict(comp, url=rel, label=comp.get("episode_label") or comp.get("label")))
         with open(os.path.join(out_dir, "episodes", f"{safe}.html"), "w", encoding="utf-8") as f:
-            f.write(build_episode(ep, cfg))
+            f.write(build_episode(ep, ep_cfg))
     with open(os.path.join(out_dir, ".nojekyll"), "w", encoding="utf-8") as f:
         f.write("")
     return {"out_dir": out_dir, "episodes": len(episodes)}

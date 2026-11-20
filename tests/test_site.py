@@ -78,6 +78,38 @@ def test_compare_link_waits_for_the_other_site(tmp_path):
     assert open(os.path.join(out, "gemini", "index.html"), encoding="utf-8").read() == "<html>gemini</html>"   # 不碰 gemini/
 
 
+def test_same_day_cross_links_both_ways(tmp_path):
+    """同一个生成器两边用：Hermes 写站点根目录，Gemini 写 gemini/；同一天的两期互相链接。"""
+    root = str(tmp_path / "site")
+    hermes_cfg = dict(CFG, created_by="Hermes Qwen3.8:27b", compare={
+        "label": "对照：Gemini Hydrogen 版", "url": "gemini/", "only_if_exists": "gemini/index.html",
+        "episode_pattern": "gemini/episodes/gm-{date}.html", "episode_label": "同一期的 Gemini Hydrogen 版"})
+    gemini_cfg = dict(CFG, created_by="Gemini Hydrogen", compare={
+        "label": "对照：Hermes Qwen3.8:27b 版", "url": "../",
+        "episode_pattern": "../episodes/ep-{date}.html", "episode_label": "同一期的 Hermes Qwen3.8:27b 版"})
+    h_eps = [{"episode_id": f"ep-2026-11-{d}", "title": "h", "date": f"2026-11-{d}", "items": [], "script": "s",
+              "audio": {}} for d in ("20", "21")]
+    g_eps = [{"episode_id": "gm-2026-11-20", "title": "g", "date": "2026-11-20", "items": [], "script": "s",
+              "audio": {"duration_sec": 200}}]
+    build_site(h_eps, root, hermes_cfg)                              # Hermes 08:30 先发
+    build_site(g_eps, os.path.join(root, "gemini"), gemini_cfg)      # Gemini 09:00 后发，只写 gemini/
+    build_site(h_eps, root, hermes_cfg)                              # 第二天 Hermes 重建全部页面
+
+    g = open(os.path.join(root, "gemini", "episodes", "gm-2026-11-20.html"), encoding="utf-8").read()
+    assert "本页由 Gemini Hydrogen 创建" in g and "Hermes Qwen3.8:27b 创建" not in g
+    assert 'href="../../episodes/ep-2026-11-20.html"' in g and "同一期的 Hermes Qwen3.8:27b 版" in g
+    assert 'src="../audio/gm-2026-11-20.mp3"' in g                   # 音频在 gemini/audio/ 下
+    gi = open(os.path.join(root, "gemini", "index.html"), encoding="utf-8").read()
+    assert "本站节目由 Gemini Hydrogen 创建" in gi and 'href="../"' in gi
+
+    h20 = open(os.path.join(root, "episodes", "ep-2026-11-20.html"), encoding="utf-8").read()
+    h21 = open(os.path.join(root, "episodes", "ep-2026-11-21.html"), encoding="utf-8").read()
+    assert 'href="../gemini/episodes/gm-2026-11-20.html"' in h20 and "同一期的 Gemini Hydrogen 版" in h20
+    assert 'href="../gemini/"' in h21 and "同一期" not in h21         # 那天 Gemini 没有节目：只链到它的首页
+    for name in ("index.html", os.path.join("episodes", "ep-2026-11-20.html"), os.path.join("audio")):
+        assert os.path.exists(os.path.join(root, name))
+
+
 def test_no_credit_when_not_configured(tmp_path):
     out = str(tmp_path / "docs")
     build_site([{"episode_id": "ep-1", "title": "t", "date": "2026-01-01", "items": [], "script": "s", "audio": {}}],

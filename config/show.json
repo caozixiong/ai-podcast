@@ -7,7 +7,9 @@
     "label": "对照：Gemini Hydrogen 版",
     "url": "gemini/",
     "only_if_exists": "gemini/index.html",
-    "_note": "Gemini 任务做的对照版本放在本仓库的 gemini/ 目录。那边的首页存在以后，这里的首页和每集页面才显示入口。"
+    "episode_pattern": "gemini/episodes/gm-{date}.html",
+    "episode_label": "同一期的 Gemini Hydrogen 版",
+    "_note": "Gemini 任务做的对照版本放在本仓库的 gemini/ 目录。那边的首页存在以后，这里的首页和每集页面才显示入口；那边同一天有节目（gm-日期.html）时，这一期的页面直接链到那一期。"
   },
   "language": "zh-CN",
   "timezone": "America/Toronto",
