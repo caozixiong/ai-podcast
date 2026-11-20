@@ -1,5 +1,358 @@
 [
   {
+    "episode_id": "ep-2026-11-20",
+    "title": "CT稀疏视角选择与边缘AI检测进展",
+    "date": "2026-11-20",
+    "items": [
+      {
+        "id": "e9e1da1d49feda9c",
+        "title": "End-to-End Joint Training of Super-Resolution and Compression Artifact Removal for Industrial Machine Vision",
+        "url": "https://arxiv.org/abs/2611.11831v1",
+        "source_name": "arXiv: 半导体 / 工业缺陷检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Dang BuiDinh",
+          "Sang NguyenQuang",
+          "Anh NguyenPhuong",
+          "Wen-Hsiao Peng",
+          "Xiem HoangVan"
+        ],
+        "published": "2026-11-09",
+        "summary": "In industrial machine vision, images captured by edge devices are often downsampled and compressed to reduce bandwidth, introducing resolution loss and compression artifacts that severely degrade the performance of downstream tasks, such as defect detection. Existing quality enhancement methods typically apply super-resolution (SR) or compression artifact removal (CAR) independently or in a sequential manner and are largely optimized for human visual fidelity rather than machine perception. This paper proposes an end-to-end quality enhancement framework that integrates SR and CAR with a unified training strategy that optimizes both human-perception and machine-perception objectives. We investigate fixed-weight and uncertainty-based dynamic-weight loss functions to balance reconstruction quality and machine vision task performance. Extensive experiments on PCB Defect, DeepPCB, and NEU-DET datasets show that the proposed jointly trained model generally outperforms standalone and separately trained SR-CAR pipelines. In particular, under severe JPEG compression, our method improves defect detection performance from 0.461 to 0.887 mAP@50 on PCB Defect over sequential SR-CAR baselines, with only a slight reduction in PSNR. These results demonstrate that joint optimization is critical for compression-aware industrial machine vision systems.",
+        "fetch_status": "abstract",
+        "relevance": 13,
+        "relevance_hits": [
+          "无损检测/缺陷检测@摘要:defect detection",
+          "AI图像处理@标题:super-resolution",
+          "工业/材料场景@标题:industrial"
+        ],
+        "fact_card": {
+          "core_claim": "提出一种端到端联合训练框架，整合超分辨率（SR）和压缩伪影去除（CAR），通过统一训练策略同时优化人类感知和机器感知目标，在工业机器视觉任务中优于独立或顺序训练的基线方法。",
+          "key_facts": [
+            "现有质量增强方法通常独立或以顺序方式应用超分辨率（SR）或压缩伪影去除（CAR），且主要优化人类视觉保真度而非机器感知。",
+            "该论文提出一个端到端质量增强框架，整合 SR 和 CAR，并使用统一训练策略优化人类感知和机器感知目标。",
+            "研究了固定权重和基于不确定性的动态权重损失函数，以平衡重建质量和机器视觉任务性能。",
+            "在 PCB Defect、DeepPCB 和 NEU-DET 数据集上的大量实验表明，联合训练模型通常优于独立和分别训练的 SR-CAR 流水线。",
+            "在严重 JPEG 压缩下，该方法在 PCB Defect 数据集上将缺陷检测性能从 0.461 提升至 0.887 mAP@50，而 PSNR 仅略有下降。"
+          ],
+          "numbers": [
+            "0.461 mAP@50 (PCB Defect 数据集，基线性能)",
+            "0.887 mAP@50 (PCB Defect 数据集，本文方法性能)",
+            "PSNR 略有下降 (未给出具体数值)"
+          ],
+          "method_type": "深度学习",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [],
+          "terms": [
+            "Super-Resolution = 超分辨率",
+            "Compression Artifact Removal = 压缩伪影去除",
+            "mAP@50 = 平均精度均值@50",
+            "PSNR = 峰值信噪比"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "f970898636b45402",
+        "title": "Spatiotemporal learning improves quantification of pore-space evolution and fluid displacement",
+        "url": "https://arxiv.org/abs/2611.17111v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Zhuangzhuang Ma",
+          "Rukuan Chai",
+          "Qianqian Ma",
+          "Yanghua Wang",
+          "Branko Bijeljic",
+          "Martin J. Blunt"
+        ],
+        "published": "2026-11-12",
+        "summary": "Pore-space evolution and fluid displacement influence how rocks transmit and store fluids, affecting geological carbon storage, underground hydrogen storage and groundwater contaminant transport. A single time-resolved micro-CT experiment may produce tens to hundreds of three-dimensional images, and segmentation is required to quantify physical properties and run image-based simulations. Traditional methods such as thresholding perform poorly on noisy, low-contrast images and need manual adjustment per image; 3D deep learning networks segment each image without temporal information, so their errors vary between images and could be mistaken for physical change. Here we introduce a transformer-based 4D segmentation framework combining spatial and temporal information. It uses sequential images to resolve ambiguous phase assignments and separate physical change from segmentation error. The method is tested on images of mineral dissolution: it measures pore-volume growth and rock boundaries more accurately than an equivalent 3D model that ignores temporal information. It also captures the increase in permeability verified against reference segmentations and flow simulations. The advantage transfers to another dissolution sample without retraining. On two other datasets of fluid displacement, it reduces spurious changes in predicted rock and porosity fluctuations and accurately identifies filling events. Spatiotemporal segmentation turns sequences of hundreds of three-dimensional images into more reliable quantitative measurements of pore-space evolution and fluid displacement without per-image parameter adjustment to support the analysis of time-resolved CT imaging.",
+        "fetch_status": "abstract",
+        "relevance": 11,
+        "relevance_hits": [
+          "X射线/CT成像@摘要:CT",
+          "AI图像处理@摘要:deep learning",
+          "工业/材料场景@标题:pore"
+        ],
+        "fact_card": {
+          "core_claim": "引入基于Transformer的4D分割框架，结合空间和时间信息，能更准确地量化孔隙空间演化和流体置换，并区分物理变化与分割误差。",
+          "key_facts": [
+            "单次时间分辨微CT实验可能产生数十到数百张三维图像，需要分割以量化物理属性并运行基于图像的模拟。",
+            "传统方法如阈值法在噪声大、低对比度图像上表现不佳，且每张图像都需要手动调整。",
+            "3D深度学习网络在分割每张图像时不使用时间信息，导致误差在图像间变化，可能被误认为是物理变化。",
+            "该方法在矿物溶解图像上进行测试，比忽略时间信息的等效3D模型更准确地测量孔隙体积增长和岩石边界。",
+            "该方法在无需重新训练的情况下，其优势可转移到另一个溶解样品上。",
+            "在另外两个流体置换数据集上，该方法减少了预测岩石和孔隙率波动的虚假变化，并准确识别填充事件。"
+          ],
+          "numbers": [
+            "tens to hundreds of three-dimensional images",
+            "4D segmentation framework"
+          ],
+          "method_type": "深度学习",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [],
+          "terms": [
+            "micro-CT = 微CT",
+            "segmentation = 分割",
+            "thresholding = 阈值法",
+            "transformer-based = 基于Transformer的",
+            "4D segmentation = 4D分割",
+            "mineral dissolution = 矿物溶解",
+            "permeability = 渗透率",
+            "fluid displacement = 流体置换"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "2386064adce5bef4",
+        "title": "Tomographic Sparse View Selection using the View Covariance Loss",
+        "url": "https://arxiv.org/abs/2611.09754v1",
+        "source_name": "arXiv: CT / X 射线图像的 AI 处理",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Jingsong Lin",
+          "Amirkoushyar Ziabari",
+          "Singanallur V. Venkatakrishnan",
+          "Obaidullah Rahman",
+          "Gregery T. Buzzard",
+          "Charles A. Bouman"
+        ],
+        "published": "2026-11-06",
+        "summary": "Standard computed tomography (CT) reconstruction algorithms such as filtered back projection (FBP) and Feldkamp-Davis-Kress (FDK) require many views for producing high-quality reconstructions, which can slow image acquisition and increase cost in non-destructive evaluation (NDE) applications. Over the past 20 years, a variety of methods have been developed for computing high-quality CT reconstructions from sparse views. However, the problem of how to select the best views for CT reconstruction remains open. In this paper, we present a novel view covariance loss (VCL) function that measures the joint information of a set of views by approximating the normalized mean squared error (NMSE) of the reconstruction. We present fast algorithms for computing the VCL along with an algorithm for selecting a subset of views that approximately minimizes its value. Our experiments on simulated and measured data indicate that for a fixed number of views our proposed view covariance loss selection (VCLS) algorithm results in reconstructions with lower NRMSE, fewer artifacts, and greater accuracy than current alternative approaches.",
+        "fetch_status": "abstract",
+        "relevance": 11,
+        "relevance_hits": [
+          "X射线/CT成像@标题:tomographic",
+          "无损检测/缺陷检测@摘要:non-destructive",
+          "AI图像处理@摘要:reconstruction"
+        ],
+        "fact_card": {
+          "core_claim": "提出了一种基于视角协方差损失（VCL）的稀疏视角选择算法，旨在通过近似重构的归一化均方误差来优化CT重建质量。",
+          "key_facts": [
+            "标准CT重建算法如滤波反投影（FBP）和Feldkamp-Davis-Kress（FDK）需要大量视角才能产生高质量重构，这在无损检测（NDE）应用中会减慢图像采集速度并增加成本。",
+            "过去20年开发了多种从稀疏视角计算高质量CT重构的方法，但如何为CT重构选择最佳视角的问题仍未解决。",
+            "本文提出了一种新颖的视角协方差损失（VCL）函数，通过近似重构的归一化均方误差（NMSE）来衡量一组视角的联合信息。",
+            "本文提出了计算VCL的快速算法，以及一个近似最小化其值的视角子集选择算法。",
+            "在模拟和测量数据上的实验表明，对于固定数量的视角，提出的视角协方差损失选择（VCLS）算法产生的重构具有更低的NRMSE、更少的伪影和更高的准确性，优于当前的替代方法。"
+          ],
+          "numbers": [
+            "过去20年（Over the past 20 years）"
+          ],
+          "method_type": "统计理论分析 / 数值模型降阶",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [],
+          "terms": [
+            "computed tomography (CT) = 计算机断层扫描",
+            "filtered back projection (FBP) = 滤波反投影",
+            "Feldkamp-Davis-Kress (FDK) = Feldkamp-Davis-Kress算法",
+            "non-destructive evaluation (NDE) = 无损检测",
+            "view covariance loss (VCL) = 视角协方差损失",
+            "normalized mean squared error (NMSE) = 归一化均方误差",
+            "view covariance loss selection (VCLS) = 视角协方差损失选择"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "a0fe96521b91505d",
+        "title": "Task-driven sparse-view planar X-ray computed tomography for axial metrology",
+        "url": "https://arxiv.org/abs/2611.01537v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Yibin Tian",
+          "Shuming Yang",
+          "Wolfgang Heidrich"
+        ],
+        "published": "2026-11-01",
+        "summary": "Computational imaging can reduce the acquisition burden when the system is designed around task-relevant information rather than complete image recovery. We investigate this framework for sparse-view planar X-ray tomography (XCT) of layered objects, using measurement of the axial termination gap (ATG) of back-drilled printed-circuit-board (PCB) vias as a representative task. Instead of using 3D reconstruction, the proposed method estimates ATG directly from polychromatic projection data through a physics-based sensitivity model. A gated hierarchical estimator first fits ATG together with radiometric perturbations and selectively introduces global geometry and specimen-warp models only when a reduced chi-squared adequacy test and Bayesian information criterion justify the added degrees of freedom. The same low-dimensional perturbation model is incorporated into marginalized Fisher-information analyses, yielding task-specific conditional and calibration-aware Cram'er-Rao bounds. Numerical experiments show that, under a fixed total photon budget, task-driven metrology changes little over 12-64 views, while reconstruction-driven metrology is strongly view-dependent with much larger errors. The direct estimator also follows the expected photon-limited scaling. These results demonstrate a computational sensing strategy in which XCT acquisition, physical modeling, and inference are evaluated according to the quantitative information required by the task rather than for general-purpose volumetric image fidelity.",
+        "fetch_status": "abstract",
+        "relevance": 11,
+        "relevance_hits": [
+          "X射线/CT成像@标题:computed tomography",
+          "AI图像处理@摘要:reconstruction",
+          "工业/材料场景@摘要:PCB"
+        ],
+        "fact_card": {
+          "core_claim": "提出了一种基于任务驱动的计算成像框架，通过物理敏感性模型直接从多色投影数据估计背钻PCB过孔的轴向终止间隙（ATG），在固定光子预算下比重建驱动方法具有更低的视角依赖性和误差。",
+          "key_facts": [
+            "该方法针对分层物体的稀疏视角平面X射线计算机断层扫描（XCT），以测量背钻印刷电路板（PCB）过孔的轴向终止间隙（ATG）为代表性任务。",
+            "不使用3D重建，而是通过基于物理的敏感性模型直接从多色投影数据估计ATG。",
+            "采用门控分层估计器，首先拟合ATG和辐射度扰动，仅当约化卡方充分性检验和贝叶斯信息准则证明增加自由度合理时，才选择性引入全局几何和样品翘曲模型。",
+            "将相同的低维扰动模型纳入边缘化费雪信息分析，得出任务特定的条件Cramer-Rao界和校准感知Cramer-Rao界。",
+            "数值实验表明，在固定总光子预算下，任务驱动计量在12-64个视角下变化很小，而重建驱动计量强烈依赖视角且误差大得多。",
+            "直接估计器遵循预期的光子受限缩放规律。"
+          ],
+          "numbers": [
+            "12-64 views",
+            "fixed total photon budget"
+          ],
+          "method_type": "数值模型降阶 / 统计理论分析",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [],
+          "terms": [
+            "axial termination gap (ATG) = 轴向终止间隙",
+            "back-drilled printed-circuit-board (PCB) vias = 背钻印刷电路板过孔",
+            "sparse-view planar X-ray computed tomography (XCT) = 稀疏视角平面X射线计算机断层扫描",
+            "Cramer-Rao bounds = Cramer-Rao界",
+            "Fisher-information = 费雪信息",
+            "Bayesian information criterion = 贝叶斯信息准则"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "d6ced521e5af07b2",
+        "title": "Real-Time Conveyor Belt Defect Detection via Edge TPU-Accelerated YOLOv11 on Raspberry Pi 5",
+        "url": "https://arxiv.org/abs/2610.34304v1",
+        "source_name": "arXiv: 半导体 / 工业缺陷检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Muhammad Nur Bijak Bestari",
+          "Mulki Indana Zulfa"
+        ],
+        "published": "2026-10-25",
+        "summary": "Conveyor belts are vital arteries in continuous bulk material handling, particularly in heavy process industries such as cement manufacturing. Undetected structural anomalies (longitudinal tears, holes, degraded patch repairs, and impact punctures) cause catastrophic belt snapping, costly downtime, and severe safety hazards. While deep learning offers high accuracy, existing models rely on power-hungry workstation GPUs, hindering practical deployment at remote industrial edge points. In this paper, we propose, implement, and validate an end-to-end, low-power edge AI vision system for real-time conveyor belt defect detection deployed on a Raspberry Pi 5 accelerated by a Google Coral Edge TPU coprocessor. The system leverages an optimized YOLOv11 nano (YOLOv11n) architecture trained on a multi-source industrial corpus exceeding 3,000 augmented samples from an operational cement plant in West Java, open-source datasets, and automated captures. The model undergoes post-training full integer quantization (INT8) compiled for systolic tensor execution. Experimental results demonstrate robust detection capability, achieving precision of 0.742, recall of 0.730, and mAP@0.5 of 0.764 across four defect classes. Deployed on-site in an IP-rated enclosure interfaced with an RTSP PoE industrial camera, the system achieves stable throughput of 30-40 FPS at 320x320 resolution with an end-to-end latency of 70-90 ms. Operational profiling under harsh clinker dust confirms thermal equilibrium at 55 +/- 5 deg C on the host CPU and ~65 deg C on the Edge TPU with zero frame loss. This demonstrates that edge AI bridges the gap between high-accuracy computer vision and cost-effective predictive maintenance in continuous manufacturing.",
+        "fetch_status": "abstract",
+        "relevance": 11,
+        "relevance_hits": [
+          "无损检测/缺陷检测@标题:defect detection",
+          "AI图像处理@摘要:deep learning",
+          "工业/材料场景@摘要:industrial"
+        ],
+        "fact_card": {
+          "core_claim": "提出并验证了一种基于树莓派5和Google Coral Edge TPU加速的YOLOv11n实时传送带缺陷检测边缘AI视觉系统，在恶劣工业环境下实现了稳定吞吐和低延迟。",
+          "key_facts": [
+            "系统部署在树莓派5（Raspberry Pi 5）上，由Google Coral Edge TPU协处理器加速。",
+            "模型采用优化的YOLOv11 nano（YOLOv11n）架构，训练数据包含超过3,000个增强样本，来源包括西爪哇一家运营水泥厂、开源数据集和自动捕获。",
+            "模型经过训练后全整数量化（INT8），并编译用于脉动张量执行（systolic tensor execution）。",
+            "系统在IP防护外壳中部署，连接RTSP PoE工业相机，在320x320分辨率下实现30-40 FPS的稳定吞吐量，端到端延迟为70-90 ms。",
+            "在恶劣的熟料粉尘环境下运行，主机CPU热平衡温度为55 +/- 5 deg C，Edge TPU约为65 deg C，且无帧丢失。"
+          ],
+          "numbers": [
+            "超过 3,000 个增强样本",
+            "precision 为 0.742",
+            "recall 为 0.730",
+            "mAP@0.5 为 0.764",
+            "30-40 FPS 吞吐量",
+            "70-90 ms 端到端延迟"
+          ],
+          "method_type": "深度学习",
+          "is_ai": true,
+          "maturity": "实验室实验（真实样品测量）",
+          "caveats": [],
+          "terms": [
+            "YOLOv11 nano = YOLOv11 nano",
+            "Edge TPU = Edge TPU",
+            "systolic tensor execution = 脉动张量执行",
+            "RTSP PoE = RTSP PoE"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "4dfabc02911077c3",
+        "title": "The Path to NDE 4.0: A Review of Algorithms, Techniques, and Strategies for Autonomous Inspection",
+        "url": "https://arxiv.org/abs/2610.31704v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Ashiqur Rahmana",
+          "Venkata Devesh Reddy Seethi",
+          "Zachary Kral",
+          "Austin Yunker",
+          "Rajkumar Kettimuthu",
+          "Hamed Alhoori"
+        ],
+        "published": "2026-10-21",
+        "summary": "Non-Destructive Inspection (NDI) is a cornerstone of modern quality assurance, critical for ensuring the safety and reliability of infrastructure and manufactured components without causing damage. This paper presents a comprehensive review of the current NDI landscape, analyzing the field through four distinct lenses, namely, computational algorithms, physical techniques, industrial applications, and research objectives. We synthesize a broad range of academic literature to illustrate the rapid evolution from manual, analog interpretation to a digitized, data-centric paradigm known as NDE 4.0. Our analysis highlights the dominance of ultrasound and visual inspection as primary physical techniques, while revealing a significant shift toward deep learning and generative models for automated defect recognition. Despite these technological strides, the industry faces critical bottlenecks, notably the scarcity of standardized open-access datasets and the \"black box\" nature of AI models, which hinders widespread adoption. By charting these developments and identifying key research gaps, such as the need for explainable AI (XAI) and standardized digital twin protocols, this review offers a strategic roadmap for future research. It concludes that the future of NDI research should focus on the successful integration of intelligent, autonomous fusion of inspection data with advanced sensor technologies into asset lifecycle management.",
+        "fetch_status": "abstract",
+        "relevance": 11,
+        "relevance_hits": [
+          "无损检测/缺陷检测@标题:NDE",
+          "AI图像处理@摘要:deep learning",
+          "工业/材料场景@摘要:industrial"
+        ],
+        "fact_card": {
+          "core_claim": "本文综述了无损检测（NDI）领域从手动模拟解释向数字化、数据中心的 NDE 4.0 范式的演变，指出深度学习在缺陷识别中的主导地位，并强调了标准化数据集缺乏和 AI 模型“黑箱”特性是行业采用的主要瓶颈。",
+          "key_facts": [
+            "无损检测（Non-Destructive Inspection, NDI）是现代质量保障的基石，用于确保基础设施和制造组件的安全性和可靠性而不造成损坏。",
+            "文章通过计算算法、物理技术、工业应用和研究目标四个不同视角分析了当前的 NDI 领域。",
+            "分析显示超声和视觉检查作为主要物理技术占据主导地位，同时向用于自动缺陷识别的深度学习（deep learning）和生成模型（generative models）发生了显著转变。",
+            "行业面临的关键瓶颈包括标准化开放获取数据集的稀缺以及 AI 模型的“黑箱”（black box）性质，这阻碍了广泛采用。",
+            "关键研究差距包括对可解释人工智能（explainable AI, XAI）和标准化数字孪生（digital twin）协议的需求。",
+            "结论认为 NDI 研究的未来应专注于将智能、自主的检测数据融合与先进传感器技术成功整合到资产生命周期管理中。"
+          ],
+          "numbers": [],
+          "method_type": "行业分析",
+          "is_ai": true,
+          "maturity": "不适用",
+          "caveats": [
+            "行业面临标准化开放获取数据集稀缺的瓶颈",
+            "AI 模型的“黑箱”性质阻碍了广泛采用"
+          ],
+          "terms": [
+            "Non-Destructive Inspection (NDI) = 无损检测",
+            "NDE 4.0 = NDE 4.0",
+            "deep learning = 深度学习",
+            "generative models = 生成模型",
+            "explainable AI (XAI) = 可解释人工智能",
+            "digital twin = 数字孪生"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      }
+    ],
+    "script": "大家好，这里是《X射线无损检测与AI图像处理前沿》。\n\n首先来看一篇关于工业机器视觉图像质量增强的研究。arXiv 上一篇预印本论文，由 Dang BuiDinh 等人撰写，需要说明的是，预印本还没有经过同行评审。这篇论文提出了一种端到端联合训练框架，将超分辨率和压缩伪影去除整合在一起，通过统一训练策略同时优化人类感知和机器感知目标。论文指出，现有方法通常独立或以顺序方式应用这些技术，且主要优化人类视觉保真度。该团队研究了固定权重和基于不确定性的动态权重损失函数，以平衡重建质量和机器视觉任务性能。在 PCB Defect、DeepPCB 和 NEU-DET 数据集上的实验表明，联合训练模型通常优于独立和分别训练的流水线。特别是在严重 JPEG 压缩下，该方法在 PCB Defect 数据集上将缺陷检测性能从 0.461 mAP@50 提升至 0.887 mAP@50，而 PSNR 仅略有下降。目前论文只在数值实验上做了验证。\n\n另一条来自 arXiv 的预印本论文，由 Zhuangzhuang Ma 等人撰写。这篇论文引入了一种基于 Transformer 的 4D 分割框架，结合空间和时间信息，用于量化孔隙空间演化和流体置换。背景是单次时间分辨微 CT 实验可能产生数十到数百张三维图像，传统阈值法在噪声大、低对比度图像上表现不佳，且每张图像都需要手动调整。而 3D 深度学习网络在分割每张图像时不使用时间信息，导致误差在图像间变化，可能被误认为是物理变化。该方法在矿物溶解图像上进行测试，比忽略时间信息的等效 3D 模型更准确地测量孔隙体积增长和岩石边界。此外，该方法在无需重新训练的情况下，其优势可转移到另一个溶解样品上。在另外两个流体置换数据集上，该方法减少了预测岩石和孔隙率波动的虚假变化，并准确识别填充事件。\n\n接下来是一篇关于 CT 稀疏视角选择的研究。arXiv 上一篇预印本论文，由 Jingsong Lin 等人撰写。论文提出了一种基于视角协方差损失的稀疏视角选择算法，旨在通过近似重构的归一化均方误差来优化 CT 重建质量。标准 CT 重建算法如滤波反投影和 Feldkamp-Davis-Kress 算法需要大量视角才能产生高质量重构，这在无损检测应用中会减慢图像采集速度并增加成本。过去 20 年开发了多种从稀疏视角计算高质量 CT 重构的方法，但如何为 CT 重构选择最佳视角的问题仍未解决。本文提出了一种新颖的视角协方差损失函数，通过近似重构的归一化均方误差来衡量一组视角的联合信息。同时提出了计算该损失函数的快速算法，以及一个近似最小化其值的视角子集选择算法。在模拟和测量数据上的实验表明，对于固定数量的视角，提出的算法产生的重构具有更低的归一化均方误差、更少的伪影和更高的准确性，优于当前的替代方法。\n\n另一条来自 arXiv 的预印本论文，由 Yibin Tian 等人撰写。这篇论文提出了一种基于任务驱动的计算成像框架，通过物理敏感性模型直接从多色投影数据估计背钻 PCB 过孔的轴向终止间隙。该方法针对分层物体的稀疏视角平面 X 射线计算机断层扫描，不使用 3D 重建，而是采用门控分层估计器。首先拟合轴向终止间隙和辐射度扰动，仅当约化卡方充分性检验和贝叶斯信息准则证明增加自由度合理时，才选择性引入全局几何和样品翘曲模型。数值实验表明，在固定总光子预算下，任务驱动计量在 12 到 64 个视角下变化很小，而重建驱动计量强烈依赖视角且误差大得多。直接估计器遵循预期的光子受限缩放规律。\n\n接下来看一个边缘 AI 视觉系统的实际部署案例。arXiv 上一篇预印本论文，由 Muhammad Nur Bijak Bestari 等人撰写。论文提出并验证了一种基于树莓派 5 和 Google Coral Edge TPU 加速的 YOLOv11n 实时传送带缺陷检测系统。系统部署在树莓派 5 上，由 Google Coral Edge TPU 协处理器加速。模型采用优化的 YOLOv11 nano 架构，训练数据包含超过 3,000 个增强样本，来源包括西爪哇一家运营水泥厂、开源数据集和自动捕获。模型经过训练后全整数量化，并编译用于脉动张量执行。系统在 IP 防护外壳中部署，连接 RTSP PoE 工业相机，在 320x320 分辨率下实现 30 到 40 FPS 的稳定吞吐量，端到端延迟为 70 到 90 ms。在恶劣的熟料粉尘环境下运行，主机 CPU 热平衡温度为 55 加减 5 摄氏度，Edge TPU 约为 65 摄氏度，且无帧丢失。测试结果显示，precision 为 0.742，recall 为 0.730，mAP@0.5 为 0.764。\n\n最后一条来自 arXiv 的预印本论文，由 Ashiqur Rahmana 等人撰写。这篇综述文章分析了无损检测领域从手动模拟解释向数字化、数据中心的 NDE 4.0 范式的演变。文章通过计算算法、物理技术、工业应用和研究目标四个不同视角分析了当前的无损检测领域。分析显示超声和视觉检查作为主要物理技术占据主导地位，同时向用于自动缺陷识别的深度学习及生成模型发生了显著转变。文章指出，行业面临的关键瓶颈包括标准化开放获取数据集的稀缺以及 AI 模型的“黑箱”性质，这阻碍了广泛采用。关键研究差距包括对可解释人工智能和标准化数字孪生协议的需求。结论认为无损检测研究的未来应专注于将智能、自主的检测数据融合与先进传感器技术成功整合到资产生命周期管理中。\n\n我们下期见。",
+    "audio": {
+      "path": "C:\\Projects\\ai-podcast\\audio\\ep-2026-11-20.mp3",
+      "duration_sec": 404.33,
+      "size_bytes": 2425968,
+      "engine": "edge-tts"
+    },
+    "status": "site_built",
+    "history": [],
+    "quality": {
+      "pipeline": "fact-cards-v1",
+      "items": 6,
+      "fetch_status": {
+        "End-to-End Joint Training of Super-Resol": "abstract",
+        "Spatiotemporal learning improves quantif": "abstract",
+        "Tomographic Sparse View Selection using ": "abstract",
+        "Task-driven sparse-view planar X-ray com": "abstract",
+        "Real-Time Conveyor Belt Defect Detection": "abstract",
+        "The Path to NDE 4.0: A Review of Algorit": "abstract"
+      },
+      "card_errors": [],
+      "violations_first": [],
+      "repaired": false,
+      "violations_final": [],
+      "created_by": "Hermes Qwen3.8:27b"
+    },
+    "commit_sha": "",
+    "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-20.html",
+    "created_at": "2026-11-20T08:33:08.414049-05:00",
+    "published_at": ""
+  },
+  {
     "episode_id": "ep-2026-11-19",
     "title": "MS2自组装、MRI偏差与冷冻电镜B因子",
     "date": "2026-11-19",
