@@ -21,19 +21,37 @@ def _ep_summary(ep: dict, limit: int = 160) -> str:
     return (text[:limit] + "…") if len(text) > limit else text
 
 
+def _creator(ep: dict, cfg: dict) -> str:
+    """这一集是谁做的（哪个 bot、哪个模型）。发布时记在节目里；老节目没记，用配置里的当前值。"""
+    return (ep.get("quality") or {}).get("created_by") or cfg.get("created_by", "")
+
+
+def _compare_link(cfg: dict, prefix: str = "") -> str:
+    """可选：指向另一套流程做的对照版本（如 Gemini 版）。show.json 里没配 compare 就不显示。"""
+    c = cfg.get("compare") or {}
+    url = c.get("url", "")
+    if not url:
+        return ""
+    if not url.startswith(("http://", "https://")):
+        url = prefix + url
+    return f'<a class="tag" href="{_esc(url)}">{_esc(c.get("label") or "对照版本")}</a>'
+
+
 def _dur(ep: dict) -> str:
     d = ep.get("audio", {}).get("duration_sec")
     return f"{int(d // 60)}:{int(d % 60):02d}" if d else "音频待上传"
 
 
-def _episode_card(ep: dict) -> str:
+def _episode_card(ep: dict, cfg: dict | None = None) -> str:
     eid = _esc(ep.get("episode_id"))
     title = _esc(ep.get("title"))
+    by = _creator(ep, cfg or {})
+    by_html = f" · {_esc(by)} 创建" if by else ""
     return f"""
     <article class="ep" data-search="{_esc(title)} {_esc(_ep_summary(ep, 80))}">
       <div class="ep-head">
         <h3><a href="episodes/{eid}.html">{title}</a></h3>
-        <span class="meta">{_esc(ep.get('date'))} · {_dur(ep)}</span>
+        <span class="meta">{_esc(ep.get('date'))} · {_dur(ep)}{by_html}</span>
       </div>
       <p class="ep-sum">{_esc(_ep_summary(ep))}</p>
       <div class="ep-actions">
@@ -55,6 +73,9 @@ h1{font-size:2rem;margin:.1em 0}
 .sub{color:var(--muted);margin:0 0 8px}
 .tag{display:inline-block;background:var(--pill);color:var(--muted);border:1px solid var(--border);
   border-radius:999px;padding:2px 10px;font-size:.8rem;margin:2px 4px 2px 0}
+.by{margin:6px 0 0}
+.tag.by-tag{color:var(--fg);border-color:var(--accent)}
+a.tag:hover{text-decoration:none;border-color:var(--accent);color:var(--accent)}
 .search{margin:22px 0;position:relative}
 .search input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);
   background:var(--card);color:var(--fg);font-size:1rem;outline:none}
@@ -136,8 +157,11 @@ JS = """
 def build_index(episodes: list[dict], cfg: dict) -> str:
     show = _esc(cfg.get("show_name", "播客"))
     sub = _esc(cfg.get("subtitle", ""))
+    by = cfg.get("created_by", "")
+    by_tag = f'<span class="tag by-tag">本站节目由 {_esc(by)} 创建</span>' if by else ""
+    by_foot = f" · 由 {_esc(by)} 创建" if by else ""
     if episodes:
-        cards = "\n".join(_episode_card(ep) for ep in episodes)
+        cards = "\n".join(_episode_card(ep, cfg) for ep in episodes)
         list_html = (
             f'<div id="list">{cards}</div>'
             '<div id="pager"><button id="prev" class="pgbtn">← 上一页</button>'
@@ -166,10 +190,11 @@ def build_index(episodes: list[dict], cfg: dict) -> str:
     <h1>{show}</h1>
     <p class="sub">{sub}</p>
     <div><span class="tag">X-ray / CT 无损检测</span><span class="tag">TSV / TGV</span><span class="tag">半导体检测</span><span class="tag">AI 图像处理</span></div>
+    <p class="by">{by_tag}{_compare_link(cfg)}</p>
   </header>
   <div class="search"><input id="search" type="search" placeholder="搜索节目（标题 / 关键词，如 TSV、Innometric）" aria-label="搜索节目"></div>
   {list_html}
-  <footer>《{show}》 · 公开资讯的中文口播解读 · 由 AI 辅助生成并人工约束来源</footer>
+  <footer>《{show}》 · 公开资讯的中文口播解读 · 由 AI 辅助生成并人工约束来源{by_foot}</footer>
 </div>
 <script>{JS}</script>
 </body></html>
@@ -225,6 +250,10 @@ def build_episode(ep: dict, cfg: dict) -> str:
         for it in ep.get("items", []) if it.get("url")) or '<li class="hint">（本集无外链来源）</li>'
     ai_note = AI_NOTE_CHECKED if ep.get("quality") else AI_NOTE_LEGACY
 
+    by = _creator(ep, cfg)
+    by_tag = f'<span class="tag by-tag">本页由 {_esc(by)} 创建</span>' if by else ""
+    by_note = f"本页由 {_esc(by)} 创建。" if by else ""
+
     script = ep.get("script", "")
     # 逐字稿按空行/句号粗略分段
     paras = [p.strip() for p in script.replace("\r\n", "\n").split("\n\n") if p.strip()]
@@ -242,21 +271,28 @@ def build_episode(ep: dict, cfg: dict) -> str:
 <body>
 <div class="wrap">
   <p><a href="../">← 返回首页</a></p>
-  <header class="hero"><h1>{title}</h1><p class="sub">{_esc(ep.get('date'))} · {_dur(ep)}</p></header>
+  <header class="hero"><h1>{title}</h1><p class="sub">{_esc(ep.get('date'))} · {_dur(ep)}</p>
+    <p class="by">{by_tag}{_compare_link(cfg, "../")}</p></header>
   {player}
   <div class="actions">{actions}<a class="link" href="#" onclick="window.print();return false;">打印/复制逐字稿</a></div>
   <h2 class="sec">本期来源（公开信息）</h2>
   <ol class="src">{srcs}</ol>
   <h2 class="sec">逐字稿</h2>
   <div class="script">{script_html}</div>
-  <div class="ai-note">{ai_note}</div>
+  <div class="ai-note">{by_note}{ai_note}</div>
 </div>
 </body></html>
 """
 
 
 def build_site(episodes: list[dict], out_dir: str, cfg: dict) -> dict:
-    """生成 index.html + assets + 每集页。返回写出的文件列表。"""
+    """生成 index.html + assets + 每集页。返回写出的文件列表。
+
+    只写 index.html、assets/、episodes/、audio/、.nojekyll；不碰 gemini/（那是 Gemini 对照流程的目录）。
+    """
+    need = (cfg.get("compare") or {}).get("only_if_exists")
+    if need and not os.path.exists(os.path.join(out_dir, need)):
+        cfg = {k: v for k, v in cfg.items() if k != "compare"}      # 对照版本还没上线：先不放入口，免得死链
     os.makedirs(os.path.join(out_dir, "assets"), exist_ok=True)
     os.makedirs(os.path.join(out_dir, "episodes"), exist_ok=True)
     os.makedirs(os.path.join(out_dir, "audio"), exist_ok=True)

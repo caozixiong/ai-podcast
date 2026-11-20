@@ -9,6 +9,14 @@
 - 只用**公开**内容源；不用私有邮件、私人 Drive 文档、公司内部/受限资料，除非用户另行授权。
 - **不生成** Podcast RSS `feed.xml`；不投稿 Apple/Spotify/外部播客平台；**不用** Cloudflare R2。
 
+## 与 Gemini 对照流程共用仓库（2026-11-19 起）
+- 仓库里的 `gemini/` 目录归 **Gemini Hydrogen 任务**所有：它每天往 `gemini/` 推自己做的节目（页面注明"本页由 Gemini Hydrogen 创建"）。
+  Hermes 这边**不改、不删、不生成** `gemini/` 下的任何文件。
+- Hermes 的页面注明"本页由 Hermes Qwen3.8:27b 创建"（`config/show.json` 的 `created_by`）。
+- 两边都推 `main`，所以推送前必须先接入远端的新提交：`app/publish.py` 的 `_sync_with_remote` 会 fetch 后 rebase
+  （只动本地未推送的提交）。冲突时放弃并报告，**不强推**。
+- `gemini/index.html` 存在以后，Hermes 的首页和每集页面才显示"对照：Gemini Hydrogen 版"入口（`show.json` 的 `compare`）。
+
 ## 执行
 - 唯一入口：`scripts/run.ps1`（PowerShell，Windows 原生）。
 - 流程：`collect → editorial → tts → drive(上传+校验) → site → push → verify`；支持半完成恢复；**同日不重复发布**。

@@ -1,6 +1,14 @@
 {
   "show_name": "X射线无损检测与AI图像处理前沿",
   "subtitle": "中文科技播客 · X-ray/CT 无损检测 · 半导体 TSV/TGV 检测 · AI 图像处理 · 科研与工业应用",
+  "created_by": "Hermes Qwen3.8:27b",
+  "_created_by_note": "显示在首页和每集页面上：本页由 …… 创建。新节目发布时会把它记进节目记录；换模型时改这里，老节目的署名不变。",
+  "compare": {
+    "label": "对照：Gemini Hydrogen 版",
+    "url": "gemini/",
+    "only_if_exists": "gemini/index.html",
+    "_note": "Gemini 任务做的对照版本放在本仓库的 gemini/ 目录。那边的首页存在以后，这里的首页和每集页面才显示入口。"
+  },
   "language": "zh-CN",
   "timezone": "America/Toronto",
   "pages_url": "https://caozixiong.github.io/ai-podcast/",

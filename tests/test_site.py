@@ -41,6 +41,51 @@ def test_populated_episode(tmp_path):
     assert "TSV 测试集" in idx
 
 
+def test_creator_credit_on_index_and_episode_pages(tmp_path):
+    cfg = dict(CFG, created_by="Hermes Qwen3.8:27b")
+    eps = [
+        {"episode_id": "ep-2026-01-03", "title": "老节目", "date": "2026-01-03", "items": [],
+         "script": "大家好。", "audio": {}},                                   # 没记创建者 → 用配置里的
+        {"episode_id": "ep-2026-01-04", "title": "换模型以后的节目", "date": "2026-01-04", "items": [],
+         "script": "大家好。", "audio": {}, "quality": {"created_by": "Hermes Qwen4:32b"}},
+    ]
+    out = str(tmp_path / "docs")
+    build_site(eps, out, cfg)
+    old = open(os.path.join(out, "episodes", "ep-2026-01-03.html"), encoding="utf-8").read()
+    new = open(os.path.join(out, "episodes", "ep-2026-01-04.html"), encoding="utf-8").read()
+    idx = open(os.path.join(out, "index.html"), encoding="utf-8").read()
+    assert "本页由 Hermes Qwen3.8:27b 创建" in old
+    assert "本页由 Hermes Qwen4:32b 创建" in new and "Qwen3.8" not in new   # 节目里记的优先
+    assert "本站节目由 Hermes Qwen3.8:27b 创建" in idx and "Hermes Qwen4:32b 创建" in idx
+    assert "对照版本" not in idx                                             # 没配 compare 就不出现链接
+
+    build_site(eps, out, dict(cfg, compare={"label": "对照：Gemini Hydrogen 版", "url": "https://example.com/g/"}))
+    idx = open(os.path.join(out, "index.html"), encoding="utf-8").read()
+    assert 'href="https://example.com/g/"' in idx and "对照：Gemini Hydrogen 版" in idx
+
+
+def test_compare_link_waits_for_the_other_site(tmp_path):
+    cfg = dict(CFG, compare={"label": "对照：Gemini Hydrogen 版", "url": "gemini/", "only_if_exists": "gemini/index.html"})
+    ep = {"episode_id": "ep-1", "title": "t", "date": "2026-01-01", "items": [], "script": "s", "audio": {}}
+    out = str(tmp_path / "site")
+    build_site([ep], out, cfg)
+    assert "Gemini Hydrogen" not in open(os.path.join(out, "index.html"), encoding="utf-8").read()
+    os.makedirs(os.path.join(out, "gemini"))
+    open(os.path.join(out, "gemini", "index.html"), "w", encoding="utf-8").write("<html>gemini</html>")
+    build_site([ep], out, cfg)
+    assert 'href="gemini/"' in open(os.path.join(out, "index.html"), encoding="utf-8").read()
+    assert 'href="../gemini/"' in open(os.path.join(out, "episodes", "ep-1.html"), encoding="utf-8").read()
+    assert open(os.path.join(out, "gemini", "index.html"), encoding="utf-8").read() == "<html>gemini</html>"   # 不碰 gemini/
+
+
+def test_no_credit_when_not_configured(tmp_path):
+    out = str(tmp_path / "docs")
+    build_site([{"episode_id": "ep-1", "title": "t", "date": "2026-01-01", "items": [], "script": "s", "audio": {}}],
+               out, CFG)
+    page = open(os.path.join(out, "episodes", "ep-1.html"), encoding="utf-8").read()
+    assert "创建" not in page
+
+
 def test_sources_show_publisher_and_status(tmp_path):
     ep = {
         "episode_id": "ep-2026-01-02", "title": "新流程", "date": "2026-01-02",

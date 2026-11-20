@@ -47,20 +47,53 @@ def _git(project_dir: str, args: list[str], timeout=300) -> tuple[int, str]:
     git = shutil.which("git")
     if not git:
         return 1, "git 未安装"
+    env = dict(os.environ)
+    env.update({"GCM_INTERACTIVE": "Never", "GIT_TERMINAL_PROMPT": "0"})     # 定时任务里绝不弹窗等输入
     try:
-        p = subprocess.run([git] + args, cwd=project_dir, timeout=timeout,
+        p = subprocess.run([git] + args, cwd=project_dir, timeout=timeout, env=env,
                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return p.returncode, p.stdout.decode(errors="replace")
     except Exception as e:
         return 1, str(e)
 
 
+def _sync_with_remote(project_dir: str) -> tuple[bool, str]:
+    """把远端 main 上别人的新提交接进来（Gemini 对照流程也往这个仓库推，它只写 gemini/ 目录）。
+
+    fetch 之后把本地还没推送的提交 rebase 到 origin/main 上；工作区里没提交的改动自动暂存再恢复。
+    只动本地未推送的提交，不强推、不改写已推送的历史。失败就放弃 rebase，本地保持原样。
+    """
+    rc, out = _git(project_dir, ["fetch", "origin", "main"], timeout=120)
+    if rc != 0:
+        return False, f"fetch 失败：{out[-200:]}"
+    rc, _ = _git(project_dir, ["merge-base", "--is-ancestor", "origin/main", "HEAD"])
+    if rc == 0:
+        return True, "远端没有新提交"
+    rc, out = _git(project_dir, ["rebase", "--autostash", "origin/main"])
+    if rc != 0:
+        _git(project_dir, ["rebase", "--abort"])
+        return False, f"rebase 失败，已放弃，本地保持原样：{out[-300:]}"
+    return True, "已接入远端的新提交"
+
+
 def _push(project_dir: str) -> tuple[bool, str]:
-    """推送 main。鉴权优先用 `gh auth setup-git` 配的 credential helper（令牌在 keyring，不落盘）；
-    失败再回退到 GH_TOKEN 的 Bearer 一次性头。"""
+    """推送 main：先同步远端再推；被拒（同步后又有人推了）就再同步、再推一次。绝不强推。"""
     rc, out = _git(project_dir, ["remote", "get-url", "origin"])
     if rc != 0:
         _git(project_dir, ["remote", "add", "origin", REPO])
+    out = ""
+    for _ in range(2):
+        synced, note = _sync_with_remote(project_dir)
+        ok, out = _push_once(project_dir)
+        if ok:
+            return True, out
+        out = f"{out}\n（同步远端：{note}）"
+    return False, out
+
+
+def _push_once(project_dir: str) -> tuple[bool, str]:
+    """推一次 main。鉴权优先用 `gh auth setup-git` 配的 credential helper（令牌在 keyring，不落盘）；
+    失败再回退到 GH_TOKEN 的 Bearer 一次性头。"""
     env = dict(os.environ)
     env.update({"GCM_INTERACTIVE": "Never", "GIT_TERMINAL_PROMPT": "0"})
     # 优先：git 已配置的 credential helper（gh keyring）
@@ -205,7 +238,9 @@ def compose_episode(show: dict, sources_cfg: dict, store: EpisodeStore, report: 
         report["result"] = "blocked"
         report["reason"] = str(ex)
         return None
-    q = ep_data.get("quality", {})
+    q = ep_data.setdefault("quality", {})
+    if show.get("created_by"):
+        q["created_by"] = show["created_by"]        # 节目页上的"本页由……创建"，以后换模型也不会改写老节目
     report["stages"]["editorial"] = (f"ok (素材 {q.get('items')} 条，自检问题 "
                                      f"{len(q.get('violations_first', []))}→{len(q.get('violations_final', []))}"
                                      f"{'，已自动改写' if q.get('repaired') else ''})")
@@ -402,6 +437,11 @@ def run_publish(project_dir: str, *, do_push: bool = False) -> dict:
         report["result"] = "skipped"
         report["reason"] = "今天已经发布过一集，跳过（不重复发布）。"
         return report
+
+    # 0.5) 正式发布前先接入远端的新提交（Gemini 对照流程写的 gemini/ 目录），建站时才看得到对照入口
+    if do_push:
+        synced, note = _sync_with_remote(project_dir)
+        report["stages"]["sync"] = ("ok: " if synced else "warn: ") + note
 
     # 1-2) 采集 + 事实卡 + 撰稿 + 自检
     ep_data = compose_episode(show, sources_cfg, store, report)
