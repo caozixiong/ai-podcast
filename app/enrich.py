@@ -9,12 +9,13 @@
 from __future__ import annotations
 
 import re
+from difflib import SequenceMatcher
 from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
 
-from .collect import UA, is_google_news
+from .collect import UA, is_google_news, title_key
 
 FETCH_TIMEOUT = 20
 MIN_FULLTEXT_CHARS = 150     # 公司公告类简讯可能只有一两百字（如格隆汇快讯）
@@ -78,9 +79,46 @@ def fetch_article(url: str, *, get=requests.get, timeout: int = FETCH_TIMEOUT) -
     return "fulltext", text
 
 
+SAME_STORY_RATIO = 0.85
+MIN_KEY_CHARS = 8
+SHARED_RUN_CHARS = 10        # 两个标题共有一段这么长的连续文字，且占较短标题的六成以上 → 同一条新闻
+SHARED_RUN_SHARE = 0.6
+
+
+def _same_story(a: str, b: str) -> bool:
+    if len(a) < MIN_KEY_CHARS or len(b) < MIN_KEY_CHARS:
+        return False
+    if a == b or a in b or b in a:
+        return True
+    m = SequenceMatcher(None, a, b, autojunk=False)
+    if m.ratio() >= SAME_STORY_RATIO:
+        return True
+    run = m.find_longest_match(0, len(a), 0, len(b)).size
+    return run >= SHARED_RUN_CHARS and run >= SHARED_RUN_SHARE * min(len(a), len(b))
+
+
+def drop_repeats(items: list[dict], past_titles: list[str] | None = None) -> tuple[list[dict], list[dict]]:
+    """去掉"同一条新闻换了个发布方/栏目名"的重复素材。返回 (保留, 丢弃)。
+
+    比的是标题指纹（去掉【栏目】前缀、栏目尾巴、标点）：和往期播过的标题相同或高度相似的丢弃；
+    同一批候选里相似的只留排在前面（相关度更高）的那条。
+    """
+    past = [k for k in (title_key(t) for t in past_titles or []) if k]
+    kept, dropped, kept_keys = [], [], []
+    for it in items:
+        key = title_key(it.get("title", ""))
+        if key and any(_same_story(key, p) for p in past + kept_keys):
+            dropped.append(it)
+            continue
+        kept.append(it)
+        kept_keys.append(key)
+    return kept, dropped
+
+
 def select_items(items: list[dict], *, max_items: int = 6, max_headline_items: int = 2,
-                 fetch=fetch_article) -> list[dict]:
-    """按原顺序（相关度优先）挑素材：总数不超过 max_items，"仅标题"的不超过 max_headline_items。
+                 min_relevance: int = 0, fetch=fetch_article) -> list[dict]:
+    """按原顺序（相关度优先）挑素材：总数不超过 max_items，"仅标题"的不超过 max_headline_items，
+    相关度低于 min_relevance 的不要（宁可少播，不拿不切题的凑数）。
 
     返回的副本带 text（供写事实卡用，不入库）与最终 fetch_status。
     """
@@ -89,7 +127,7 @@ def select_items(items: list[dict], *, max_items: int = 6, max_headline_items: i
     for raw in items:
         if len(selected) >= max_items:
             break
-        if not raw.get("url") or raw.get("relevance", 0) < 0:
+        if not raw.get("url") or raw.get("relevance", 0) < max(0, min_relevance):
             continue
         it = dict(raw)
         status = it.get("fetch_status") or "title"

@@ -20,7 +20,7 @@ from .state import EpisodeStore, Episode, STATE_DIR_DEFAULT
 import re
 
 from .collect import collect_sources, fetch_arxiv_by_ids, arxiv_id_from_url
-from .enrich import select_items
+from .enrich import select_items, drop_repeats
 from .editorial import write_episode, LLMError
 from .tts import synthesize, TTSUnavailable
 from .drive import upload, remote_exists, DriveUnavailable
@@ -90,28 +90,93 @@ def _public_item(it: dict) -> dict:
     return {k: v for k, v in it.items() if k != "text"}
 
 
+def gather_candidates(show: dict, sources_cfg: dict, store: EpisodeStore, *,
+                      ignore_seen: bool = False) -> dict:
+    """采集全部候选并分层：items（全部）→ fresh（没播过）→ eligible（切题且不与往期重复）。
+
+    不截断候选池：先按"是否播过"过滤，再挑前几条。以前先截到 40 条再过滤，
+    排在前面的都播过以后，后面的新素材就永远轮不到了。
+    """
+    e = show.get("episode", {})
+    raw = collect_sources(sources_cfg, lookback_days=int(e.get("lookback_days", 7)),
+                          priority_keywords=sources_cfg.get("priority_keywords", []),
+                          max_items=1000,
+                          news_lookback_days=int(e.get("news_lookback_days", 0)) or None)
+    warnings = [it.get("summary", "") for it in raw if it.get("id") == "_errors"]
+    items = [it for it in raw if it.get("relevance", 0) >= 0]
+    fresh = items if ignore_seen else [it for it in items if not store.is_seen(it["id"])]
+    min_rel = int(e.get("min_relevance", 0))
+    on_topic = [it for it in fresh if it.get("relevance", 0) >= min_rel]
+    past_titles = [] if ignore_seen else [it.get("title", "") for ep in store.load_episodes()
+                                          for it in ep.items]
+    eligible, repeats = drop_repeats(on_topic, past_titles)
+    return {"items": items, "fresh": fresh, "eligible": eligible, "repeats": repeats,
+            "min_relevance": min_rel, "warnings": warnings}
+
+
+def run_candidates(project_dir: str, *, ignore_seen: bool = False) -> dict:
+    """选题预览：只采集和打分，不调用模型、不发布、不记已读。用来查"今天会选什么、为什么"。"""
+    cfg = load_config(project_dir)
+    show, sources_cfg = cfg["show"], cfg["sources"]
+    store = EpisodeStore(os.path.join(project_dir, "data"))
+    e = show.get("episode", {})
+    pool = gather_candidates(show, sources_cfg, store, ignore_seen=ignore_seen)
+    # 预览不抓网页正文：直链新闻按"有摘要就算有原文"估计
+    selected = select_items(pool["eligible"], max_items=int(e.get("max_items", 6)),
+                            max_headline_items=int(e.get("max_headline_items", 2)),
+                            min_relevance=pool["min_relevance"], fetch=lambda u: ("title", ""))
+    chosen = {it["id"] for it in selected}
+    repeat_ids = {it["id"] for it in pool["repeats"]}
+    fresh_ids = {it["id"] for it in pool["fresh"]}
+
+    def row(it):
+        if it["id"] in chosen:
+            state = "入选"
+        elif it["id"] in repeat_ids:
+            state = "与往期重复"
+        elif it["id"] not in fresh_ids:
+            state = "已播过"
+        elif it.get("relevance", 0) < pool["min_relevance"]:
+            state = "不切题"
+        else:
+            state = "候补"
+        return {"state": state, "relevance": it.get("relevance", 0), "kind": it.get("kind"),
+                "published": it.get("published"), "publisher": it.get("publisher"),
+                "title": it.get("title"), "hits": it.get("relevance_hits", []),
+                "source": it.get("source_name")}
+
+    return {"date": today_str(), "min_relevance": pool["min_relevance"],
+            "total": len(pool["items"]), "fresh": len(pool["fresh"]),
+            "on_topic": len(pool["eligible"]), "selected": len(selected),
+            "warnings": pool["warnings"], "rows": [row(it) for it in pool["items"]]}
+
+
 def compose_episode(show: dict, sources_cfg: dict, store: EpisodeStore, report: dict, *,
                     on_violation: str | None = None, ignore_seen: bool = False) -> dict | None:
     """采集 → 挑选/补原文 → 事实卡 → 撰稿 → 自检。成功返回 ep_data；跳过/受阻返回 None 并写 report。"""
     e = show.get("episode", {})
-    items = collect_sources(sources_cfg, lookback_days=int(e.get("lookback_days", 7)),
-                            priority_keywords=sources_cfg.get("priority_keywords", []),
-                            max_items=40)
-    items = [it for it in items if it.get("relevance", 0) >= 0]
-    fresh = items if ignore_seen else [it for it in items if not store.is_seen(it["id"])]
-    selected = select_items(fresh, max_items=int(e.get("max_items", 6)),
-                            max_headline_items=int(e.get("max_headline_items", 2)))
+    pool = gather_candidates(show, sources_cfg, store, ignore_seen=ignore_seen)
+    selected = select_items(pool["eligible"], max_items=int(e.get("max_items", 6)),
+                            max_headline_items=int(e.get("max_headline_items", 2)),
+                            min_relevance=pool["min_relevance"])
     report["stages"]["collect"] = {
-        "total": len(items), "fresh": len(fresh), "selected": len(selected),
+        "total": len(pool["items"]), "fresh": len(pool["fresh"]),
+        "on_topic": len(pool["eligible"]), "min_relevance": pool["min_relevance"],
+        "repeats_dropped": len(pool["repeats"]), "selected": len(selected),
         "status": [it.get("fetch_status") for it in selected],
+        "relevance": [it.get("relevance") for it in selected],
     }
+    if pool["warnings"]:
+        report["stages"]["collect"]["warnings"] = pool["warnings"]
     min_items = int(e.get("min_items", 2))
     min_sub = int(e.get("min_substantive_items", 1))
     substantive = sum(1 for it in selected if it.get("fetch_status") != "title")
     if len(selected) < min_items or substantive < min_sub:
         report["result"] = "skipped"
-        report["reason"] = (f"可用资讯不足（入选 {len(selected)} 条，其中有原文的 {substantive} 条；"
-                            f"要求至少 {min_items} 条且至少 {min_sub} 条有原文），今天跳过，不硬凑。")
+        report["reason"] = (f"切题的新资讯不足（未播过的 {len(pool['fresh'])} 条里，相关度达到 "
+                            f"{pool['min_relevance']} 的有 {len(pool['eligible'])} 条；入选 {len(selected)} 条，"
+                            f"其中有原文的 {substantive} 条；要求至少 {min_items} 条且至少 {min_sub} 条有原文），"
+                            f"今天跳过，不硬凑。")
         return None
 
     llm_cfg = show.get("llm", {})

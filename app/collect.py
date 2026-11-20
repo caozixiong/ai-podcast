@@ -13,8 +13,9 @@ from __future__ import annotations
 
 import hashlib
 import re
+import time
 from datetime import datetime, timedelta, timezone
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 import feedparser
 import requests
@@ -26,6 +27,10 @@ UA = {"User-Agent": "ai-podcast/1.0 (research; contact: caozixiong@users.noreply
 ARXIV_ABSTRACT_LIMIT = 4000     # arXiv 摘要基本都在 2000 字符内；不再截成 600
 NEWS_SUMMARY_LIMIT = 1500
 MIN_ABSTRACT_CHARS = 200
+ARXIV_API = "https://export.arxiv.org/api/query"
+ARXIV_MIN_INTERVAL = 3.2        # arXiv 要求同一客户端 3 秒内不超过 1 次请求
+ARXIV_RETRY_WAIT = 8            # 限流/临时故障时只重试一次
+TITLE_FACTOR = 2                # 关键词出现在标题里，比只在摘要里提到一句更能说明切题
 
 
 def _norm_id(*parts: str) -> str:
@@ -79,6 +84,128 @@ def _strip_publisher_suffix(title: str, publisher: str) -> str:
     return title
 
 
+_SEO_TAIL = re.compile(r"(?:_[^_\s]{1,12})+$")
+_LEAD_TAG = re.compile(r"^(?:\s*(?:【[^】]{1,20}】|\[[^\]]{1,20}\]))+")
+
+
+def _strip_seo_tail(title: str) -> str:
+    """新闻标题常带站点栏目尾巴：『…封测年会_华汉伟业_半导体』『…开工_市场测评_市场_中金在线』。"""
+    cut = _SEO_TAIL.sub("", title).strip()
+    return cut if len(cut) >= 8 else title
+
+
+def title_key(title: str) -> str:
+    """判断"是不是同一条新闻"用的标题指纹：去掉【栏目】前缀、栏目尾巴、标点和空白。"""
+    t = _LEAD_TAG.sub("", _strip_seo_tail(title or ""))
+    return re.sub(r"[\W_]+", "", t).lower()
+
+
+def _kw_pattern(kw: str) -> re.Pattern:
+    """关键词 → 正则。
+
+    - 拉丁字母/数字开头或结尾的一侧，不得紧挨别的字母数字：'SEM' 不再命中 'self-assembly'，
+      而 '量产级TGV全工艺' 里的 TGV 仍能命中（两侧是汉字）。
+    - 全大写缩写（SEM、CT、TSV）区分大小写；其余不区分。结尾是字母时允许复数 s。
+    - 空格和连字符可有可无：'non-destructive' 也命中 'nondestructive'、'non destructive'。
+    """
+    parts = [re.escape(p) for p in re.split(r"[\s\-]+", kw.strip()) if p]
+    body = r"[\s\-]*".join(parts)
+    left = r"(?<![A-Za-z0-9])" if re.match(r"[A-Za-z0-9]", kw.strip()) else ""
+    tail = kw.strip()[-1:]
+    right = ""
+    if re.match(r"[A-Za-z]", tail):
+        right = r"s?(?![A-Za-z0-9])"
+    elif tail.isdigit():
+        right = r"(?![A-Za-z0-9])"
+    letters = re.sub(r"[^A-Za-z]", "", kw)
+    acronym = bool(letters) and letters.isupper() and len(letters) <= 5
+    return re.compile(left + body + right, 0 if acronym else re.IGNORECASE)
+
+
+class RelevanceScorer:
+    """按主题给素材打相关度。
+
+    sources.json 的 topics：[{name, weight, core, keywords}]。每个主题只计一次分：
+    关键词在标题里命中记 weight×TITLE_FACTOR，只在摘要里命中记 weight。
+    标了 core 的主题一个都没命中 → 0 分（只沾边、不切题）。
+    downrank：命中其中任一词，扣 penalty 分（例如纯临床医学影像）。
+    exclude_title_keywords：标题里出现任一词直接记 0 分（市场报告类软文、借"无损检测"之名的无关消费资讯）。
+    没有 topics 时退回旧的 priority_keywords 平铺列表（全部算核心、权重 1）。
+    """
+
+    def __init__(self, sources_cfg: dict | None = None, priority_keywords: list[str] | None = None):
+        cfg = sources_cfg or {}
+        topics = cfg.get("topics") or []
+        if not topics:
+            topics = [{"name": "关键词", "weight": 1, "core": True,
+                       "keywords": list(priority_keywords or [])}]
+        self.topics = [{"name": t.get("name", ""), "weight": int(t.get("weight", 1)),
+                        "core": bool(t.get("core", False)),
+                        "patterns": [(k, _kw_pattern(k)) for k in t.get("keywords", []) if k.strip()]}
+                       for t in topics]
+        self.need_core = any(t["core"] for t in self.topics)
+        down = cfg.get("downrank") or {}
+        self.penalty = int(down.get("penalty", 0))
+        self.down = [(k, _kw_pattern(k)) for k in down.get("keywords", []) if k.strip()]
+        self.exclude = [(k, _kw_pattern(k)) for k in cfg.get("exclude_title_keywords", []) if k.strip()]
+
+    def score(self, title: str, summary: str = "") -> tuple[int, list[str]]:
+        """返回 (相关度, 命中说明)。命中说明形如『先进封装@标题:TGV』，入库后便于事后查为什么选它。"""
+        total, hits, core_hit = 0, [], False
+        banned = next((k for k, p in self.exclude if p.search(title or "")), None)
+        if banned:
+            return 0, [f"排除:{banned}"]
+        for t in self.topics:
+            in_title = next((k for k, p in t["patterns"] if p.search(title or "")), None)
+            in_body = None if in_title else next((k for k, p in t["patterns"] if p.search(summary or "")), None)
+            if in_title:
+                total += t["weight"] * TITLE_FACTOR
+                hits.append(f"{t['name']}@标题:{in_title}")
+            elif in_body:
+                total += t["weight"]
+                hits.append(f"{t['name']}@摘要:{in_body}")
+            else:
+                continue
+            core_hit = core_hit or t["core"]
+        if self.need_core and not core_hit:
+            return 0, hits
+        blob = (title or "") + "\n" + (summary or "")
+        bad = next((k for k, p in self.down if p.search(blob)), None)
+        if bad and self.penalty:
+            total = max(0, total - self.penalty)
+            hits.append(f"降权:{bad}")
+        return total, hits
+
+
+def arxiv_url(src: dict) -> str:
+    """arXiv 源可以直接给 url，也可以给人能读的 query（由这里拼成 API 地址）。"""
+    if src.get("query"):
+        return (f"{ARXIV_API}?search_query={quote(src['query'], safe=':()')}&start=0"
+                f"&max_results={int(src.get('max_results', 30))}"
+                "&sortBy=submittedDate&sortOrder=descending")
+    return src.get("url", "")
+
+
+def _get_arxiv(url: str, state: dict):
+    """取 arXiv 列表：两次请求之间至少隔 ARXIV_MIN_INTERVAL 秒；限流或临时故障只重试一次。"""
+    last_err = None
+    for attempt in range(2):
+        wait = ARXIV_MIN_INTERVAL - (time.monotonic() - state["last"]) if "last" in state else 0
+        if attempt:
+            wait = max(wait, ARXIV_RETRY_WAIT)
+        if wait > 0:
+            time.sleep(wait)
+        try:
+            r = requests.get(url, timeout=TIMEOUT, headers=UA)
+            state["last"] = time.monotonic()
+            r.raise_for_status()
+            return r
+        except Exception as e:            # noqa: BLE001 —— 记下原因，交给上层决定跳过这个源
+            state["last"] = time.monotonic()
+            last_err = e
+    raise last_err
+
+
 def _authors(entry) -> list[str]:
     out = []
     for a in entry.get("authors", []) or []:
@@ -113,11 +240,14 @@ def fetch_arxiv_by_ids(arxiv_ids: list[str]) -> dict[str, dict]:
 
 def collect_sources(sources_cfg: dict, *, lookback_days: int = 7,
                     priority_keywords: list[str] | None = None,
-                    max_items: int = 40) -> list[dict]:
+                    max_items: int = 40, news_lookback_days: int | None = None) -> list[dict]:
     """返回归一化 Item（相关度/新度降序）。不可用源会被跳过并记录。"""
-    pkeys = [k.lower() for k in (priority_keywords or [])]
+    scorer = RelevanceScorer(sources_cfg, priority_keywords)
+    arxiv_state: dict = {}
     now = datetime.now(timezone.utc)
     cutoff = now - timedelta(days=lookback_days)
+    # 新闻过期得比论文快：三周前的旧闻不该当成今天的资讯来念
+    news_cutoff = now - timedelta(days=news_lookback_days) if news_lookback_days else cutoff
     items: list[dict] = []
     seen = set()
     errors: list[str] = []
@@ -125,14 +255,13 @@ def collect_sources(sources_cfg: dict, *, lookback_days: int = 7,
     for src in sources_cfg.get("sources", []):
         if not src.get("enabled", True):
             continue
-        url = src.get("url")
+        is_arxiv = src.get("type") == "arxiv"
+        url = arxiv_url(src) if is_arxiv else src.get("url")
         if not url:
             continue
-        is_arxiv = src.get("type") == "arxiv"
         try:
             if is_arxiv:
-                r = requests.get(url, timeout=TIMEOUT, headers=UA)
-                r.raise_for_status()
+                r = _get_arxiv(url, arxiv_state)
                 feed = feedparser.parse(r.content)
             else:
                 feed = feedparser.parse(url)
@@ -147,12 +276,14 @@ def collect_sources(sources_cfg: dict, *, lookback_days: int = 7,
             link = (e.get("link") or "").strip()
             publisher = _publisher(e, src)
             title = _strip_publisher_suffix(_clean(e.get("title", ""), None), publisher)
+            if src.get("type") != "arxiv":
+                title = _strip_seo_tail(title)
             raw_summary = e.get("summary", "") or e.get("description", "")
             pub = _parse_pub(e)
             if not (title and link):
                 continue
             # 有明确日期但超出时间窗 → 丢弃，避免播报旧新闻；无日期的保留（后续按相关度排）
-            if pub is not None and pub < cutoff:
+            if pub is not None and pub < (cutoff if is_arxiv else news_cutoff):
                 continue
             key = _norm_id(str(e.get("id", "")), link, _legacy_key_title(e.get("title", "")))
             if key in seen:
@@ -171,8 +302,7 @@ def collect_sources(sources_cfg: dict, *, lookback_days: int = 7,
                 summary = _clean(raw_summary, NEWS_SUMMARY_LIMIT)
                 status = "pending"
 
-            blob = (title + " " + summary).lower()
-            score = sum(1 for k in pkeys if k in blob)
+            score, hits = scorer.score(title, summary)
             items.append({
                 "id": key,
                 "title": title,
@@ -185,6 +315,7 @@ def collect_sources(sources_cfg: dict, *, lookback_days: int = 7,
                 "summary": summary,
                 "fetch_status": status,
                 "relevance": score,
+                "relevance_hits": hits,
             })
 
     items.sort(key=lambda x: (x["relevance"], x["published"]), reverse=True)
