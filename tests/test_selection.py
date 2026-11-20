@@ -58,7 +58,6 @@ TOPICS = {
         {"name": "CT", "weight": 3, "core": True, "keywords": ["X-ray", "computed tomography"]},
         {"name": "AI", "weight": 2, "core": False, "keywords": ["segmentation", "deep learning"]},
     ],
-    "downrank": {"penalty": 5, "keywords": ["patient"]},
     "exclude_title_keywords": ["市场规模"],
 }
 
@@ -71,17 +70,60 @@ def test_title_hit_counts_double_and_each_topic_once():
     assert score == 6 + 4 and hits == ["CT@标题:X-ray", "AI@标题:segmentation"]
 
 
+def test_caret_keyword_counts_in_title_only():
+    cfg = {"topics": [{"name": "CT", "weight": 3, "core": True, "keywords": ["^X-ray", "X-ray imaging"]},
+                      {"name": "AI", "weight": 2, "core": False, "keywords": ["reconstruction"]}]}
+    s = RelevanceScorer(cfg)
+    # X 射线衍射做表征的凝聚态论文：摘要里有 X-ray，标题里有 reconstruction（晶格重构），不该算切题
+    assert s.score("Al-Sublattice Reconstruction in Sm2Ir8Al31", "single-crystal X-ray diffraction")[0] == 0
+    assert s.score("X-Ray Baggage Segmentation", "")[0] == 6
+    assert s.score("Detector gap interpolation", "photon-counting X-ray imaging")[0] == 3
+
+
 def test_no_core_topic_means_zero():
     s = RelevanceScorer(TOPICS)
     score, hits = s.score("Deep learning segmentation of street scenes", "segmentation everywhere")
     assert score == 0 and hits                                   # 只沾边：记了命中，但不给分
 
 
-def test_downrank_and_title_exclusion():
-    s = RelevanceScorer(TOPICS)
-    assert s.score("X-ray segmentation", "validated on 120 patients")[0] == 6 + 4 - 5
-    assert s.score("Chest imaging", "X-ray of each patient")[0] == 0   # 扣到 0 为止，不出现负分
-    assert s.score("工业CT市场规模预测 X-ray", "")[0] == 0
+def test_title_exclusion():
+    assert RelevanceScorer(TOPICS).score("工业CT市场规模预测 X-ray", "")[0] == 0
+
+
+MED = {
+    "topics": [
+        {"name": "CT", "weight": 3, "core": True, "keywords": ["X-ray", "CT", "computed tomography"]},
+        {"name": "AI", "weight": 2, "core": False, "keywords": ["segmentation", "reconstruction"]},
+        {"name": "工业", "weight": 3, "core": False, "industrial": True, "keywords": ["weld", "industrial"]},
+    ],
+    "medical_exclusion": {"penalty": 5, "strong_keywords": ["patient", "pelvic", "low-dose CT"],
+                          "weak_keywords": ["medical", "clinical"]},
+}
+
+
+def test_medical_imaging_is_excluded_not_just_downranked():
+    s = RelevanceScorer(MED)
+    # 标题里有医学词（强词、泛词都算）→ 排除
+    assert s.score("Low-Dose CT Denoising", "")[0] == 0
+    score, hits = s.score("Medical CT segmentation", "")
+    assert score == 0 and hits == ["排除(医学影像):medical"]
+    # 摘要里出现一个解剖/病患类的强词 → 排除（如只在摘要里写了 pelvic 的锥束 CT 重建论文）
+    assert s.score("Cone-Beam CT Reconstruction with Learned Warm Starts", "evaluated on pelvic scans")[0] == 0
+    # 摘要里两个泛词 → 排除
+    assert s.score("3D CT segmentation", "a medical foundation model for clinical use")[0] == 0
+
+
+def test_medical_mention_in_passing_only_costs_points():
+    s = RelevanceScorer(MED)
+    # 工业论文（标题命中 industrial 主题）顺带提一句患者成像：不排除，只扣分
+    score, hits = s.score("X-ray CT inspection of welds", "unlike patient imaging, dose is not a concern")
+    assert score == 6 + 6 - 5 and hits[-1] == "降权(提到医学):patient"
+    # 通用方法论文摘要里只有一个泛词：不排除，只扣分
+    assert s.score("Sparse-view CT reconstruction", "applications range from medical to materials")[0] == 6 + 4 - 5
+    # 但工业标题救不了"摘要里一堆医学词"
+    assert s.score("Industrial CT segmentation", "validated on patient pelvic scans in clinical practice")[0] == 0
+    # 没有医学词：不受影响
+    assert s.score("X-ray CT inspection of welds", "porosity analysis")[0] == 12
 
 
 def test_flat_priority_keywords_still_work():
@@ -105,6 +147,16 @@ OFF_TOPIC = [
      "3D reconstruction. We show such an approach can improve reconstruction resolution."),
     ("PAISF: A Partially Adaptive In-Order Selection Function for Routing in On-Chip, Inter-Chiplet Networks",
      "deadlock-free routing for chiplet-based systems built on a wafer-scale interposer."),
+    ("Accelerating Variational Cone-Beam CT Reconstruction with Learned Warm Starts",
+     "image-guided radiotherapy; evaluated on pelvic cone-beam CT data."),
+    ("RouteDiff: Low-Dose CT Denoising via Fidelity-Refinement Routing and Hypergraph State Regulation",
+     "low-dose CT (LDCT) denoising with a diffusion model."),
+    ("NativeSeg: Native Vision Language Segmentation of 3D Computed Tomography via Spatial Visual Tokens",
+     "a medical vision-language model for multi-organ segmentation."),
+    ("A 3D foundation model unifying CT interpretation and segmentation",
+     "trained on clinical CT volumes with radiologist reports from several hospitals."),
+    ("Anisotropic Structural and Magnetic Response in Sm2Ir8Al31: Al-Sublattice Reconstruction",
+     "single-crystal X-ray diffraction and magnetization measurements."),
     ("2026武汉黄金回收规范化指南：无损检测、全程留痕、票据留存", ""),
     ("X 射线检测系统市场增长 |全球报告 [2034]", ""),
 ]
@@ -119,6 +171,8 @@ ON_TOPIC = [
     ("华汉伟业携量产级TGV全工艺流程AOI检测方案亮相第二十四届封测年会", ""),
     ("【明日主题前瞻】总投资50亿元，又一先进封装项目开工", ""),
     ("Deep learning segmentation of FIB-SEM volumes of battery cathodes", ""),
+    ("X-ray computed tomography of porosity in additively manufactured alloys",
+     "Unlike medical CT, industrial CT of dense metal parts suffers from beam hardening."),
 ]
 
 

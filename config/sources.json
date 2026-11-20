@@ -1,23 +1,37 @@
 {
-  "_scoring": "相关度 = 各主题得分之和：关键词在标题里命中记 weight×2，只在摘要里命中记 weight，每个主题只计一次。core 主题一个都没命中 → 0 分。命中 downrank 的词再扣 penalty；标题命中 exclude_title_keywords 的直接 0 分。低于 show.json 里 episode.min_relevance 的素材不入选，宁可少播也不凑数。拉丁字母关键词按整词匹配（SEM 不会命中 self-assembly），全大写缩写区分大小写。用 `python -m app candidates` 可以不调用模型直接看当天的候选和得分。",
+  "_scoring": "相关度 = 各主题得分之和：关键词在标题里命中记 weight×2，只在摘要里命中记 weight，每个主题只计一次；关键词前加 ^ 表示只认标题。core 主题一个都没命中 → 0 分。医学影像按 medical_exclusion 排除（0 分）；标题命中 exclude_title_keywords 的也是 0 分。低于 show.json 里 episode.min_relevance 的素材不入选，宁可少播也不凑数。拉丁字母关键词按整词匹配（SEM 不会命中 self-assembly），全大写缩写区分大小写。用 `python -m app candidates` 可以不调用模型直接看当天的候选和得分。",
   "topics": [
     {
       "name": "X射线/CT成像",
       "weight": 3,
       "core": true,
       "keywords": [
-        "X-ray",
         "computed tomography",
         "CT",
         "micro-CT",
         "nano-CT",
+        "tomographic",
+        "tomogram",
+        "tomography",
         "laminography",
         "radiography",
-        "X 射线",
-        "X 光",
+        "ptychography",
+        "ptychographic",
+        "X-ray imaging",
+        "X-ray image",
+        "X-ray microscopy",
+        "X-ray inspection",
+        "X-ray scan",
+        "X-ray projection",
+        "^X-ray",
+        "^X 射线",
+        "^X 光",
+        "X 射线检测",
+        "X 射线成像",
         "断层扫描",
         "计算机断层"
-      ]
+      ],
+      "_note": "前面带 ^ 的词只认标题。摘要里要出现明确的成像说法（CT、tomography、X-ray imaging 等）才算。"
     },
     {
       "name": "先进封装/TSV/TGV",
@@ -50,7 +64,8 @@
         "封装检测",
         "Innometric",
         "Javis"
-      ]
+      ],
+      "industrial": true
     },
     {
       "name": "无损检测/缺陷检测",
@@ -79,7 +94,8 @@
         "失效分析",
         "探伤",
         "量测"
-      ]
+      ],
+      "industrial": true
     },
     {
       "name": "AI图像处理",
@@ -143,7 +159,8 @@
         "增材制造",
         "复合材料",
         "铸件"
-      ]
+      ],
+      "industrial": true
     },
     {
       "name": "显微/制样",
@@ -164,31 +181,37 @@
       "_note": "算核心主题但权重只有 1：单讲电镜的论文到不了下限，必须同时是图像处理/AI 方法才入选。"
     }
   ],
-  "downrank": {
-    "_note": "节目定位是科研与工业应用。临床应用类论文（胸片分类、手术规划等）扣分后基本落到下限以下；标题里同时有 CT/X-ray 和图像处理方法的医学影像方法论文仍可入选，但排在工业和通用方法之后。",
+  "medical_exclusion": {
+    "_note": "节目定位是科研与工业应用，医学影像论文不播（2026-11-19 用户决定完全排除）。标题里出现下面任一词 → 排除；摘要里出现 strong 词，或两个以上不同的词 → 排除。例外只有两种，都只扣 penalty 分：标题本身命中 industrial 主题而摘要里只顺带提到一个 strong 词；摘要里只有一个 weak 词。",
     "penalty": 5,
-    "keywords": [
+    "strong_keywords": [
       "patient",
-      "clinical",
-      "medical",
+      "clinician",
       "tumor",
       "tumour",
       "lesion",
       "cancer",
+      "carcinoma",
       "disease",
       "pulmonary",
       "lung",
       "chest",
+      "thoracic",
       "liver",
+      "kidney",
+      "renal",
       "brain",
       "cardiac",
       "coronary",
       "vascular",
       "angiography",
       "abdominal",
+      "abdomen",
+      "pelvic",
       "dental",
       "bone",
-      "organ",
+      "breast",
+      "mammography",
       "anatomy",
       "anatomical",
       "surgery",
@@ -197,12 +220,28 @@
       "radiology",
       "radiologist",
       "hospital",
-      "MRI",
+      "biopsy",
+      "in vivo",
+      "murine",
+      "low-dose CT",
+      "LDCT",
       "患者",
       "临床",
       "肿瘤",
-      "医学影像",
-      "医院"
+      "医学",
+      "医院",
+      "医疗"
+    ],
+    "weak_keywords": [
+      "medical",
+      "medicine",
+      "biomedical",
+      "healthcare",
+      "clinical",
+      "MRI",
+      "organ",
+      "pathology",
+      "radiological"
     ]
   },
   "exclude_title_keywords": [
@@ -246,8 +285,9 @@
       "name": "arXiv: CT / X 射线图像的 AI 处理",
       "type": "arxiv",
       "query": "(all:\"computed tomography\" OR all:\"X-ray\") AND (all:segmentation OR all:\"defect detection\" OR all:denoising OR all:\"super-resolution\" OR all:reconstruction OR all:\"deep learning\") AND (cat:eess.IV OR cat:cs.CV OR cat:cond-mat.mtrl-sci)",
-      "max_results": 40,
-      "enabled": true
+      "max_results": 60,
+      "enabled": true,
+      "_note": "这条检索式的结果大半是医学影像（会被 medical_exclusion 排除），所以多取一些，给非医学的论文留位置。"
     },
     {
       "name": "arXiv: 半导体 / 工业缺陷检测",

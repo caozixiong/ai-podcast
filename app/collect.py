@@ -127,8 +127,12 @@ class RelevanceScorer:
 
     sources.json 的 topics：[{name, weight, core, keywords}]。每个主题只计一次分：
     关键词在标题里命中记 weight×TITLE_FACTOR，只在摘要里命中记 weight。
+    关键词前加 ^ 表示只认标题：单独一个 "X-ray" 出现在摘要里多半是 X 射线衍射、能谱之类的表征手段，
+    不代表这篇论文是讲 X 射线成像的。
     标了 core 的主题一个都没命中 → 0 分（只沾边、不切题）。
-    downrank：命中其中任一词，扣 penalty 分（例如纯临床医学影像）。
+    medical_exclusion：医学影像不播。标题里出现医学词 → 0 分；摘要里出现解剖/病患类的强词，
+    或两个以上不同的医学词 → 0 分。例外：标题本身命中了 industrial 主题（工业论文顺带提一句
+    "不同于患者成像"），或摘要里只有一个泛词（medical、clinical）→ 只扣 penalty 分，不排除。
     exclude_title_keywords：标题里出现任一词直接记 0 分（市场报告类软文、借"无损检测"之名的无关消费资讯）。
     没有 topics 时退回旧的 priority_keywords 平铺列表（全部算核心、权重 1）。
     """
@@ -140,13 +144,15 @@ class RelevanceScorer:
             topics = [{"name": "关键词", "weight": 1, "core": True,
                        "keywords": list(priority_keywords or [])}]
         self.topics = [{"name": t.get("name", ""), "weight": int(t.get("weight", 1)),
-                        "core": bool(t.get("core", False)),
-                        "patterns": [(k, _kw_pattern(k)) for k in t.get("keywords", []) if k.strip()]}
+                        "core": bool(t.get("core", False)), "industrial": bool(t.get("industrial", False)),
+                        "patterns": [(k.lstrip("^"), _kw_pattern(k.lstrip("^")), k.startswith("^"))
+                                     for k in t.get("keywords", []) if k.strip("^ ")]}
                        for t in topics]
         self.need_core = any(t["core"] for t in self.topics)
-        down = cfg.get("downrank") or {}
-        self.penalty = int(down.get("penalty", 0))
-        self.down = [(k, _kw_pattern(k)) for k in down.get("keywords", []) if k.strip()]
+        med = cfg.get("medical_exclusion") or {}
+        self.penalty = int(med.get("penalty", 0))
+        self.med_strong = [(k, _kw_pattern(k)) for k in med.get("strong_keywords", []) if k.strip()]
+        self.med_weak = [(k, _kw_pattern(k)) for k in med.get("weak_keywords", []) if k.strip()]
         self.exclude = [(k, _kw_pattern(k)) for k in cfg.get("exclude_title_keywords", []) if k.strip()]
 
     def score(self, title: str, summary: str = "") -> tuple[int, list[str]]:
@@ -155,26 +161,46 @@ class RelevanceScorer:
         banned = next((k for k, p in self.exclude if p.search(title or "")), None)
         if banned:
             return 0, [f"排除:{banned}"]
+        industrial_title = False
         for t in self.topics:
-            in_title = next((k for k, p in t["patterns"] if p.search(title or "")), None)
-            in_body = None if in_title else next((k for k, p in t["patterns"] if p.search(summary or "")), None)
+            in_title = next((k for k, p, _ in t["patterns"] if p.search(title or "")), None)
+            in_body = None if in_title else next(
+                (k for k, p, title_only in t["patterns"] if not title_only and p.search(summary or "")), None)
             if in_title:
                 total += t["weight"] * TITLE_FACTOR
                 hits.append(f"{t['name']}@标题:{in_title}")
+                industrial_title = industrial_title or t["industrial"]
             elif in_body:
                 total += t["weight"]
                 hits.append(f"{t['name']}@摘要:{in_body}")
             else:
                 continue
             core_hit = core_hit or t["core"]
+        verdict, words = self._medical(title or "", summary or "", industrial_title)
+        if verdict == "exclude":
+            return 0, [f"排除(医学影像):{'、'.join(words)}"]
         if self.need_core and not core_hit:
             return 0, hits
-        blob = (title or "") + "\n" + (summary or "")
-        bad = next((k for k, p in self.down if p.search(blob)), None)
-        if bad and self.penalty:
+        if verdict == "penalty" and self.penalty:
             total = max(0, total - self.penalty)
-            hits.append(f"降权:{bad}")
+            hits.append(f"降权(提到医学):{'、'.join(words)}")
         return total, hits
+
+    def _medical(self, title: str, summary: str, industrial_title: bool) -> tuple[str, list[str]]:
+        """判断是不是医学影像素材：返回 ('exclude' | 'penalty' | '', 命中的词)。"""
+        both = self.med_strong + self.med_weak
+        in_title = [k for k, p in both if p.search(title)]
+        if in_title:
+            return "exclude", in_title[:3]
+        strong = [k for k, p in self.med_strong if p.search(summary)]
+        weak = [k for k, p in self.med_weak if p.search(summary)]
+        if not strong and not weak:
+            return "", []
+        if len(strong) + len(weak) >= 2 and not (industrial_title and len(strong) <= 1 and not weak):
+            return "exclude", (strong + weak)[:3]
+        if strong and not industrial_title:
+            return "exclude", strong[:3]
+        return "penalty", (strong + weak)[:3]
 
 
 def arxiv_url(src: dict) -> str:
