@@ -1,5 +1,361 @@
 [
   {
+    "episode_id": "ep-2026-11-21",
+    "title": "X射线成像重建与分割新进展",
+    "date": "2026-11-21",
+    "items": [
+      {
+        "id": "e1d353a2d479ba45",
+        "title": "Stochastic Optimisation for Scalable Ptychographic Image Reconstruction",
+        "url": "https://arxiv.org/abs/2611.24232v1",
+        "source_name": "arXiv: CT / X 射线图像的 AI 处理",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Alan W. Muriithi",
+          "Jared Tanner",
+          "Jaroslav M. Fowkes",
+          "Benedikt J. Daurer"
+        ],
+        "published": "2026-11-18",
+        "summary": "X-ray ptychography is a lensless coherent diffraction imaging technique capable of high spatial resolution, in which an image is reconstructed by solving a large-scale inverse problem from highly redundant far-field diffraction measurements acquired under overlapping illumination. Whilst the measurement redundancy created by overlapping illumination is essential for reconstruction fidelity, it leads to computational and memory demands that scale poorly with object size and target resolution when using conventional reconstruction algorithms. This work proposes a ptychographic reconstruction framework that reduces peak memory usage and time to convergence by leveraging stochastic optimisation techniques developed for large-scale machine learning. Specifically, the framework employs stochastic gradient descent with a decaying step size that progressively reduces the effect of gradient noise, referred to here as variance reduction (VR), with gradients that agree with automatic differentiation, to optimise the ptychographic forward model using randomly sampled subsets of diffraction measurements. For an experimental dataset of 200,000 diffraction patterns of $128\\times128$ pixels, VR is demonstrated to require $65\\%$ of the peak GPU memory and $22\\%$ of the reconstruction time of the established maximum-likelihood (ML) algorithm. The VR framework incorporates the Poisson maximum-likelihood formulation and partial coherence within a unified and extensible optimisation setting. Numerical experiments demonstrate that the framework achieves reconstruction quality visually comparable to established methods, with lower peak GPU memory and a shorter time",
+        "fetch_status": "abstract",
+        "relevance": 10,
+        "relevance_hits": [
+          "X射线/CT成像@标题:ptychographic",
+          "AI图像处理@标题:reconstruction"
+        ],
+        "fact_card": {
+          "core_claim": "提出一种利用随机优化技术（特别是方差缩减）的X射线ptychography重建框架，显著降低了峰值GPU内存使用率和重建时间。",
+          "key_facts": [
+            "X射线ptychography是一种无透镜相干衍射成像技术，通过求解大规模逆问题从高度冗余的远场衍射测量中重建图像。",
+            "传统重建算法的计算和内存需求随物体大小和目标分辨率的增加而恶化。",
+            "该框架采用具有衰减步长的随机梯度下降（stochastic gradient descent），通过逐步减少梯度噪声的影响（称为方差缩减，variance reduction）来优化ptychography前向模型。",
+            "梯度与自动微分（automatic differentiation）一致，并使用随机采样的衍射测量子集进行优化。",
+            "VR框架在统一且可扩展的优化设置中纳入了泊松最大似然（Poisson maximum-likelihood）公式和部分相干性（partial coherence）。",
+            "数值实验表明，该框架的重建质量在视觉上与现有方法相当，但具有更低的峰值GPU内存和更短的时间。"
+          ],
+          "numbers": [
+            "200,000 diffraction patterns",
+            "128x128 pixels",
+            "65% of the peak GPU memory",
+            "22% of the reconstruction time"
+          ],
+          "method_type": "数值模型降阶 / 统计理论分析",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [],
+          "terms": [
+            "ptychography = 叠层成像",
+            "stochastic optimisation = 随机优化",
+            "variance reduction = 方差缩减",
+            "automatic differentiation = 自动微分",
+            "Poisson maximum-likelihood = 泊松最大似然",
+            "partial coherence = 部分相干性"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "c06f184e6f9df3e5",
+        "title": "Improving X-Ray Baggage Instance Segmentation with Shared Point-Based Mask Refinement",
+        "url": "https://arxiv.org/abs/2611.20476v1",
+        "source_name": "arXiv: CT / X 射线图像的 AI 处理",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Abdulaziz Alqahtani",
+          "Qasim Umer"
+        ],
+        "published": "2026-11-16",
+        "summary": "Overlapping projections and complex object contours make prohibited items difficult to delineate in X-ray baggage images. This study investigates shared point-based mask refinement to improve instance segmentation within Cascade Mask R-CNN. The framework combines a ResNet-101 backbone with an attention-based feature pyramid and progressively updates uncertain mask locations, increasing mask resolution from $28 \\times 28$ to $112 \\times 112$. A single refinement module is shared across cascade stages and refinement levels, with transformer and multilayer perceptron (MLP) variants used to examine the role of interactions among selected points. Ten configurations were evaluated on the official PIXray split across three training seeds using the original target-instance annotations for evaluation. The transformer and MLP refiners achieved mean mask average precision (AP) of 71.79 and 72.47, respectively, compared with 70.50 for the unrefined detector, yielding gains of 1.29 and 1.97 AP points. The MLP achieved the highest mean mask AP among the evaluated configurations. Both variants also improved boundary agreement on commonly detected objects, supporting improved mask delineation, while detection diagnostics did not establish a corresponding positive gain. These findings demonstrate that shared point-based refinement can improve segmentation quality in the tested cascade architecture using existing target-mask annotations, without additional occluder supervision. Evaluation on independent X-ray datasets is needed to determine how well these improvements generalize.",
+        "fetch_status": "abstract",
+        "relevance": 10,
+        "relevance_hits": [
+          "X射线/CT成像@标题:X-ray",
+          "AI图像处理@标题:segmentation"
+        ],
+        "fact_card": {
+          "core_claim": "在Cascade Mask R-CNN框架中引入共享的点基掩码细化模块（Transformer和MLP变体），利用现有目标掩码标注即可提升X光行李图像中实例分割的掩码平均精度（AP）。",
+          "key_facts": [
+            "研究旨在解决X光行李图像中因重叠投影和复杂轮廓导致的违禁品难以界定问题。",
+            "框架结合ResNet-101主干网络与基于注意力的特征金字塔，将掩码分辨率从28 x 28逐步更新至112 x 112。",
+            "单个细化模块在级联阶段和细化层级间共享，使用Transformer和多層感知器（MLP）变体来考察选中点之间相互作用的作用。",
+            "在官方PIXray分割数据集上，使用三个训练种子和原始目标实例标注进行评估。",
+            "Transformer和MLP细化器分别实现了71.79和72.47的掩码平均精度（AP），相比未细化检测器的70.50分别提升了1.29和1.97个AP点。",
+            "MLP变体在评估的配置中取得了最高的平均掩码AP，且两种变体都改善了常见检测对象的边界一致性，但未确立检测诊断方面的相应正向增益。"
+          ],
+          "numbers": [
+            "掩码分辨率从 28 x 28 提升至 112 x 112",
+            "Transformer 细化器平均掩码 AP 为 71.79",
+            "MLP 细化器平均掩码 AP 为 72.47",
+            "未细化检测器平均掩码 AP 为 70.50",
+            "Transformer 相比未细化检测器提升 1.29 AP 点",
+            "MLP 相比未细化检测器提升 1.97 AP 点"
+          ],
+          "method_type": "深度学习",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "检测诊断（detection diagnostics）未确立相应的正向增益",
+            "需要在独立的X光数据集上进行评估，以确定这些改进的泛化能力"
+          ],
+          "terms": [
+            "Cascade Mask R-CNN = 级联掩码区域卷积神经网络",
+            "ResNet-101 = 残差网络101",
+            "attention-based feature pyramid = 基于注意力的特征金字塔",
+            "multilayer perceptron (MLP) = 多层感知器",
+            "mean mask average precision (AP) = 平均掩码平均精度",
+            "PIXray = PIXray数据集"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "6990c00209ce9309",
+        "title": "BeST: Beta splatted tomography for direct reconstruction from coherent imaging measurements",
+        "url": "https://arxiv.org/abs/2611.17982v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Johannes Gruen",
+          "Philipp Paetzold",
+          "Andreas Schropp",
+          "Aknur Karabay",
+          "Shahin Sepanlou",
+          "Sebastian Eberle",
+          "Martin Seyrich",
+          "Felix Wittwer"
+        ],
+        "published": "2026-11-13",
+        "summary": "Conventional coherent X-ray tomography requires the phase of each projection to be reconstructed with high fidelity. However, individual reconstructed projections might be flawed, e.g. due to positioning errors, yielding inconsistent tomographic reconstructions. By directly coupling phase retrieval and tomography, consistency is enforced through a common object volume. But reconstructing a full volume demands substantial computational resources. To reduce this demand, we introduce Beta Splatted Tomography (BeST), which represents the common object volume using compactly supported beta primitives with closed-form analytical projections, enabling efficient reconstruction directly from coherent scattering images. This representation substantially reduces the number of optimizable parameters compared to a voxel grid. We demonstrate BeST on experimental datasets from hard X-ray near-field holography and far-field ptychography measurements. In both cases, the joint technique improves reconstruction quality compared to two-step methods.",
+        "fetch_status": "abstract",
+        "relevance": 10,
+        "relevance_hits": [
+          "X射线/CT成像@标题:tomography",
+          "AI图像处理@标题:reconstruction"
+        ],
+        "fact_card": {
+          "core_claim": "提出了一种名为 BeST 的方法，通过结合相位恢复和断层扫描，利用紧凑支持的 beta 基元直接重构相干成像测量数据，从而减少计算资源需求并提高重构质量。",
+          "key_facts": [
+            "传统相干 X 射线断层扫描要求高保真地重构每个投影的相位，但单个重构投影可能存在缺陷（例如由于定位错误），导致不一致的断层重构。",
+            "BeST 通过直接耦合相位恢复和断层扫描，通过共同的物体体积强制一致性。",
+            "BeST 使用具有闭式解析投影的紧凑支持 beta 基元来表示共同的物体体积，从而直接从相干散射图像进行高效重构。",
+            "与体素网格相比，这种表示法显著减少了可优化参数的数量。",
+            "在硬 X 射线近场全息术和远场ptychography 测量的实验数据集上演示了 BeST。",
+            "在这两种情况下，联合技术相比两步法提高了重构质量。"
+          ],
+          "numbers": [],
+          "method_type": "数值模型降阶",
+          "is_ai": false,
+          "maturity": "实验室实验（真实样品测量）",
+          "caveats": [],
+          "terms": [
+            "Beta Splatted Tomography (BeST) = Beta 溅射断层扫描",
+            "coherent X-ray tomography = 相干 X 射线断层扫描",
+            "phase retrieval = 相位恢复",
+            "beta primitives = beta 基元",
+            "hard X-ray near-field holography = 硬 X 射线近场全息术",
+            "far-field ptychography = 远场ptychography"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "acd2162726480147",
+        "title": "Homology Features for X-Ray Hyperspectral Images Segmentation",
+        "url": "https://arxiv.org/abs/2611.06230v1",
+        "source_name": "arXiv: CT / X 射线图像的 AI 处理",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Fethi Harkat",
+          "Guillaume Gey",
+          "Valérie Perrier",
+          "Kévin Polisano"
+        ],
+        "published": "2026-11-04",
+        "summary": "Characterizing Multi-Energy X-ray Transmission (XRT) hyperspectral images presents significant challenges for traditional classification frameworks due to high-dimensional redundancy and non-linear spectral overlaps. Although manifold learning techniques such as UMAP enhance spectral representation by preserving non-linear correlations, they do not explicitly utilize the geometric structure of the embedded manifold for segmentation. This study introduces a hybrid architecture that integrates topological features derived from persistent homology with convolutional and graph neural networks. The approach computes Vietoris-Rips persistent homology on UMAP-projected superpixel point clouds to capture H 1 cyclic structures that encode spectral heterogeneity. These topological descriptors are combined with pixel-level CNN features through a broadcasting mechanism that propagates superpixel-level graph representations to full spatial resolution. Experimental results on XRT multi-energy imagery demonstrate that the proposed hybrid model significantly outperforms both CNN-only and superpixel-pooling fusion baselines, suggesting that topological features provide complementary discriminative information to local spectralspatial descriptors.",
+        "fetch_status": "abstract",
+        "relevance": 10,
+        "relevance_hits": [
+          "X射线/CT成像@标题:X-ray",
+          "AI图像处理@标题:segmentation"
+        ],
+        "fact_card": {
+          "core_claim": "提出一种结合持续同调拓扑特征与卷积及图神经网络的混合架构，用于X射线多能谱超光谱图像分割，实验表明其性能显著优于仅CNN和超像素池化融合基线。",
+          "key_facts": [
+            "传统分类框架在处理多能X射线透射（XRT）超光谱图像时面临高维冗余和非线性光谱重叠的挑战。",
+            "流形学习技术如UMAP通过保留非线性相关性增强光谱表示，但未显式利用嵌入流形的几何结构进行分割。",
+            "该方法在UMAP投影的超像素点云上计算Vietoris-Rips持续同调，以捕获编码光谱异质性的H 1循环结构。",
+            "拓扑描述符通过广播机制与像素级CNN特征结合，将超像素级图表示传播到全空间分辨率。",
+            "在XRT多能图像上的实验结果显示，该混合模型显著优于仅CNN和超像素池化融合基线。"
+          ],
+          "numbers": [],
+          "method_type": "数值模型降阶",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [],
+          "terms": [
+            "Persistent homology = 持续同调",
+            "Vietoris-Rips = Vietoris-Rips",
+            "UMAP = UMAP",
+            "Superpixel = 超像素",
+            "Convolutional neural networks = 卷积神经网络",
+            "Graph neural networks = 图神经网络"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "83554eb18b76d56f",
+        "title": "PSF-Informed Reconstruction: An Enhanced 2D Directional Filtered Backprojection Method for Cone-Beam Rotary Computed Laminography",
+        "url": "https://arxiv.org/abs/2611.00953v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Chengxiang Wang",
+          "Wei Yu",
+          "Baodong Liu"
+        ],
+        "published": "2026-10-31",
+        "summary": "Cone-beam rotary computed laminography (CL) presents a viable alternative to cone-beam CT for imaging objects with high aspect ratios. Conventional reconstruction techniques, such as CL-FBP and CL-FDK, often yield suboptimal results charac?terized by pronounced superimposition artifacts, reduced contrast,and blurred edges, primarily due to their reliance on 1D row-wise filtering along detector rows. To address these limitations and improve reconstruction quality, we proposed a novel 2D directional filtered backprojection (DFBP) method based on the point spread function (PSF). First, an exact expression for the projection process is derived by establishing the relationship between a reconstructed pixel and its corresponding projection point on the detector. Second, a revised backprojection process incorporating two weighting factors is introduced to counteract the nonlinearity inherent in conventional backprojection, leading to a simplified PSF formulation. Third, to circumvent the computational burden of 3D image space filtering,an approximate method by linearizing the coordinate relationship in Fourier space under some assumptions is developed that transfers the 3D filtering operation to the 2D projection space. This approach facilitates the derivation of a formally simple yet effective 2D direc?tional filter, which integrates a 2D von Hann window and a 2D sinc window. Experimental results demonstrate that the proposed method produces reconstructions with superior contrast, sharper boundaries,and fewer superimposition artifacts compared to CL-FBP and CL?FDK. Moreover, it enables more accurate recovery of internal structures, such as bubble defects and electronic components.",
+        "fetch_status": "abstract",
+        "relevance": 10,
+        "relevance_hits": [
+          "X射线/CT成像@标题:laminography",
+          "AI图像处理@标题:reconstruction"
+        ],
+        "fact_card": {
+          "core_claim": "提出了一种基于点扩散函数（PSF）的新型二维方向滤波反投影（DFBP）方法，用于改进锥形束旋转计算层析成像（CL）的重建质量。",
+          "key_facts": [
+            "锥形束旋转计算层析成像（Cone-beam rotary computed laminography, CL）是高长径比物体成像的可行替代方案。",
+            "传统重建技术如 CL-FBP 和 CL-FDK 因依赖沿探测器行的 1D 逐行滤波，常产生明显的叠加伪影、对比度降低和边缘模糊。",
+            "该方法首先通过建立重建像素与探测器上对应投影点之间的关系，推导了投影过程的精确表达式。",
+            "引入包含两个加权因子的修正反投影过程，以抵消传统反投影中的非线性，从而简化 PSF 公式。",
+            "开发了一种近似方法，通过在某些假设下线性化傅里叶空间中的坐标关系，将 3D 图像空间滤波操作转移到 2D 投影空间。",
+            "推导出的 2D 方向滤波器整合了 2D von Hann 窗和 2D sinc 窗。"
+          ],
+          "numbers": [
+            "1D row-wise filtering",
+            "2D directional filtered backprojection",
+            "3D image space filtering",
+            "2D projection space",
+            "2D von Hann window",
+            "2D sinc window"
+          ],
+          "method_type": "数值模型降阶",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "近似方法依赖于在某些假设下线性化傅里叶空间中的坐标关系。"
+          ],
+          "terms": [
+            "Cone-beam rotary computed laminography = 锥形束旋转计算层析成像",
+            "Filtered Backprojection = 滤波反投影",
+            "Point Spread Function = 点扩散函数",
+            "von Hann window = von Hann 窗",
+            "sinc window = sinc 窗"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "472a8c728a515e6c",
+        "title": "Matching two-dimensional statistics does not certify three-dimensional transport in battery electrodes",
+        "url": "https://arxiv.org/abs/2611.20121v1",
+        "source_name": "arXiv: CT / X 射线图像的 AI 处理",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Maziar Raissi",
+          "Devesh Upadhyay"
+        ],
+        "published": "2026-11-15",
+        "summary": "Three-dimensional battery electrode structures reconstructed from two-dimensional micrographs are routinely used to predict transport, assuming that matching the measured 2D statistics reproduces the relevant 3D properties. We test this premise on X-ray tomograms of three all-solid-state cathodes. With a differentiable conductivity solver, we optimise voxel structures that match the real electrode in phase fractions, boundary density, two- and three-point correlations and lineal-path functions, on all section planes, slab by slab and layer by layer, within measurement noise. Every sample has statistical twins conducting 10-88-fold less than the real electrode, robust to 5^3 majority filtering, whereas the most conductive are at most 3.3-fold above it. The twins rearrange rather than remove material, severing or funnelling through-plane paths. A classifier on 2D sections detects them, as it does current 2D-to-3D generators: the information is in the images but not in the statistics. Matching standard 2D statistics therefore does not certify 3D transport.",
+        "fetch_status": "abstract",
+        "relevance": 9,
+        "relevance_hits": [
+          "X射线/CT成像@摘要:tomogram",
+          "工业/材料场景@标题:battery"
+        ],
+        "fact_card": {
+          "core_claim": "匹配二维统计量并不能保证重构的三维电池电极结构具有正确的三维传输性能，因为存在统计特征相同但导电性差异巨大的“统计孪生”结构。",
+          "key_facts": [
+            "研究测试了基于二维显微照片重构三维电池电极结构以预测传输性能的常规假设。",
+            "使用可微分电导率求解器优化体素结构，使其在相分数、边界密度、两点和三点关联以及线径函数等统计量上与真实电极匹配。",
+            "优化后的结构在所有截面平面上逐层匹配，且在测量噪声范围内保持一致。",
+            "发现的“统计孪生”结构比真实电极导电性低10到88倍，且对5^3多数滤波具有鲁棒性。",
+            "导电性最高的结构最多比真实电极高3.3倍。",
+            "基于二维截面的分类器可以检测到这些统计孪生结构，表明信息存在于图像中而非统计量中。"
+          ],
+          "numbers": [
+            "导电性低10-88倍",
+            "5^3多数滤波",
+            "导电性高3.3倍"
+          ],
+          "method_type": "数值模型降阶",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "匹配标准二维统计量不能认证三维传输性能"
+          ],
+          "terms": [
+            "differentiable conductivity solver = 可微分电导率求解器",
+            "voxel structures = 体素结构",
+            "phase fractions = 相分数",
+            "boundary density = 边界密度",
+            "two- and three-point correlations = 两点和三点关联",
+            "lineal-path functions = 线径函数",
+            "statistical twins = 统计孪生",
+            "majority filtering = 多数滤波"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      }
+    ],
+    "script": "大家好，这里是《X射线无损检测与AI图像处理前沿》。\n\n首先来看 arXiv 上一篇预印本论文，需要说明的是，预印本还没有经过同行评审。Alan W. Muriithi 等人提出了一种利用随机优化技术，特别是方差缩减的 X 射线叠层成像重建框架。叠层成像是一种无透镜相干衍射成像技术，传统算法在物体变大或分辨率提高时，计算和内存需求会急剧恶化。该框架采用具有衰减步长的随机梯度下降，通过逐步减少梯度噪声的影响来优化前向模型，并纳入了泊松最大似然公式和部分相干性。数值实验表明，在处理 200,000 张 128x128 像素的衍射图案时，该框架的重建质量在视觉上与现有方法相当，但峰值 GPU 内存使用率仅为原来的 65%，重建时间缩短至原来的 22%。\n\n另一条来自 arXiv 的预印本论文，作者 Abdulaziz Alqahtani 等人研究如何改进 X 光行李图像中的实例分割。他们针对重叠投影和复杂轮廓导致的违禁品界定难题，在级联掩码区域卷积神经网络框架中引入了共享的点基掩码细化模块。该框架结合残差网络 101 主干与基于注意力的特征金字塔，将掩码分辨率从 28 x 28 提升至 112 x 112。在官方 PIXray 分割数据集上，使用 Transformer 和多層感知器两种变体进行评估。结果显示，Transformer 细化器的平均掩码 AP 为 71.79，相比未细化检测器的 70.50 提升了 1.29 个 AP 点；而 MLP 细化器达到了 72.47 的 AP，提升了 1.97 个 AP 点。虽然 MLP 变体取得了最高精度并改善了边界一致性，但文章指出检测诊断方面未确立相应的正向增益，且需要在独立数据集上验证泛化能力。\n\n第三条消息来自 arXiv 预印本，Johannes Gruen 等人提出了名为 BeST 的方法，即 Beta 溅射断层扫描。传统相干 X 射线断层扫描需要高保真重构每个投影的相位，但单个投影的缺陷会导致断层重构不一致。BeST 通过直接耦合相位恢复和断层扫描，利用共同的物体体积强制一致性。它使用具有闭式解析投影的紧凑支持 beta 基元来表示物体体积，相比体素网格显著减少了可优化参数。该方法在硬 X 射线近场全息术和远场 ptychography 的实验数据集上进行了演示，结果显示联合技术相比两步法提高了重构质量。\n\n接下来是 arXiv 上的一篇预印本，Fethi Harkat 等人提出了一种结合持续同调拓扑特征与卷积及图神经网络的混合架构，用于 X 射线多能谱超光谱图像分割。传统框架在处理多能 X 射线透射图像时面临高维冗余和非线性光谱重叠的挑战。该方法在 UMAP 投影的超像素点云上计算 Vietoris-Rips 持续同调，以捕获编码光谱异质性的 H 1 循环结构。拓扑描述符通过广播机制与像素级 CNN 特征结合，将超像素级图表示传播到全空间分辨率。实验结果显示，该混合模型在 XRT 多能图像上的性能显著优于仅 CNN 和超像素池化融合基线。\n\n另一条来自 arXiv 的预印本，Chengxiang Wang 等人提出了一种基于点扩散函数的新型二维方向滤波反投影方法，用于改进锥形束旋转计算层析成像的重建质量。传统的 CL-FBP 和 CL-FDK 技术依赖沿探测器行的 1D 逐行滤波，常产生叠加伪影和边缘模糊。该方法通过推导投影过程的精确表达式，引入包含两个加权因子的修正反投影过程，并开发了一种近似方法，将 3D 图像空间滤波操作转移到 2D 投影空间。推导出的 2D 方向滤波器整合了 2D von Hann 窗和 2D sinc 窗。需要注意的是，该近似方法依赖于在某些假设下线性化傅里叶空间中的坐标关系。\n\n最后一条 arXiv 预印本论文由 Maziar Raissi 等人撰写，研究指出匹配二维统计量并不能保证重构的三维电池电极结构具有正确的三维传输性能。他们使用可微分电导率求解器优化体素结构，使其在相分数、边界密度、两点和三点关联以及线径函数等统计量上与真实电极匹配。然而，发现的“统计孪生”结构比真实电极导电性低 10 到 88 倍，且对 5 的 3 次方多数滤波具有鲁棒性。相反，导电性最高的结构最多比真实电极高 3.3 倍。基于二维截面的分类器可以检测到这些统计孪生结构，表明信息存在于图像中而非统计量中。\n\n我们下期见。",
+    "audio": {
+      "path": "C:\\Projects\\ai-podcast\\audio\\ep-2026-11-21.mp3",
+      "duration_sec": 318.79,
+      "size_bytes": 1912752,
+      "engine": "edge-tts"
+    },
+    "status": "site_built",
+    "history": [],
+    "quality": {
+      "pipeline": "fact-cards-v1",
+      "items": 6,
+      "fetch_status": {
+        "Stochastic Optimisation for Scalable Pty": "abstract",
+        "Improving X-Ray Baggage Instance Segment": "abstract",
+        "BeST: Beta splatted tomography for direc": "abstract",
+        "Homology Features for X-Ray Hyperspectra": "abstract",
+        "PSF-Informed Reconstruction: An Enhanced": "abstract",
+        "Matching two-dimensional statistics does": "abstract"
+      },
+      "card_errors": [],
+      "violations_first": [
+        "出现了公式或 LaTeX 符号（$、^、\\eta 之类），语音无法朗读；改用中文文字描述"
+      ],
+      "repaired": true,
+      "violations_final": [],
+      "created_by": "Hermes Qwen3.8:27b"
+    },
+    "commit_sha": "",
+    "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-21.html",
+    "created_at": "2026-11-21T16:02:06.775588-05:00",
+    "published_at": ""
+  },
+  {
     "episode_id": "ep-2026-11-20",
     "title": "CT稀疏视角选择与边缘AI检测进展",
     "date": "2026-11-20",
@@ -328,7 +684,7 @@
       "size_bytes": 2425968,
       "engine": "edge-tts"
     },
-    "status": "site_built",
+    "status": "pushed",
     "history": [],
     "quality": {
       "pipeline": "fact-cards-v1",
@@ -347,10 +703,10 @@
       "violations_final": [],
       "created_by": "Hermes Qwen3.8:27b"
     },
-    "commit_sha": "",
+    "commit_sha": "9e7bb406597697d3f804087c51b7bcd42f285df2",
     "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-20.html",
     "created_at": "2026-11-20T08:33:08.414049-05:00",
-    "published_at": ""
+    "published_at": "2026-11-20T08:33:44.996939-05:00"
   },
   {
     "episode_id": "ep-2026-11-19",
