@@ -1,5 +1,361 @@
 [
   {
+    "episode_id": "ep-2026-11-22",
+    "title": "X射线CT重建与缺陷检测新进展",
+    "date": "2026-11-22",
+    "items": [
+      {
+        "id": "d6559c3399c3043d",
+        "title": "Prototype-Guided Dynamic Domain Modulation and a Large-Scale Multi-SKU Benchmark for Shampoo Bottle Surface Defect Detection",
+        "url": "https://arxiv.org/abs/2610.38194v2",
+        "source_name": "arXiv: 半导体 / 工业缺陷检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Yuehang Li",
+          "Xiao Wang",
+          "Qiang Chen",
+          "Yangyi Fan",
+          "Bo Jiang",
+          "Yaowei Wang",
+          "Jin Tang"
+        ],
+        "published": "2026-10-28",
+        "summary": "Industrial shampoo-bottle surface defect detection must operate across many stock keeping units (SKUs), where differences in bottle geometry, material, label layout, reflectance, and imaging conditions can substantially alter the appearance of the same defect. Existing industrial defect datasets rarely provide both instance-level defect annotations and product-variant identities, making it difficult to study SKU-aware detection under realistic manufacturing conditions. We introduce Bottle-SKU, a large-scale multi-SKU benchmark for shampoo bottle surface defect detection. Bottle-SKU contains 13,119 images, 20,419 instance-level bounding boxes, seven defect categories, and 48 bottle SKUs, enabling evaluation of both shared defect recognition and SKU-specific appearance variation. To address the challenge of SKU-specific appearance variation, we propose Prototype-Guided Dynamic Domain Modulation (ProDMM). ProDMM constructs a visual prototype for each SKU from training images and predicts a soft SKU distribution for each input. The resulting prototype-conditioned representation dynamically generates low-rank Query/Value modulation for the visual backbone and residual conditioning for defect-text-to-visual attention, while preserving the pretrained Grounding DINO detection pathway. The model is trained jointly with detection, SKU-domain classification, and modulation-regularization objectives. Experiments on Bottle-SKU and the public GC10-DET-SKU metallic surface defect dataset demonstrate the effectiveness of prototype-guided domain conditioning for industrial surface defect detection. The source code and model will be released on https://github.com/Event-AHU/Industrial_Anomaly_Detection",
+        "fetch_status": "abstract",
+        "relevance": 9,
+        "relevance_hits": [
+          "无损检测/缺陷检测@标题:defect detection",
+          "工业/材料场景@摘要:industrial"
+        ],
+        "fact_card": {
+          "core_claim": "提出了一种名为ProDMM的原型引导动态域调制方法，并构建了包含48种SKU的大规模洗发水瓶表面缺陷检测基准数据集Bottle-SKU，以解决多SKU场景下的外观变化检测难题。",
+          "key_facts": [
+            "现有工业缺陷数据集很少同时提供实例级缺陷标注和产品变体身份，难以在真实制造条件下研究SKU感知检测。",
+            "ProDMM从训练图像中为每个SKU构建视觉原型，并为每个输入预测软SKU分布。",
+            "该方法动态生成低秩Query/Value调制用于视觉骨干网络，并为缺陷文本到视觉注意力提供残差条件，同时保留预训练的Grounding DINO检测路径。",
+            "模型联合训练了检测、SKU域分类和调制正则化目标。",
+            "实验在Bottle-SKU和公开的GC10-DET-SKU金属表面缺陷数据集上验证了原型引导域条件化的有效性。"
+          ],
+          "numbers": [
+            "13,119 images",
+            "20,419 instance-level bounding boxes",
+            "seven defect categories",
+            "48 bottle SKUs"
+          ],
+          "method_type": "深度学习",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [],
+          "terms": [
+            "stock keeping units (SKUs) = 库存单位",
+            "Prototype-Guided Dynamic Domain Modulation (ProDMM) = 原型引导动态域调制",
+            "Grounding DINO = Grounding DINO",
+            "Query/Value = Query/Value"
+          ],
+          "dropped": [
+            "Bottle-SKU基准包含13,119张图像、20,419个实例级边界框、7个缺陷类别和48个瓶子SKU。"
+          ],
+          "error": ""
+        }
+      },
+      {
+        "id": "df1be6ce902074d2",
+        "title": "Learning-Based Interpolation of Detector Gaps in Photon-Counting X-ray Imaging",
+        "url": "https://arxiv.org/abs/2611.15614v1",
+        "source_name": "arXiv: CT / X 射线图像的 AI 处理",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Johannes B. Thalhammer",
+          "Patrick Ilg",
+          "Tina Dorosti",
+          "Sebastian Peterhansl",
+          "Theresa Hiu",
+          "Daniel Frey",
+          "Zijin Huang",
+          "Florian Schaff"
+        ],
+        "published": "2026-11-11",
+        "summary": "Image detectors assembled from tiled modules have physical gaps in the field of view that must be filled before downstream processing such as phase retrieval or tomographic reconstruction. Unlike natural-image inpainting, detector-gap interpolation must leave all other pixels unmodified and preserve the intensity statistics of the filled region, since even a small shift in mean intensity can cause ring artifacts after reconstruction. We adapted two generative models, a Wasserstein GAN with gradient penalty (WGAN-GP) and a conditional Pix2Pix model, to this task. We implemented a masking strategy that restricts all changes to the gap pixels and loss terms that constrain the mean intensity and the intensity distribution of the filled region. Both models were trained on nanoCT projections with simulated gaps and compared with linear interpolation, Navier--Stokes inpainting, and the deep image-inpainting network MADF, quantitatively on simulated gaps and visually on real detector gaps. WGAN-GP and Pix2Pix achieved the best perceptual similarity (LPIPS) and histogram distance and, apart from linear interpolation, the shortest inference time. Pix2Pix required about five times fewer training GPU-hours than WGAN-GP. Ablation studies showed that masking the network output contributes by far the most to plausible inpainting results. Applied to sinograms, Pix2Pix produced the most natural gap filling but improved the reconstruction only slightly compared with linear interpolation. The source code and the weights of the final Pix2Pix model are available at https://github.com/J-3TO/detectorGapRemoval_Pix2Pix.",
+        "fetch_status": "abstract",
+        "relevance": 8,
+        "relevance_hits": [
+          "X射线/CT成像@标题:X-ray imaging",
+          "AI图像处理@摘要:reconstruction"
+        ],
+        "fact_card": {
+          "core_claim": "通过适配WGAN-GP和Pix2Pix模型并引入掩码策略及强度统计约束，实现了光子计数X射线成像中探测器间隙的插值，其中Pix2Pix在感知相似度和直方图距离上表现最佳且训练成本更低。",
+          "key_facts": [
+            "图像探测器由拼接模块组装而成，视场中存在物理间隙，必须在相位恢复或断层重建等下游处理前填充。",
+            "探测器间隙插值必须保持其他像素不变，并保留填充区域的强度统计特性，因为平均强度的微小偏移会在重建后导致环状伪影。",
+            "研究适配了Wasserstein GAN with gradient penalty (WGAN-GP)和条件Pix2Pix模型，实施了限制所有更改仅限于间隙像素的掩码策略，并添加了约束填充区域平均强度和强度分布的损失项。",
+            "两个模型均在带有模拟间隙的nanoCT投影上训练，并与线性插值、Navier-Stokes inpainting以及深度图像修复网络MADF进行了定量和定性比较。",
+            "WGAN-GP和Pix2Pix获得了最佳的感知相似度（LPIPS）和直方图距离，除线性插值外推理时间最短。",
+            "消融研究表明，对网络输出进行掩码处理对产生合理的修复结果贡献最大。"
+          ],
+          "numbers": [
+            "Pix2Pix所需的训练GPU小时数比WGAN-GP少约五倍"
+          ],
+          "method_type": "深度学习",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "应用于sinograms时，Pix2Pix虽然产生了最自然的间隙填充，但与线性插值相比，对重建结果的改善仅略微提升。"
+          ],
+          "terms": [
+            "Wasserstein GAN with gradient penalty = Wasserstein GAN with gradient penalty",
+            "Pix2Pix = Pix2Pix",
+            "LPIPS = LPIPS",
+            "MADF = MADF",
+            "nanoCT = nanoCT",
+            "sinograms = sinograms"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "0a23562c05344639",
+        "title": "ALETHEIA: A Multi-Frequency Eddy Current Pulsed Thermography Dataset for Neural Operator Learning in Nondestructive Testing",
+        "url": "https://arxiv.org/abs/2611.11252v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Changbin Sun",
+          "Jie Xiao",
+          "Xiaotian Chen",
+          "Yuankai Wu"
+        ],
+        "published": "2026-11-08",
+        "summary": "Learning neural solvers for spatiotemporal partial differential equations (PDEs) under real-world constraints remains a key challenge in scientific machine learning, especially for inverse tasks with sparse and noisy boundary observations. We present the Aletheia dataset, the first 3D benchmark for learning data-driven solvers in the context of nondestructive testing (NDT). The dataset simulates eddy-current-induced heating in conductive solids and models the resulting transient heat propagation governed by the heat equation. Aletheia contains over 4,700 high-resolution samples across 10 excitation frequencies (1-100,kHz), each providing volumetric heat source and temperature fields over time. It supports both forward prediction of temperature evolution and inverse reconstruction of internal heat sources or defects from surface infrared measurements. Real infrared thermography data from cracked rail specimens are included for calibration and comparison. We define four canonical tasks on both regular and irregular grids and benchmark them using various neural operators. Aletheia establishes a unified platform for evaluating neural PDE solvers under realistic NDT conditions, enabling progress in reliable, data-driven inverse modeling. The dataset and code are publicly available at https://github.com/sherlock-0327/ALETHEIA.",
+        "fetch_status": "abstract",
+        "relevance": 8,
+        "relevance_hits": [
+          "无损检测/缺陷检测@标题:non-destructive",
+          "AI图像处理@摘要:machine learning"
+        ],
+        "fact_card": {
+          "core_claim": "Aletheia 是首个用于无损检测（NDT）中数据驱动求解器学习的 3D 基准数据集，包含涡流加热模拟及真实红外数据，支持前向预测与逆向重建任务。",
+          "key_facts": [
+            "该数据集模拟导电固体中由涡流引起的加热，并建模由热方程控制的瞬态热传播。",
+            "数据集包含超过 4,700 个高分辨率样本，覆盖 10 个激励频率（1-100,kHz）。",
+            "每个样本提供随时间变化的体积热源和温度场。",
+            "数据集支持从表面红外测量中逆向重建内部热源或缺陷，以及温度演化的前向预测。",
+            "包含来自裂纹钢轨试样的真实红外热成像数据，用于校准和比较。",
+            "在规则和不规则网格上定义了四个典型任务，并使用多种神经算子（neural operators）进行基准测试。"
+          ],
+          "numbers": [
+            "超过 4,700 个高分辨率样本",
+            "10 个激励频率",
+            "频率范围 1-100,kHz",
+            "4 个典型任务"
+          ],
+          "method_type": "数据集构建与基准测试",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [],
+          "terms": [
+            "neural operators = 神经算子",
+            "nondestructive testing (NDT) = 无损检测",
+            "eddy-current-induced heating = 涡流引起的加热",
+            "heat equation = 热方程",
+            "infrared thermography = 红外热成像"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "99d99639ee1208cd",
+        "title": "View optimization in Computed Tomography",
+        "url": "https://arxiv.org/abs/2611.03322v1",
+        "source_name": "arXiv: CT / X 射线图像的 AI 处理",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Seemeen Karimi",
+          "Christopher McGuire"
+        ],
+        "published": "2026-11-02",
+        "summary": "Many emerging CT imaging applications must operate with data from sparse projection angles, on the order of 10 views, such as first responder scenarios, dynamic imaging of detonation events, and flash imaging of materials under extreme conditions in high energy-density science. Few-view imaging is a data undersampling problem, that degrades tomographic reconstructions with streaks, shadows, and other aliasing artifacts, due to ill-conditioning. In few- view CT, the specific set of projection angles can strongly impact reconstruction quality, and the optimal angles depend on the object being scanned. Despite a surge of recent research, there is much to explore in this problem. We present an object-aware performance prediction framework for few-view projection datasets based on a matrix decomposition of the discretized forward model augmented with expected object gradient information. The method yields a quantitative score for a candidate set of view angles that can underpin a view selection recommendation algorithm. A key feature is that it can be applied at multiple stages of acquisition: a priori, before any radiographs are taken, or adaptively, after some radiographs are collected, to determine the next best view. We demonstrate the approach using simulated CT data with 5 view and 15 view configurations. Preliminary results are encouraging; images reconstructed using a standard statistical algorithm show that reconstruction accuracy agrees with our performance score. Reconstruction accuracy was evaluated against a known ground truth using an information theoretic score. Continued testing with complex objects and multiple geometries is necessary.",
+        "fetch_status": "abstract",
+        "relevance": 8,
+        "relevance_hits": [
+          "X射线/CT成像@标题:computed tomography",
+          "AI图像处理@摘要:reconstruction"
+        ],
+        "fact_card": {
+          "core_claim": "提出了一种基于离散化前向模型矩阵分解和预期物体梯度信息的对象感知性能预测框架，用于少视图CT中的视图角度选择。",
+          "key_facts": [
+            "许多新兴CT成像应用必须在稀疏投影角度数据下运行，角度数量约为10个视图。",
+            "少视图成像是一个数据欠采样问题，由于病态性导致重建图像出现条纹、阴影和其他混叠伪影。",
+            "该方法可以应用于采集的多个阶段：先验（拍摄任何X光片之前）或自适应（收集一些X光片后确定下一个最佳视图）。",
+            "使用5视图和15视图配置的模拟CT数据演示了该方法。",
+            "重建精度通过信息论分数与已知的真值进行比较评估。",
+            "使用标准统计算法重建的图像显示，重建精度与性能分数一致。"
+          ],
+          "numbers": [
+            "10 views",
+            "5 view",
+            "15 view"
+          ],
+          "method_type": "数值模型降阶",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "需要对复杂物体和多种几何结构进行持续测试。"
+          ],
+          "terms": [
+            "Computed Tomography = CT",
+            "matrix decomposition = 矩阵分解",
+            "information theoretic score = 信息论分数"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "19dd30f556f4670f",
+        "title": "Physics-informed X-ray tomography of magnetization and material parameters",
+        "url": "https://arxiv.org/abs/2611.00528v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Alexander Setescak",
+          "Polly Mitchell",
+          "Luke J. R. Higgins",
+          "Burkhard Kaulich",
+          "Luke Turnbull",
+          "Rikako Yamamoto",
+          "Marina Raboni Ferreira",
+          "Daniel A. Mayoh"
+        ],
+        "published": "2026-10-31",
+        "summary": "Three-dimensional spin textures are stabilized by microscopic interactions within their host materials. X-ray vector tomography can image these nanoscale structures, but weak magnetic contrast and a limited range of viewing angles often leave parts of the magnetization poorly determined. Here we show that a reconstruction constrained by the micromagnetic energy recovers the three-dimensional magnetization from such data and gains sensitivity to the underlying material interactions. Applied to the chiral magnet Co$_8$Zn$_9$Mn$_3$, the method resolves the three-dimensional helical texture even from a small fraction of the dual-axis projections typically required for a successful tomographic reconstruction, or from a single tilt axis alone. By testing which ratio of exchange to Dzyaloshinskii-Moriya interaction in the reconstruction best reproduces the measured projections, we obtain a value for the sample that differs by about 10 % from the literature value derived from the helical winding period. Taken together, our findings suggest a way to reduce the time needed for vector tomography and to extend it to determining fundamental magnetic interactions in a material.",
+        "fetch_status": "abstract",
+        "relevance": 8,
+        "relevance_hits": [
+          "X射线/CT成像@标题:tomography",
+          "AI图像处理@摘要:reconstruction"
+        ],
+        "fact_card": {
+          "core_claim": "通过受微磁能量约束的重建方法，可以从有限的X射线矢量层析数据中恢复三维磁化结构，并确定材料中的交换相互作用与Dzyaloshinskii-Moriya相互作用之比。",
+          "key_facts": [
+            "三维自旋纹理由宿主材料内的微观相互作用稳定。",
+            "X射线矢量层析可以成像这些纳米结构，但弱磁对比度和有限的观察角度范围通常导致部分磁化确定不佳。",
+            "受微磁能量约束的重建方法可以从此类数据中恢复三维磁化，并提高对底层材料相互作用的敏感性。",
+            "该方法应用于手性磁体Co8Zn9Mn3，即使从通常成功层析重建所需双轴投影的一小部分，或仅从单个倾斜轴，也能分辨出三维螺旋纹理。",
+            "通过测试重建中交换相互作用与Dzyaloshinskii-Moriya相互作用的最佳比例以重现测量投影，获得的样品值与从螺旋缠绕周期推导的文献值相差约10%。",
+            "研究结果提出了一种减少矢量层析所需时间并扩展其用于确定材料基本磁相互作用的方法。"
+          ],
+          "numbers": [
+            "Co8Zn9Mn3",
+            "10 %"
+          ],
+          "method_type": "数值模型降阶",
+          "is_ai": false,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "弱磁对比度和有限的观察角度范围通常导致部分磁化确定不佳"
+          ],
+          "terms": [
+            "Dzyaloshinskii-Moriya interaction = Dzyaloshinskii-Moriya相互作用",
+            "micromagnetic energy = 微磁能量",
+            "vector tomography = 矢量层析",
+            "chiral magnet = 手性磁体",
+            "helical texture = 螺旋纹理"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "a9eece86ad397caf",
+        "title": "Extremely Sparse-View Computed Tomography from 2D Projections via Pose-Aware Diffusion Priors",
+        "url": "https://arxiv.org/abs/2610.38319v1",
+        "source_name": "arXiv: CT / X 射线图像的 AI 处理",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Linrui Dai",
+          "Jinxiu Liang",
+          "Chu Zhou",
+          "Mae Yamaguchi",
+          "Ryuya Takahashi",
+          "Imari Sato"
+        ],
+        "published": "2026-10-28",
+        "summary": "Extremely sparse-view computed tomography (xSV-CT) is critical when scanning time, motion, or radiation tolerance limits each scan to only a few projections. In many such scenarios, the same acquisition limits also constrain dataset construction, making pre-reconstructed 3D volumes from dense scans unavailable. This exposes a gap in current sparse-view approaches: Optimization-based methods, which use the sparse measurements directly but lack data-driven priors to suppress artifacts, and learning-based methods, which use strong priors but usually require densely scanned training volumes acquired outside the xSV-CT regime. We study this train-sparse / infer-sparse setting by learning a pose-aware diffusion prior from one 2D projection per training sample, then guiding diffusion sampling with measured-view fidelity, shared-volume reprojection, and projection-physics consistency for tomographic reconstruction. On two public CT datasets across 1-, 4-, and 8-view settings, the proposed method achieves the best novel-view synthesis scores and best or competitive reconstruction quality compared with baselines that use dense-volume supervision.",
+        "fetch_status": "abstract",
+        "relevance": 8,
+        "relevance_hits": [
+          "X射线/CT成像@标题:computed tomography",
+          "AI图像处理@摘要:reconstruction"
+        ],
+        "fact_card": {
+          "core_claim": "提出了一种基于姿态感知扩散先验的极稀疏视图CT重建方法，在仅使用每个训练样本一个2D投影的情况下，实现了优于或可比于使用密集体积监督基线方法的重建质量。",
+          "key_facts": [
+            "极稀疏视图CT（xSV-CT）在扫描时间、运动或辐射耐受度限制每次扫描仅能有少数投影时至关重要。",
+            "现有优化方法缺乏数据驱动先验以抑制伪影，而学习方法通常需要在xSV-CT范围外获取的密集扫描训练体积。",
+            "该方法通过从每个训练样本的一个2D投影中学习姿态感知扩散先验来解决训练稀疏/推理稀疏的问题。",
+            "扩散采样过程由测量视图保真度、共享体积重投影和投影物理一致性引导。",
+            "在两个公开CT数据集的1、4和8视图设置下，该方法取得了最佳的新视图合成分数以及最佳或具有竞争力的重建质量。"
+          ],
+          "numbers": [
+            "1-, 4-, and 8-view settings",
+            "one 2D projection per training sample"
+          ],
+          "method_type": "深度学习",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "该方法依赖于从每个训练样本的一个2D投影中学习姿态感知扩散先验。"
+          ],
+          "terms": [
+            "Extremely Sparse-View Computed Tomography = 极稀疏视图CT",
+            "Pose-Aware Diffusion Priors = 姿态感知扩散先验",
+            "Novel-view synthesis = 新视图合成"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      }
+    ],
+    "script": "大家好，这里是《X射线无损检测与AI图像处理前沿》。\n\n首先来看 arXiv 上的一篇预印本论文，需要说明的是，预印本还没有经过同行评审。Yuehang Li 等人提出了一种名为 ProDMM 的原型引导动态域调制方法，并构建了包含 48 种 SKU 的大规模洗发水瓶表面缺陷检测基准数据集 Bottle-SKU。据论文介绍，现有工业缺陷数据集很少同时提供实例级缺陷标注和产品变体身份，难以在真实制造条件下研究 SKU 感知检测。该方法从训练图像中为每个 SKU 构建视觉原型，并为每个输入预测软 SKU 分布，动态生成低秩 Query/Value 调制用于视觉骨干网络。实验在 Bottle-SKU 和公开的 GC10-DET-SKU 金属表面缺陷数据集上验证了原型引导域条件化的有效性。数据集包含 13,119 张图像、20,419 个实例级边界框、seven defect categories 以及 48 bottle SKUs。目前论文只在数值实验层面进行了验证。\n\n另一条来自 arXiv 的预印本论文，Johannes B. Thalhammer 等人研究了光子计数 X 射线成像中探测器间隙的插值问题。图像探测器由拼接模块组装而成，视场中存在物理间隙，必须在相位恢复或断层重建等下游处理前填充。研究适配了 Wasserstein GAN with gradient penalty 和条件 Pix2Pix 模型，实施了限制所有更改仅限于间隙像素的掩码策略，并添加了约束填充区域平均强度和强度分布的损失项。两个模型均在带有模拟间隙的 nanoCT 投影上训练，并与线性插值、Navier-Stokes inpainting 以及深度图像修复网络 MADF 进行了比较。结果显示，Pix2Pix 在感知相似度 LPIPS 和直方图距离上表现最佳，且所需的训练 GPU 小时数比 Wasserstein GAN with gradient penalty 少约五倍。不过，当应用于 sinograms 时，Pix2Pix 虽然产生了最自然的间隙填充，但与线性插值相比，对重建结果的改善仅略微提升。\n\n接下来是 Changbin Sun 等人发布的一篇关于无损检测数据集的论文。Aletheia 是首个用于无损检测中数据驱动求解器学习的 3D 基准数据集，包含涡流加热模拟及真实红外数据。该数据集模拟导电固体中由涡流引起的加热，并建模由热方程控制的瞬态热传播。数据集包含超过 4,700 个高分辨率样本，覆盖 10 个激励频率，频率范围在 1-100,kHz 之间。每个样本提供随时间变化的体积热源和温度场，支持从表面红外测量中逆向重建内部热源或缺陷，以及温度演化的前向预测。研究在规则和不规则网格上定义了 4 个典型任务，并使用多种神经算子进行基准测试。\n\n另一条来自 arXiv 的论文，Seemeen Karimi 等人提出了一种基于离散化前向模型矩阵分解和预期物体梯度信息的对象感知性能预测框架，用于少视图 CT 中的视图角度选择。许多新兴 CT 成像应用必须在稀疏投影角度数据下运行，角度数量约为 10 views。少视图成像是一个数据欠采样问题，由于病态性导致重建图像出现条纹、阴影和其他混叠伪影。该方法可以应用于采集的多个阶段，包括先验或自适应模式。研究使用 5 view 和 15 view 配置的模拟 CT 数据演示了该方法，重建精度通过信息论分数与已知的真值进行比较评估。该方法目前需要在复杂物体和多种几何结构上进行持续测试。\n\n接下来看 Alexander Setescak 等人关于物理信息 X 射线层析的论文。通过受微磁能量约束的重建方法，可以从有限的 X 射线矢量层析数据中恢复三维磁化结构，并确定材料中的交换相互作用与 Dzyaloshinskii-Moriya 相互作用之比。三维自旋纹理由宿主材料内的微观相互作用稳定，但弱磁对比度和有限的观察角度范围通常导致部分磁化确定不佳。该方法应用于手性磁体 Co8Zn9Mn3，即使从通常成功层析重建所需双轴投影的一小部分，或仅从单个倾斜轴，也能分辨出三维螺旋纹理。通过测试重建中交换相互作用与 Dzyaloshinskii-Moriya 相互作用的最佳比例以重现测量投影，获得的样品值与从螺旋缠绕周期推导的文献值相差约 10 %。\n\n最后一条是 Linrui Dai 等人提出的基于姿态感知扩散先验的极稀疏视图 CT 重建方法。极稀疏视图 CT 在扫描时间、运动或辐射耐受度限制每次扫描仅能有少数投影时至关重要。现有优化方法缺乏数据驱动先验以抑制伪影，而学习方法通常需要在极稀疏视图 CT 范围外获取的密集扫描训练体积。该方法通过从每个训练样本的一个 2D 投影中学习姿态感知扩散先验来解决训练稀疏和推理稀疏的问题。扩散采样过程由测量视图保真度、共享体积重投影和投影物理一致性引导。在两个公开 CT 数据集的 1-, 4-, and 8-view settings 下，该方法取得了最佳的新视图合成分数以及最佳或具有竞争力的重建质量。该方法依赖于从每个训练样本的一个 2D 投影中学习姿态感知扩散先验。\n\n我们下期见。",
+    "audio": {
+      "path": "C:\\Projects\\ai-podcast\\audio\\ep-2026-11-22.mp3",
+      "duration_sec": 361.25,
+      "size_bytes": 2167488,
+      "engine": "edge-tts"
+    },
+    "status": "site_built",
+    "history": [],
+    "quality": {
+      "pipeline": "fact-cards-v1",
+      "items": 6,
+      "fetch_status": {
+        "Prototype-Guided Dynamic Domain Modulati": "abstract",
+        "Learning-Based Interpolation of Detector": "abstract",
+        "ALETHEIA: A Multi-Frequency Eddy Current": "abstract",
+        "View optimization in Computed Tomography": "abstract",
+        "Physics-informed X-ray tomography of mag": "abstract",
+        "Extremely Sparse-View Computed Tomograph": "abstract"
+      },
+      "card_errors": [],
+      "violations_first": [],
+      "repaired": false,
+      "violations_final": [],
+      "created_by": "Hermes Qwen3.8:27b"
+    },
+    "commit_sha": "",
+    "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-22.html",
+    "created_at": "2026-11-22T08:32:13.789608-05:00",
+    "published_at": ""
+  },
+  {
     "episode_id": "ep-2026-11-21",
     "title": "X射线成像重建与分割新进展",
     "date": "2026-11-21",
@@ -329,7 +685,7 @@
       "size_bytes": 1912752,
       "engine": "edge-tts"
     },
-    "status": "site_built",
+    "status": "pushed",
     "history": [],
     "quality": {
       "pipeline": "fact-cards-v1",
@@ -350,10 +706,10 @@
       "violations_final": [],
       "created_by": "Hermes Qwen3.8:27b"
     },
-    "commit_sha": "",
+    "commit_sha": "4b483f5a3a73aa50108815b08d304454f08bb71a",
     "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-21.html",
     "created_at": "2026-11-21T16:02:06.775588-05:00",
-    "published_at": ""
+    "published_at": "2026-11-21T16:02:44.032473-05:00"
   },
   {
     "episode_id": "ep-2026-11-20",
