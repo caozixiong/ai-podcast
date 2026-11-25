@@ -1,5 +1,314 @@
 [
   {
+    "episode_id": "ep-2026-11-25",
+    "title": "XCT颗粒分割与中子成像增强进展",
+    "date": "2026-11-25",
+    "items": [
+      {
+        "id": "666fcdf4ee98882f",
+        "title": "「声镭科技」完成Pre-A轮融资，领跑先进封装无损检测赛道",
+        "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1pSmV3cHAtUVdkQ2s1R3RsQ19Dd0JkeU1MTDN2ZHZfcUpWbUp5NVY2SHNjQkE4cGNHVGVzNHFHVVVOUGNtcGlXbTFUSFhUaGVvVjBsNEtB?oc=5",
+        "source_name": "Google News RSS: TSV / 封装 / 检测 (中文)",
+        "publisher": "投资界",
+        "kind": "news",
+        "authors": [],
+        "published": "2026-11-23",
+        "summary": "",
+        "fetch_status": "title",
+        "relevance": 12,
+        "relevance_hits": [
+          "先进封装/TSV/TGV@标题:先进封装",
+          "无损检测/缺陷检测@标题:无损检测"
+        ],
+        "fact_card": {
+          "core_claim": "「声镭科技」完成Pre-A轮融资，领跑先进封装无损检测赛道",
+          "key_facts": [],
+          "numbers": [],
+          "method_type": "",
+          "is_ai": null,
+          "maturity": "",
+          "caveats": [],
+          "terms": [],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "251abc3e0e10ebab",
+        "title": "一束X光，照见智造之细——正业科技以工业检测赋能实体经济高质量发展",
+        "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9sU2c5SFJtTEpTVHdXVFBVOENOelVzZl8wSzFWU2tTZkloanc5LUdJLUZ0dlBjWVRGT3U5MERtVmxSVTIzZHJ2ankwY1pkb2Z2MVJGWkF1V21FSUxDU1J0VFAycjdiVHhaRjZPOA?oc=5",
+        "source_name": "Google News RSS: X 射线 / CT 无损检测 (中文)",
+        "publisher": "中华网",
+        "kind": "news",
+        "authors": [],
+        "published": "2026-11-23",
+        "summary": "",
+        "fetch_status": "title",
+        "relevance": 12,
+        "relevance_hits": [
+          "X射线/CT成像@标题:X 光",
+          "工业/材料场景@标题:工业"
+        ],
+        "fact_card": {
+          "core_claim": "一束X光，照见智造之细——正业科技以工业检测赋能实体经济高质量发展",
+          "key_facts": [],
+          "numbers": [],
+          "method_type": "",
+          "is_ai": null,
+          "maturity": "",
+          "caveats": [],
+          "terms": [],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "f67a7790285b8c3e",
+        "title": "ReplaySAM: Zero-Shot 3D Particle-Pack Segmentation with SAM 2",
+        "url": "https://arxiv.org/abs/2611.30016v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Bogong Wang",
+          "Yulai Zhang",
+          "Philipp D. Lösel",
+          "Andrew Kingston",
+          "Mark Knackstedt"
+        ],
+        "published": "2026-11-23",
+        "summary": "X-ray computed tomography (XCT) provides non-destructive three-dimensional (3D) images of particle packs, making their internal structure accessible for quantitative analysis. Extracting particle-level measurements from these volumes first requires identifying and separating individual particles, a task that remains challenging in dense, irregular packs. Existing workflows often require manual correction or task-specific training, while promptable models need a strategy for automatically locating individual particles and recovering their instance masks. We present ReplaySAM, which adapts the pretrained Segment Anything Model 2 (SAM2) to three-dimensional particle-pack segmentation without additional training. It generates point prompts from foreground geometry and fuses SAM2 predictions across orthogonal slice sequences to recover particle instances. On XCT volumes of real quartz and iron-ore particle packs, ReplaySAM achieves higher mean instance Dice scores than expert-assisted watershed and nnInteractive under the evaluated protocols. ReplaySAM thus provides a training-free framework for 3D particle-pack instance segmentation, with geometry-based prompting that eliminates manual prompt placement.",
+        "fetch_status": "abstract",
+        "relevance": 10,
+        "relevance_hits": [
+          "X射线/CT成像@摘要:computed tomography",
+          "无损检测/缺陷检测@摘要:non-destructive",
+          "AI图像处理@标题:segmentation"
+        ],
+        "fact_card": {
+          "core_claim": "ReplaySAM 通过适配预训练的 SAM2 并采用基于几何的点提示策略，实现了无需额外训练的三维颗粒堆积零样本实例分割。",
+          "key_facts": [
+            "X 射线计算机断层扫描（X-ray computed tomography, XCT）提供颗粒堆积的非破坏性三维图像，使内部结构可用于定量分析。",
+            "现有工作流通常需要手动校正或针对特定任务的训练，而可提示模型需要策略来自动定位单个颗粒并恢复其实例掩码。",
+            "ReplaySAM 将预训练的 Segment Anything Model 2 (SAM2) 适配到三维颗粒堆积分割，且无需额外训练。",
+            "该方法从前景几何生成点提示，并融合正交切片序列中的 SAM2 预测以恢复颗粒实例。",
+            "在真实石英和铁矿石颗粒堆积的 XCT 体积数据上，ReplaySAM 在评估协议下获得了比专家辅助分水岭（watershed）和 nnInteractive 更高的平均实例 Dice 分数。"
+          ],
+          "numbers": [
+            "3D (three-dimensional)",
+            "SAM 2"
+          ],
+          "method_type": "深度学习模型适配 / 零样本分割",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "原文指出在密集、不规则堆积中识别和分离单个颗粒仍然具有挑战性。"
+          ],
+          "terms": [
+            "X-ray computed tomography = X 射线计算机断层扫描",
+            "Segment Anything Model 2 = Segment Anything Model 2 (SAM2)",
+            "instance Dice scores = 实例 Dice 分数",
+            "watershed = 分水岭",
+            "nnInteractive = nnInteractive"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "678a3971a7571c6d",
+        "title": "Improved CNN-Transformer Network for Neutron Image Super-Resolution",
+        "url": "https://arxiv.org/abs/2611.16620v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Yuheng Chu",
+          "Hongli Li",
+          "Tian Zhang"
+        ],
+        "published": "2026-11-12",
+        "summary": "The spatial resolution of neutron images is of great importance for material defect diagnosis, structural characterization, and nondestructive testing. However, owing to limitations in neutron beam quality, scintillator conversion efficiency and light scattering, detector pixel size, and noise levels, conventional neutron images often suffer from speckle noise, blurred edges, and missing details, making them inadequate for high-precision analysis. To address these issues, an improved super-resolution model combining convolutional neural networks (CNNs) and Transformers is proposed. First, to overcome the difficulty of obtaining high-quality and clear training images for neutron imaging, a pretrained image restoration model is fine-tuned using real neutron images and then employed to enhance existing neutron images, thereby providing high-quality reference images for subsequent super-resolution model training. Second, an improved CRAFT-based super-resolution network is developed by incorporating a hybrid prior-guided channel fusion module (HPCF), a mean-standard deviation dual-statistics squeeze-and-excitation block (MS-SEBlock), and a partial convolution feed-forward network (PCFN), with the aim of improving the reconstruction of important information, such as textures and fine details, in neutron images. Simulation results demonstrate that, compared with bicubic interpolation, SRCNN, SRGAN-VGG, and other methods, the proposed network achieves superior performance in both full-reference metrics, including PSNR and SSIM, and no-reference metrics, including AGM and SMD. The visual quality and structural fidelity of the reconstructed images are also significantly improved. This study provides a new approach to improving neutron image quality.",
+        "fetch_status": "abstract",
+        "relevance": 7,
+        "relevance_hits": [
+          "无损检测/缺陷检测@摘要:non-destructive",
+          "AI图像处理@标题:super-resolution"
+        ],
+        "fact_card": {
+          "core_claim": "提出了一种结合卷积神经网络（CNN）和Transformer的改进超分辨率模型，用于提升中子图像质量。",
+          "key_facts": [
+            "中子图像的空间分辨率对材料缺陷诊断、结构表征和无损检测至关重要。",
+            "传统中子图像常受斑点噪声、边缘模糊和细节缺失的影响，难以满足高精度分析需求。",
+            "通过微调预训练图像恢复模型并使用真实中子图像增强现有图像，为超分辨率模型训练提供高质量参考图像。",
+            "开发了基于改进CRAFT的超分辨率网络，引入了混合先验引导通道融合模块（HPCF）、均值-标准差双统计挤压激励块（MS-SEBlock）和部分卷积前馈网络（PCFN）。",
+            "仿真结果表明，与双三次插值、SRCNN、SRGAN-VGG等方法相比，该网络在PSNR、SSIM、AGM和SMD等指标上表现更优。"
+          ],
+          "numbers": [],
+          "method_type": "深度学习",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "受限于中子束质量、闪烁体转换效率和光散射、探测器像素尺寸及噪声水平，传统中子图像质量受限。"
+          ],
+          "terms": [
+            "CNNs = 卷积神经网络",
+            "Transformers = Transformer",
+            "HPCF = 混合先验引导通道融合模块",
+            "MS-SEBlock = 均值-标准差双统计挤压激励块",
+            "PCFN = 部分卷积前馈网络",
+            "PSNR = 峰值信噪比",
+            "SSIM = 结构相似性指数",
+            "AGM = 平均梯度"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "7ef3ed6dec29baf0",
+        "title": "Neutron Imaging Enhancement for Lithium Batteries Based on Swin-Transformer and Image Fusion",
+        "url": "https://arxiv.org/abs/2611.29479v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Hansheng Ding",
+          "Fanxu Meng",
+          "Tian Zhang"
+        ],
+        "published": "2026-11-22",
+        "summary": "Neutron imaging is highly sensitive to light elements such as lithium and is therefore valuable for non-destructive testing (NDT) and analyzing internal structural evolution in lithium batteries. However, limited neutron-source flux and detector performance often result in images with mixed noise, low contrast, and blurred edges, hindering accurate assessment of battery internal states. To address these issues, this paper proposes a lithium-battery neutron image enhancement method combining an improved Swin-Transformer with spatial-domain image fusion. First, an improved Swin-Transformer incorporating Multi-Dconv Head Transposed Attention (MDTA) and Global Response Normalization (GRN) extracts and reconstructs image features to suppress high-density white spots and Gaussian-Poisson mixed noise. Second, guided filtering and a gradient-adaptive mask are used for selective edge enhancement, while Contrast Limited Adaptive Histogram Equalization (CLAHE) improves local contrast. Finally, a spatial-frequency (SF)-based local block-weighted fusion mechanism adaptively combines the edge-enhanced and contrast-equalized images to preserve microscopic details while suppressing noise. Experiments show that, compared with BM3D, DnCNN, and GAN, the proposed method achieves strong performance in full-reference and no-reference evaluations. Its best PSNR and SSIM reach 33.0517 dB and 0.9637, respectively, while the NR-IQA and Natural Image Quality Evaluator (NIQE) scores are as low as 0.1794 and 4.0974. The method reduces artifacts and over smoothing, improving the visual fidelity and structural identifiability of lithium-battery neutron images.",
+        "fetch_status": "abstract",
+        "relevance": 6,
+        "relevance_hits": [
+          "无损检测/缺陷检测@摘要:non-destructive",
+          "工业/材料场景@摘要:battery"
+        ],
+        "fact_card": {
+          "core_claim": "提出了一种结合改进的 Swin-Transformer 和空间域图像融合的锂电池中子图像增强方法，以抑制噪声并提升图像质量。",
+          "key_facts": [
+            "中子成像对锂等轻元素高度敏感，适用于锂电池的无损检测（NDT）和内部结构演化分析。",
+            "受限于中子源通量和探测器性能，中子图像常存在混合噪声、低对比度和边缘模糊问题。",
+            "该方法使用包含多头深度卷积转置注意力（MDTA）和全局响应归一化（GRN）的改进 Swin-Transformer 来提取和重建图像特征，以抑制高密度白点和高斯-泊松混合噪声。",
+            "利用导向滤波和梯度自适应掩膜进行选择性边缘增强，并使用对比度受限自适应直方图均衡化（CLAHE）改善局部对比度。",
+            "采用基于空间频率（SF）的局部块加权融合机制，自适应地结合边缘增强和对比度均衡图像，以保留微观细节并抑制噪声。",
+            "实验表明，与 BM3D、DnCNN 和 GAN 相比，该方法在全参考和无参考评估中表现强劲，减少了伪影和过度平滑。"
+          ],
+          "numbers": [
+            "最佳 PSNR 达到 33.0517 dB",
+            "最佳 SSIM 达到 0.9637",
+            "NR-IQA 分数低至 0.1794",
+            "自然图像质量评估器（NIQE）分数低至 4.0974"
+          ],
+          "method_type": "深度学习",
+          "is_ai": true,
+          "maturity": "数值实验（算法、仿真或理论方法的计算验证）",
+          "caveats": [
+            "受限于中子源通量和探测器性能，原始图像存在混合噪声、低对比度和边缘模糊"
+          ],
+          "terms": [
+            "Swin-Transformer = Swin-Transformer",
+            "Multi-Dconv Head Transposed Attention (MDTA) = 多头深度卷积转置注意力",
+            "Global Response Normalization (GRN) = 全局响应归一化",
+            "Gaussian-Poisson mixed noise = 高斯-泊松混合噪声",
+            "Contrast Limited Adaptive Histogram Equalization (CLAHE) = 对比度受限自适应直方图均衡化",
+            "spatial-frequency (SF) = 空间频率",
+            "PSNR = 峰值信噪比",
+            "SSIM = 结构相似性指数"
+          ],
+          "dropped": [],
+          "error": ""
+        }
+      },
+      {
+        "id": "1e6d6a6b0c3116cc",
+        "title": "High-Resolution 3D Micro-CT Database of Transcranial Magnetic Stimulation (TMS) Coils for More Accurate Modelling, Technology Benchmarking, and Progress in Coil Design",
+        "url": "https://arxiv.org/abs/2611.29051v1",
+        "source_name": "arXiv: X 射线 / CT 无损检测",
+        "publisher": "arXiv",
+        "kind": "arxiv",
+        "authors": [
+          "Maryam Farahmandrad",
+          "Max Koehler",
+          "Mahdi Bayati",
+          "Denis Goldnik",
+          "Sergiy Antonyuk",
+          "Stephan Goetz"
+        ],
+        "published": "2026-11-21",
+        "summary": "Accurate modelling of transcranial magnetic stimulation (TMS) coils requires coil-specific geometric and electrical parameters. Yet detailed manufacturer models are rarely available, and internals may be widely available to companies in the field but not to researchers. The development of new coils should ideally build on all existing prior art. This work presents a technology benchmark and modelling-ready dataset for seventeen widely used commercial TMS coils across multiple manufacturers and geometries. High-resolution micro-CT (0.0495 mm resolution, material and density contrast) serves to reconstruct winding and casing structures and to extract parameters directly usable in numerical models, including loop dimensions, conductor cross-section, turn count, winding height, and winding-to-surface (casing) thickness. Complementary electrical measurements provide spectral impedance (series resistance and inductance) scans from 20 Hz to 200 kHz, together with dc resistance. In addition to baseline geometry and impedance, the study documents practical construction features relevant to safety and usability with detailed insights into their internal construction (e.g., cooling architectures and embedded sensing). The resulting benchmark dataset supports coil-specific electric-field simulations, reduces modelling uncertainty associated with generic assumptions (e.g., fixed coil-scalp spacing), and provides a quantitative reference for designing and evaluating new coil technologies against established commercial solutions. As a simulation-readiness example, we generated a calibrated CT-derived MCB70 line-current model for SimNIBS and evaluated its effect on predicted electric-field metrics. Compared with the SimNIBS MCB70 model, the CT-derived model produced measurable differences under identical placement conditions. We provide the dataset online.",
+        "fetch_status": "abstract",
+        "relevance": 6,
+        "relevance_hits": [
+          "X射线/CT成像@标题:CT"
+        ],
+        "fact_card": {
+          "core_claim": "High-Resolution 3D Micro-CT Database of Transcranial Magnetic Stimulation (TMS) Coils for More Accurate Modelling, Technology Benchmarking, and Progress in Coil Design",
+          "key_facts": [
+            "使用分辨率为0.0495 mm的高分辨率micro-CT重建绕组和外壳结构，并提取可直接用于数值模型的参数，包括回路尺寸、导体横截面、匝数、绕组高度以及绕组到表面（外壳）的厚度。",
+            "互补的电气测量提供了从20 Hz到200 kHz的频谱阻抗（串联电阻和电感）扫描数据，以及直流电阻。",
+            "研究记录了与安全性和可用性相关的实际构造特征，包括对内部构造（如冷却架构和嵌入式传感）的详细洞察。",
+            "作为仿真就绪示例，生成了用于SimNIBS的校准CT衍生MCB70线电流模型，并评估其对预测电场指标的影响。",
+            "与SimNIBS的MCB70模型相比，CT衍生模型在相同放置条件下产生了可测量的差异。"
+          ],
+          "numbers": [
+            "0.0495 mm分辨率",
+            "20 Hz到200 kHz的频谱阻抗扫描范围"
+          ],
+          "method_type": "实验测量与数据集构建",
+          "is_ai": false,
+          "maturity": "实验室实验（真实样品测量）",
+          "caveats": [
+            "详细的制造商模型很少可用，且内部结构可能仅在行业内公司间广泛共享，而未向研究人员开放。"
+          ],
+          "terms": [
+            "transcranial magnetic stimulation = 经颅磁刺激",
+            "micro-CT = 微计算机断层扫描",
+            "spectral impedance = 频谱阻抗",
+            "SimNIBS = SimNIBS（仿真软件名称，原文未提供中文译法）"
+          ],
+          "dropped": [
+            "该工作呈现了针对17种广泛使用的商用TMS线圈的技术基准和建模就绪数据集，涵盖多个制造商和几何结构。",
+            "17种广泛使用的商用TMS线圈",
+            "本研究通过高分辨率微计算机断层扫描（micro-CT）和电气测量，建立了包含17种商用经颅磁刺激（TMS）线圈几何与电气参数的基准数据集，以支持更准确的建模和线圈设计评估。"
+          ],
+          "error": ""
+        }
+      }
+    ],
+    "script": "大家好，这里是《X射线无损检测与AI图像处理前沿》。\n\n首先来看两条行业动态。据投资界报道，他们发表了一篇文章，题目是《「声镭科技」完成Pre-A轮融资，领跑先进封装无损检测赛道》。全文暂未获取，细节这里不展开。另一条来自中华网，他们发表了一篇文章，题目是《一束X光，照见智造之细——正业科技以工业检测赋能实体经济高质量发展》。全文暂未获取，细节这里不展开。\n\n接下来进入技术内容，本集涉及三篇 arXiv 预印本论文，需要说明的是，预印本还没有经过同行评审。\n\n第一篇论文由 Bogong Wang 等人撰写，研究的是利用 Segment Anything Model 2 进行三维颗粒堆积的零样本实例分割。X 射线计算机断层扫描能提供颗粒堆积的非破坏性三维图像，但现有工作流通常需要手动校正或针对特定任务训练。这篇论文提出的 ReplaySAM 方法，通过适配预训练的 SAM2 并采用基于几何的点提示策略，实现了无需额外训练的分割。具体做法是从前景几何生成点提示，并融合正交切片序列中的预测以恢复颗粒实例。在真实石英和铁矿石颗粒堆积的 XCT 体积数据上，该方法在评估协议下获得了比专家辅助分水岭算法和 nnInteractive 更高的平均实例 Dice 分数。不过原文也指出，在密集、不规则堆积中识别和分离单个颗粒仍然具有挑战性。\n\n另一篇来自 arXiv 的论文由 Yuheng Chu 等人撰写，提出了一种结合卷积神经网络和 Transformer 的改进超分辨率模型，用于提升中子图像质量。中子图像的空间分辨率对材料缺陷诊断和无损检测至关重要，但传统图像常受斑点噪声和边缘模糊影响。该研究通过微调预训练图像恢复模型，并使用真实中子图像增强现有图像，为训练提供高质量参考。他们开发了基于改进 CRAFT 的超分辨率网络，引入了混合先验引导通道融合模块、均值-标准差双统计挤压激励块和部分卷积前馈网络。仿真结果表明，与双三次插值、SRCNN、SRGAN-VGG 等方法相比，该网络在峰值信噪比、结构相似性指数、平均梯度等指标上表现更优。当然，这也受限于中子束质量、闪烁体转换效率以及探测器像素尺寸等物理因素。\n\n第三篇论文同样来自 arXiv，由 Hansheng Ding 等人撰写，研究基于 Swin-Transformer 和图像融合的锂电池中子图像增强。中子成像对锂等轻元素高度敏感，适用于锂电池的无损检测，但受限于中子源通量和探测器性能，原始图像存在混合噪声和低对比度问题。该方法使用包含多头深度卷积转置注意力和全局响应归一化的改进 Swin-Transformer 来提取特征，以抑制高密度白点和高斯-泊松混合噪声。同时利用导向滤波和梯度自适应掩膜进行选择性边缘增强，并使用对比度受限自适应直方图均衡化改善局部对比度。最后采用基于空间频率的局部块加权融合机制，自适应地结合边缘增强和对比度均衡图像。实验表明，与 BM3D、DnCNN 和 GAN 相比，该方法在全参考和无参考评估中表现强劲，减少了伪影和过度平滑。具体数值上，最佳峰值信噪比达到 33.0517 dB，最佳结构相似性指数达到 0.9637，无参考质量评估分数低至 0.1794，自然图像质量评估器分数低至 4.0974。\n\n最后一条资讯来自 arXiv，由 Maryam Farahmandrad 等人撰写，构建了一个高分辨率三维微计算机断层扫描数据库，用于经颅磁刺激线圈的建模和设计。这项研究使用分辨率为 0.0495 mm 的高分辨率 micro-CT 重建绕组和外壳结构，并提取可直接用于数值模型的参数，包括回路尺寸、导体横截面、匝数等。互补的电气测量提供了从 20 Hz 到 200 kHz 的频谱阻抗扫描数据，以及直流电阻。研究还记录了与安全性和可用性相关的实际构造特征，如冷却架构和嵌入式传感。作为仿真就绪示例，他们生成了用于 SimNIBS 的校准 CT 衍生线电流模型，并评估其对预测电场指标的影响。与 SimNIBS 的默认模型相比，CT 衍生模型在相同放置条件下产生了可测量的差异。这项工作的局限在于，详细的制造商模型很少可用，且内部结构可能仅在行业内公司间广泛共享，而未向研究人员开放。\n\n我们下期见。",
+    "audio": {
+      "path": "C:\\Projects\\ai-podcast\\audio\\ep-2026-11-25.mp3",
+      "duration_sec": 312.82,
+      "size_bytes": 1876896,
+      "engine": "edge-tts"
+    },
+    "status": "site_built",
+    "history": [],
+    "quality": {
+      "pipeline": "fact-cards-v1",
+      "items": 6,
+      "fetch_status": {
+        "「声镭科技」完成Pre-A轮融资，领跑先进封装无损检测赛道": "title",
+        "一束X光，照见智造之细——正业科技以工业检测赋能实体经济高质量发展": "title",
+        "ReplaySAM: Zero-Shot 3D Particle-Pack Se": "abstract",
+        "Improved CNN-Transformer Network for Neu": "abstract",
+        "Neutron Imaging Enhancement for Lithium ": "abstract",
+        "High-Resolution 3D Micro-CT Database of ": "abstract"
+      },
+      "card_errors": [],
+      "violations_first": [],
+      "repaired": false,
+      "violations_final": [],
+      "created_by": "Hermes Qwen3.8:27b"
+    },
+    "commit_sha": "",
+    "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-25.html",
+    "created_at": "2026-11-25T08:31:43.754679-05:00",
+    "published_at": ""
+  },
+  {
     "episode_id": "ep-2026-11-22",
     "title": "X射线CT重建与缺陷检测新进展",
     "date": "2026-11-22",
@@ -331,7 +640,7 @@
       "size_bytes": 2167488,
       "engine": "edge-tts"
     },
-    "status": "site_built",
+    "status": "pushed",
     "history": [],
     "quality": {
       "pipeline": "fact-cards-v1",
@@ -350,10 +659,10 @@
       "violations_final": [],
       "created_by": "Hermes Qwen3.8:27b"
     },
-    "commit_sha": "",
+    "commit_sha": "1bc0bd3e6c93ca7388dc9a6ca01e8f6694954342",
     "pages_url": "https://caozixiong.github.io/ai-podcast/episodes/ep-2026-11-22.html",
     "created_at": "2026-11-22T08:32:13.789608-05:00",
-    "published_at": ""
+    "published_at": "2026-11-22T08:32:47.421469-05:00"
   },
   {
     "episode_id": "ep-2026-11-21",
